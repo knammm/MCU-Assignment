@@ -88,7 +88,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x11 ./Core/Src/global.o
  .debug_macro   0x0000000000000000      0xa9c ./Core/Src/global.o
  .debug_line    0x0000000000000000       0x35 ./Core/Src/global.o
- .debug_str     0x0000000000000000     0x2d58 ./Core/Src/global.o
+ .debug_str     0x0000000000000000     0x2db2 ./Core/Src/global.o
  .comment       0x0000000000000000       0x54 ./Core/Src/global.o
  .ARM.attributes
                 0x0000000000000000       0x33 ./Core/Src/global.o
