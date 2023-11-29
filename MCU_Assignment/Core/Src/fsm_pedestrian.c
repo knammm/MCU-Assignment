@@ -6,3 +6,4 @@
  */
 #include "fsm_pedestrian.h"
 
+int a=10;
