@@ -140,7 +140,7 @@ Discarded input sections
  .debug_abbrev  0x0000000000000000      0x14d ./Core/Src/global.o
  .debug_aranges
                 0x0000000000000000       0x18 ./Core/Src/global.o
- .debug_macro   0x0000000000000000      0x1fd ./Core/Src/global.o
+ .debug_macro   0x0000000000000000      0x201 ./Core/Src/global.o
  .debug_macro   0x0000000000000000      0xa9c ./Core/Src/global.o
  .debug_macro   0x0000000000000000      0x215 ./Core/Src/global.o
  .debug_macro   0x0000000000000000       0x2e ./Core/Src/global.o
