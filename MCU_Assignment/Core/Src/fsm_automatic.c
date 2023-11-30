@@ -8,6 +8,7 @@
 #include "fsm_automatic.h"
 
 void fsm_automatic_run(){
+	char str[50];
 	switch(status){
 	case INIT:
 		//TODO
@@ -17,9 +18,13 @@ void fsm_automatic_run(){
 		break;
 	case RED_GREEN:
 		//TODO
+		Traffic_setColor(1, OFF_LED);
+		Traffic_setColor(2, OFF_LED);
 		Traffic_setColor(1, AUTO_RED);
 		Traffic_setColor(2, AUTO_GREEN);
 		if (timerSecond == 1){
+			HAL_UART_Transmit(&huart2, (void *)str, sprintf(str, "\r\n!7SEG1: %d#\r\n",timerTraffic1), 500);
+			HAL_UART_Transmit(&huart2, (void *)str, sprintf(str, "\r\n!7SEG2: %d#\r\n\n\n",timerTraffic2), 500);
 			setTimerSecond(1000);
 			timerTraffic1--;
 			timerTraffic2--;
@@ -33,9 +38,13 @@ void fsm_automatic_run(){
 		break;
 	case RED_YELLOW:
 		//TODO
+		Traffic_setColor(1, OFF_LED);
+		Traffic_setColor(2, OFF_LED);
 		Traffic_setColor(1, AUTO_RED);
 		Traffic_setColor(2, AUTO_YELLOW);
 		if (timerSecond == 1){
+			HAL_UART_Transmit(&huart2, (void *)str, sprintf(str, "\r\n!7SEG1: %d#\r\n",timerTraffic1), 500);
+			HAL_UART_Transmit(&huart2, (void *)str, sprintf(str, "\r\n!7SEG2: %d#\r\n\n\n",timerTraffic2), 500);
 			setTimerSecond(1000);
 			timerTraffic1--;
 			if (timerTraffic1 <= 0) timerTraffic1 = durationGREEN / 1000;
@@ -49,9 +58,13 @@ void fsm_automatic_run(){
 		}
 		break;
 	case GREEN_RED:
+		Traffic_setColor(1, OFF_LED);
+		Traffic_setColor(2, OFF_LED);
 		Traffic_setColor(1, AUTO_GREEN);
 		Traffic_setColor(2, AUTO_RED);
 		if (timerSecond == 1){
+			HAL_UART_Transmit(&huart2, (void *)str, sprintf(str, "\r\n!7SEG1: %d#\r\n",timerTraffic1), 500);
+			HAL_UART_Transmit(&huart2, (void *)str, sprintf(str, "\r\n!7SEG2: %d#\r\n\n\n",timerTraffic2), 500);
 			setTimerSecond(1000);
 			timerTraffic1--;
 			if (timerTraffic1 <= 0) timerTraffic1 = durationYELLOW / 1000;
@@ -64,9 +77,13 @@ void fsm_automatic_run(){
 		}
 		break;
 	case YELLOW_RED:
+		Traffic_setColor(1, OFF_LED);
+		Traffic_setColor(2, OFF_LED);
 		Traffic_setColor(1, AUTO_YELLOW);
 		Traffic_setColor(2, AUTO_RED);
 		if (timerSecond == 1){
+			HAL_UART_Transmit(&huart2, (void *)str, sprintf(str, "\r\n!7SEG1: %d#\r\n",timerTraffic1), 500);
+			HAL_UART_Transmit(&huart2, (void *)str, sprintf(str, "\r\n!7SEG2: %d#\r\n\n\n",timerTraffic2), 500);
 			setTimerSecond(1000);
 			timerTraffic1--;
 			if (timerTraffic1 <= 0) timerTraffic1 = durationRED / 1000;
@@ -101,7 +118,8 @@ void fsm_automatic_run(){
 	else if(isButtonPressed(0) == 1){
 		pedestrianFlag = 1;
 		// Set timer for off pedestrian light...
-		setTimer(2, 15000); // 15 secs
+		setTimer(2, 10000); // 10 secs
+		setTimer(3, 10);
 	}
 
 }

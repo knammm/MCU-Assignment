@@ -9,6 +9,7 @@
 #define INC_FSM_AUTOMATIC_H_
 
 #include "global.h"
+#include "stdio.h"
 
 int RED_sec;
 int YELLOW_sec;
