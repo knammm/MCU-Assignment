@@ -19,6 +19,8 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "global.h"
+#include "scheduler.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -92,17 +94,29 @@ int main(void)
   MX_TIM2_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
-
+  HAL_TIM_Base_Start_IT(&htim2);
+  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
-  {
+   SCH_Init();
+   //blinkLEDs(TRAFFIC_1, AUTO_RED);
+   SCH_Add_Task(timerRun, 0, 1);
+   SCH_Add_Task(timerRunSecond, 0, 1);
+   SCH_Add_Task(timerRun7SEG, 0, 1);
+   SCH_Add_Task(button_reading, 0, 1);
+   //SCH_Add_Task(update7SEG, 1, 25);
+   SCH_Add_Task(updateBuffer, 1,10);
+   SCH_Add_Task(fsm_automatic_run, 0, 1);
+   SCH_Add_Task(fsm_manual_run, 0, 1);
+   SCH_Add_Task(fsm_pedestrian_run, 0, 1);
+   while (1)
+   {
     /* USER CODE END WHILE */
-
+	   SCH_Dispatch_Tasks();
     /* USER CODE BEGIN 3 */
-  }
+   }
   /* USER CODE END 3 */
 }
 
@@ -295,7 +309,13 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
+//	timerRun();
+//	timerRun7SEG();
+//	timerRunSecond();
+//	button_reading();
+	SCH_Update();
+}
 /* USER CODE END 4 */
 
 /**
