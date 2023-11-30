@@ -119,7 +119,8 @@ void fsm_automatic_run(){
 		pedestrianFlag = 1;
 		// Set timer for off pedestrian light...
 		setTimer(2, 10000); // 10 secs
-		setTimer(3, 10);
+		setTimer(3, 100);
+		setTimer(4, 100);
 	}
 
 }
