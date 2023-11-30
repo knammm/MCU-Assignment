@@ -1,2 +1,2 @@
-fsm_pedestrian.c:16:6:buzzerProcess	16	static
-fsm_pedestrian.c:21:6:fsm_pedestrian_run	16	static
+fsm_pedestrian.c:15:6:buzzerProcess	16	static
+fsm_pedestrian.c:20:6:fsm_pedestrian_run	16	static
