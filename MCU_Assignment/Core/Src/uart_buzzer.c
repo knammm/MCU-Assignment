@@ -5,4 +5,6 @@
  *      Author: olkmphy
  */
 
-
+void buzzer(){
+	// Implement buzzer here...
+}

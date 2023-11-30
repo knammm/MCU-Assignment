@@ -8,6 +8,6 @@
 #ifndef INC_UART_BUZZER_H_
 #define INC_UART_BUZZER_H_
 
-
+void buzzer();
 
 #endif /* INC_UART_BUZZER_H_ */
