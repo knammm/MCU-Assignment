@@ -21,4 +21,3 @@ int led_index = 0;
 int led_buffer[4] = {0};
 
 int buzzer_value = 0;
-int index_buzzer = 1;
