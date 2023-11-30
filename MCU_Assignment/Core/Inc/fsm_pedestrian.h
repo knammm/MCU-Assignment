@@ -13,4 +13,3 @@
 #endif /* INC_FSM_PEDESTRIAN_H_ */
 
 #include "global.h"
-HELOOO

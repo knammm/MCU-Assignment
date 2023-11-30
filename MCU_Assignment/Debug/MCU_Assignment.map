@@ -73,7 +73,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x11 ./Core/Src/fsm_pedestrian.o
  .debug_macro   0x0000000000000000      0xa9c ./Core/Src/fsm_pedestrian.o
  .debug_line    0x0000000000000000       0x3d ./Core/Src/fsm_pedestrian.o
- .debug_str     0x0000000000000000     0x2d60 ./Core/Src/fsm_pedestrian.o
+ .debug_str     0x0000000000000000     0x2dba ./Core/Src/fsm_pedestrian.o
  .comment       0x0000000000000000       0x54 ./Core/Src/fsm_pedestrian.o
  .ARM.attributes
                 0x0000000000000000       0x33 ./Core/Src/fsm_pedestrian.o
@@ -289,20 +289,52 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x83 ./Core/Src/main.o
  .debug_macro   0x0000000000000000       0x7c ./Core/Src/main.o
  .group         0x0000000000000000        0xc ./Core/Src/scheduler.o
+ .group         0x0000000000000000        0xc ./Core/Src/scheduler.o
+ .group         0x0000000000000000        0xc ./Core/Src/scheduler.o
+ .group         0x0000000000000000        0xc ./Core/Src/scheduler.o
+ .group         0x0000000000000000        0xc ./Core/Src/scheduler.o
+ .group         0x0000000000000000        0xc ./Core/Src/scheduler.o
+ .group         0x0000000000000000        0xc ./Core/Src/scheduler.o
+ .group         0x0000000000000000        0xc ./Core/Src/scheduler.o
  .text          0x0000000000000000        0x0 ./Core/Src/scheduler.o
  .data          0x0000000000000000        0x0 ./Core/Src/scheduler.o
  .bss           0x0000000000000000        0x0 ./Core/Src/scheduler.o
- .debug_info    0x0000000000000000       0x21 ./Core/Src/scheduler.o
- .debug_abbrev  0x0000000000000000       0x13 ./Core/Src/scheduler.o
+ .bss.SCH_tasks_Array
+                0x0000000000000000       0xc8 ./Core/Src/scheduler.o
+ .bss.newTaskID
+                0x0000000000000000        0x4 ./Core/Src/scheduler.o
+ .text.SCH_Init
+                0x0000000000000000       0x8c ./Core/Src/scheduler.o
+ .text.SCH_Update
+                0x0000000000000000       0x40 ./Core/Src/scheduler.o
+ .text.SCH_Add_Task
+                0x0000000000000000      0x1e4 ./Core/Src/scheduler.o
+ .text.SCH_Delete_Task
+                0x0000000000000000       0xf0 ./Core/Src/scheduler.o
+ .text.SCH_Dispatch_Tasks
+                0x0000000000000000       0x50 ./Core/Src/scheduler.o
+ .text.Get_New_Task_ID
+                0x0000000000000000       0x20 ./Core/Src/scheduler.o
+ .debug_info    0x0000000000000000      0x2a2 ./Core/Src/scheduler.o
+ .debug_abbrev  0x0000000000000000      0x164 ./Core/Src/scheduler.o
  .debug_aranges
-                0x0000000000000000       0x18 ./Core/Src/scheduler.o
- .debug_macro   0x0000000000000000       0x11 ./Core/Src/scheduler.o
+                0x0000000000000000       0x48 ./Core/Src/scheduler.o
+ .debug_ranges  0x0000000000000000       0x38 ./Core/Src/scheduler.o
+ .debug_macro   0x0000000000000000       0x72 ./Core/Src/scheduler.o
  .debug_macro   0x0000000000000000      0xa9c ./Core/Src/scheduler.o
- .debug_line    0x0000000000000000       0x38 ./Core/Src/scheduler.o
- .debug_str     0x0000000000000000     0x2d5b ./Core/Src/scheduler.o
+ .debug_macro   0x0000000000000000       0x22 ./Core/Src/scheduler.o
+ .debug_macro   0x0000000000000000       0x8e ./Core/Src/scheduler.o
+ .debug_macro   0x0000000000000000       0x51 ./Core/Src/scheduler.o
+ .debug_macro   0x0000000000000000      0x103 ./Core/Src/scheduler.o
+ .debug_macro   0x0000000000000000       0x6a ./Core/Src/scheduler.o
+ .debug_macro   0x0000000000000000      0x1df ./Core/Src/scheduler.o
+ .debug_macro   0x0000000000000000       0x10 ./Core/Src/scheduler.o
+ .debug_line    0x0000000000000000      0x585 ./Core/Src/scheduler.o
+ .debug_str     0x0000000000000000     0x3e06 ./Core/Src/scheduler.o
  .comment       0x0000000000000000       0x54 ./Core/Src/scheduler.o
+ .debug_frame   0x0000000000000000       0xf8 ./Core/Src/scheduler.o
  .ARM.attributes
-                0x0000000000000000       0x33 ./Core/Src/scheduler.o
+                0x0000000000000000       0x2d ./Core/Src/scheduler.o
  .group         0x0000000000000000        0xc ./Core/Src/software_timer.o
  .text          0x0000000000000000        0x0 ./Core/Src/software_timer.o
  .data          0x0000000000000000        0x0 ./Core/Src/software_timer.o
