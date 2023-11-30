@@ -61,8 +61,8 @@ all: main-build
 main-build: MCU_Assignment.elf secondary-outputs
 
 # Tool invocations
-MCU_Assignment.elf: $(OBJS) $(USER_OBJS) C:\Users\ASUS\Documents\HCMUT\Junior\ Year\MCU\Assignment\MCU_Assignment\STM32F103RBTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "MCU_Assignment.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\ASUS\Documents\HCMUT\Junior Year\MCU\Assignment\MCU_Assignment\STM32F103RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="MCU_Assignment.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+MCU_Assignment.elf: $(OBJS) $(USER_OBJS) D:\BKU\ -\ K21\ -\ Computer\ Engineering\Microprocessors\ -\ Microcontrollers\Assignment\MCU_Assignment_git\MCU_Assignment\STM32F103RBTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "MCU_Assignment.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"D:\BKU - K21 - Computer Engineering\Microprocessors - Microcontrollers\Assignment\MCU_Assignment_git\MCU_Assignment\STM32F103RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="MCU_Assignment.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
