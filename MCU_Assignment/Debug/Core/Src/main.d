@@ -22,7 +22,12 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
- ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
+ ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
+ ../Core/Inc/global.h ../Core/Inc/input_reading.h ../Core/Inc/main.h \
+ ../Core/Inc/global.h ../Core/Inc/software_timer.h \
+ ../Core/Inc/handle_leds.h ../Core/Inc/fsm_automatic.h \
+ ../Core/Inc/fsm_manual.h ../Core/Inc/fsm_pedestrian.h \
+ ../Core/Inc/uart_buzzer.h ../Core/Inc/scheduler.h
 
 ../Core/Inc/main.h:
 
@@ -73,3 +78,25 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h:
 
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h:
+
+../Core/Inc/global.h:
+
+../Core/Inc/input_reading.h:
+
+../Core/Inc/main.h:
+
+../Core/Inc/global.h:
+
+../Core/Inc/software_timer.h:
+
+../Core/Inc/handle_leds.h:
+
+../Core/Inc/fsm_automatic.h:
+
+../Core/Inc/fsm_manual.h:
+
+../Core/Inc/fsm_pedestrian.h:
+
+../Core/Inc/uart_buzzer.h:
+
+../Core/Inc/scheduler.h:
