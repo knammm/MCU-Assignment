@@ -6,8 +6,8 @@ int counter7SEG = 0;
 int timerSecond = 0;
 int counterSecond = 0;
 
-int timerFlag[NO_OF_COUNTERS] = {0, 0, 0, 0, 0};
-int counter[NO_OF_COUNTERS] = {0, 0, 0, 0, 0};
+int timerFlag[NO_OF_COUNTERS] = {0, 0, 0, 0, 0, 0};
+int counter[NO_OF_COUNTERS] = {0, 0, 0, 0, 0, 0};
 
 void setTimer7SEG(int duration){
 	counter7SEG = duration/PERIOD;

@@ -114,10 +114,10 @@ int main(void)
    SCH_Add_Task(timerRun7SEG, 0, 1);
    SCH_Add_Task(button_reading, 0, 1);
    //SCH_Add_Task(update7SEG, 1, 25);
-   SCH_Add_Task(updateBuffer, 1,10);
+   //SCH_Add_Task(updateBuffer, 1,10);
+   SCH_Add_Task(fsm_pedestrian_run, 0, 1);
    SCH_Add_Task(fsm_automatic_run, 0, 1);
    SCH_Add_Task(fsm_manual_run, 0, 1);
-   SCH_Add_Task(fsm_pedestrian_run, 0, 1);
    while (1)
    {
     /* USER CODE END WHILE */

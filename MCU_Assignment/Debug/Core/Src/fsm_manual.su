@@ -1,1 +1,2 @@
-fsm_manual.c:9:6:fsm_manual_run	64	static
+fsm_manual.c:10:6:returnAutomatic	8	static
+fsm_manual.c:19:6:fsm_manual_run	16	static

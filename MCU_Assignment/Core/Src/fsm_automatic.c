@@ -104,6 +104,7 @@ void fsm_automatic_run(){
 		if(status == RED_GREEN || status == RED_YELLOW || status == GREEN_RED || status == YELLOW_RED){
 			status = MOD_RED;
 			setTimer(1, 10); // timer for blinky
+			setTimer(5, 5000);
 			Traffic_setColor(1, AUTO_RED);
 			Traffic_setColor(2, AUTO_RED);
 			RED_sec = durationRED / 1000;

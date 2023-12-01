@@ -52,9 +52,9 @@ void fsm_pedestrian_run() {
 					// Calculate the appropriate index
                     indexForSpeed = needMore - timerTraffic2;
                     if (timerFlag[3] == 1) {
-                        buzzerProcess(128 * (1 + indexForSpeed));
+                        buzzerProcess(512 * (1 + indexForSpeed));
                         setTimer(3, speed[indexForSpeed]); // Set the speed through array
-                        setTimer(4, 100); // Set delay for turn off buzzer
+                        setTimer(4, 20); // Set delay for turn off buzzer
                     }
 
                     if (timerFlag[4] == 1) {
@@ -64,9 +64,9 @@ void fsm_pedestrian_run() {
                 } else if (status == RED_YELLOW) {
 					// In this status, just care about "timerTraffic2"
                     if (timerFlag[3] == 1) {
-                        buzzerProcess(128 * (5 - timerTraffic2 + 1));
+                        buzzerProcess(512 * (5 - timerTraffic2 + 1));
                         setTimer(3, speed[5 - timerTraffic2]);
-                        setTimer(4, 100);
+                        setTimer(4, 20);
                     }
                     if (timerFlag[4] == 1) {
                         buzzerProcess(0);
@@ -75,9 +75,9 @@ void fsm_pedestrian_run() {
             } else if (durationYELLOW >= 5000 && status == RED_YELLOW && timerTraffic2 <= 5) {
 				// The code is the same as above RED_YELLOW
                 if (timerFlag[3] == 1) {
-                    buzzerProcess(128 * (5 - timerTraffic2 + 1));
+                    buzzerProcess(512 * (5 - timerTraffic2 + 1));
                     setTimer(3, speed[5 - timerTraffic2]);
-                    setTimer(4, 100);
+                    setTimer(4, 20);
                 }
                 if (timerFlag[4] == 1) {
                     buzzerProcess(0);

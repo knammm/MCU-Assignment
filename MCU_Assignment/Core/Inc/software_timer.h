@@ -10,7 +10,7 @@
 
 #include "global.h"
 
-#define NO_OF_COUNTERS	5
+#define NO_OF_COUNTERS	6
 #define PERIOD			10
 
 extern int timerFlag[NO_OF_COUNTERS];
