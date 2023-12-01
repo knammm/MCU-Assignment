@@ -37,13 +37,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  16 .debug_macro  000198dc  00000000  00000000  0003ca98  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   000126ea  00000000  00000000  00056374  2**0
+ 17 .debug_line   000126f9  00000000  00000000  00056374  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    0008b4cd  00000000  00000000  00068a5e  2**0
+ 18 .debug_str    0008b4cd  00000000  00000000  00068a6d  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000053  00000000  00000000  000f3f2b  2**0
+ 19 .comment      00000053  00000000  00000000  000f3f3a  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00003a70  00000000  00000000  000f3f80  2**2
+ 20 .debug_frame  00003a70  00000000  00000000  000f3f90  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -2861,10 +2861,17 @@ void Pedestrian_setColor(int color){
  80018a8:	200001e0 	.word	0x200001e0
 
 080018ac <setTimerSecond>:
+void setTimer7SEG(int duration){
+	counter7SEG = duration/PERIOD;
+	timer7SEG=0;
+}
+
+void setTimerSecond(int duration){
  80018ac:	b480      	push	{r7}
  80018ae:	b083      	sub	sp, #12
  80018b0:	af00      	add	r7, sp, #0
  80018b2:	6078      	str	r0, [r7, #4]
+	counterSecond = duration/PERIOD;
  80018b4:	687b      	ldr	r3, [r7, #4]
  80018b6:	4a08      	ldr	r2, [pc, #32]	; (80018d8 <setTimerSecond+0x2c>)
  80018b8:	fb82 1203 	smull	r1, r2, r2, r3
@@ -2873,9 +2880,11 @@ void Pedestrian_setColor(int color){
  80018c0:	1ad3      	subs	r3, r2, r3
  80018c2:	4a06      	ldr	r2, [pc, #24]	; (80018dc <setTimerSecond+0x30>)
  80018c4:	6013      	str	r3, [r2, #0]
+	timerSecond = 0;
  80018c6:	4b06      	ldr	r3, [pc, #24]	; (80018e0 <setTimerSecond+0x34>)
  80018c8:	2200      	movs	r2, #0
  80018ca:	601a      	str	r2, [r3, #0]
+}
  80018cc:	bf00      	nop
  80018ce:	370c      	adds	r7, #12
  80018d0:	46bd      	mov	sp, r7
@@ -2887,11 +2896,14 @@ void Pedestrian_setColor(int color){
  80018e0:	200001ec 	.word	0x200001ec
 
 080018e4 <setTimer>:
+
+void setTimer(int index, int duration){
  80018e4:	b480      	push	{r7}
  80018e6:	b083      	sub	sp, #12
  80018e8:	af00      	add	r7, sp, #0
  80018ea:	6078      	str	r0, [r7, #4]
  80018ec:	6039      	str	r1, [r7, #0]
+	counter[index] = duration/PERIOD;
  80018ee:	683b      	ldr	r3, [r7, #0]
  80018f0:	4a09      	ldr	r2, [pc, #36]	; (8001918 <setTimer+0x34>)
  80018f2:	fb82 1203 	smull	r1, r2, r2, r3
@@ -2901,10 +2913,12 @@ void Pedestrian_setColor(int color){
  80018fc:	4907      	ldr	r1, [pc, #28]	; (800191c <setTimer+0x38>)
  80018fe:	687b      	ldr	r3, [r7, #4]
  8001900:	f841 2023 	str.w	r2, [r1, r3, lsl #2]
+	timerFlag[index] = 0;
  8001904:	4a06      	ldr	r2, [pc, #24]	; (8001920 <setTimer+0x3c>)
  8001906:	687b      	ldr	r3, [r7, #4]
  8001908:	2100      	movs	r1, #0
  800190a:	f842 1023 	str.w	r1, [r2, r3, lsl #2]
+}
  800190e:	bf00      	nop
  8001910:	370c      	adds	r7, #12
  8001912:	46bd      	mov	sp, r7
@@ -2915,17 +2929,22 @@ void Pedestrian_setColor(int color){
  8001920:	200001f4 	.word	0x200001f4
 
 08001924 <timerRun>:
+
+void timerRun(){
  8001924:	b480      	push	{r7}
  8001926:	b083      	sub	sp, #12
  8001928:	af00      	add	r7, sp, #0
+	for (int i = 0; i < NO_OF_COUNTERS; i++){
  800192a:	2300      	movs	r3, #0
  800192c:	607b      	str	r3, [r7, #4]
  800192e:	e01c      	b.n	800196a <timerRun+0x46>
+		if (counter[i] > 0){
  8001930:	4a12      	ldr	r2, [pc, #72]	; (800197c <timerRun+0x58>)
  8001932:	687b      	ldr	r3, [r7, #4]
  8001934:	f852 3023 	ldr.w	r3, [r2, r3, lsl #2]
  8001938:	2b00      	cmp	r3, #0
  800193a:	dd13      	ble.n	8001964 <timerRun+0x40>
+			counter[i]--;
  800193c:	4a0f      	ldr	r2, [pc, #60]	; (800197c <timerRun+0x58>)
  800193e:	687b      	ldr	r3, [r7, #4]
  8001940:	f852 3023 	ldr.w	r3, [r2, r3, lsl #2]
@@ -2933,21 +2952,28 @@ void Pedestrian_setColor(int color){
  8001946:	490d      	ldr	r1, [pc, #52]	; (800197c <timerRun+0x58>)
  8001948:	687b      	ldr	r3, [r7, #4]
  800194a:	f841 2023 	str.w	r2, [r1, r3, lsl #2]
+			if (counter[i] <= 0){
  800194e:	4a0b      	ldr	r2, [pc, #44]	; (800197c <timerRun+0x58>)
  8001950:	687b      	ldr	r3, [r7, #4]
  8001952:	f852 3023 	ldr.w	r3, [r2, r3, lsl #2]
  8001956:	2b00      	cmp	r3, #0
  8001958:	dc04      	bgt.n	8001964 <timerRun+0x40>
+				timerFlag[i] = 1;
  800195a:	4a09      	ldr	r2, [pc, #36]	; (8001980 <timerRun+0x5c>)
  800195c:	687b      	ldr	r3, [r7, #4]
  800195e:	2101      	movs	r1, #1
  8001960:	f842 1023 	str.w	r1, [r2, r3, lsl #2]
+	for (int i = 0; i < NO_OF_COUNTERS; i++){
  8001964:	687b      	ldr	r3, [r7, #4]
  8001966:	3301      	adds	r3, #1
  8001968:	607b      	str	r3, [r7, #4]
  800196a:	687b      	ldr	r3, [r7, #4]
  800196c:	2b05      	cmp	r3, #5
  800196e:	dddf      	ble.n	8001930 <timerRun+0xc>
+			}
+		}
+	}
+}
  8001970:	bf00      	nop
  8001972:	bf00      	nop
  8001974:	370c      	adds	r7, #12
@@ -2958,24 +2984,33 @@ void Pedestrian_setColor(int color){
  8001980:	200001f4 	.word	0x200001f4
 
 08001984 <timerRunSecond>:
+
+void timerRunSecond(){
  8001984:	b480      	push	{r7}
  8001986:	af00      	add	r7, sp, #0
+	if (counterSecond > 0){
  8001988:	4b09      	ldr	r3, [pc, #36]	; (80019b0 <timerRunSecond+0x2c>)
  800198a:	681b      	ldr	r3, [r3, #0]
  800198c:	2b00      	cmp	r3, #0
  800198e:	dd0b      	ble.n	80019a8 <timerRunSecond+0x24>
+		counterSecond--;
  8001990:	4b07      	ldr	r3, [pc, #28]	; (80019b0 <timerRunSecond+0x2c>)
  8001992:	681b      	ldr	r3, [r3, #0]
  8001994:	3b01      	subs	r3, #1
  8001996:	4a06      	ldr	r2, [pc, #24]	; (80019b0 <timerRunSecond+0x2c>)
  8001998:	6013      	str	r3, [r2, #0]
+		if (counterSecond <= 0){
  800199a:	4b05      	ldr	r3, [pc, #20]	; (80019b0 <timerRunSecond+0x2c>)
  800199c:	681b      	ldr	r3, [r3, #0]
  800199e:	2b00      	cmp	r3, #0
  80019a0:	dc02      	bgt.n	80019a8 <timerRunSecond+0x24>
+			timerSecond = 1;
  80019a2:	4b04      	ldr	r3, [pc, #16]	; (80019b4 <timerRunSecond+0x30>)
  80019a4:	2201      	movs	r2, #1
  80019a6:	601a      	str	r2, [r3, #0]
+		}
+	}
+}
  80019a8:	bf00      	nop
  80019aa:	46bd      	mov	sp, r7
  80019ac:	bc80      	pop	{r7}
@@ -2984,24 +3019,33 @@ void Pedestrian_setColor(int color){
  80019b4:	200001ec 	.word	0x200001ec
 
 080019b8 <timerRun7SEG>:
+
+void timerRun7SEG(){
  80019b8:	b480      	push	{r7}
  80019ba:	af00      	add	r7, sp, #0
+	if (counter7SEG > 0){
  80019bc:	4b09      	ldr	r3, [pc, #36]	; (80019e4 <timerRun7SEG+0x2c>)
  80019be:	681b      	ldr	r3, [r3, #0]
  80019c0:	2b00      	cmp	r3, #0
  80019c2:	dd0b      	ble.n	80019dc <timerRun7SEG+0x24>
+		counter7SEG--;
  80019c4:	4b07      	ldr	r3, [pc, #28]	; (80019e4 <timerRun7SEG+0x2c>)
  80019c6:	681b      	ldr	r3, [r3, #0]
  80019c8:	3b01      	subs	r3, #1
  80019ca:	4a06      	ldr	r2, [pc, #24]	; (80019e4 <timerRun7SEG+0x2c>)
  80019cc:	6013      	str	r3, [r2, #0]
+		if (counter7SEG <= 0){
  80019ce:	4b05      	ldr	r3, [pc, #20]	; (80019e4 <timerRun7SEG+0x2c>)
  80019d0:	681b      	ldr	r3, [r3, #0]
  80019d2:	2b00      	cmp	r3, #0
  80019d4:	dc02      	bgt.n	80019dc <timerRun7SEG+0x24>
+			timer7SEG = 1;
  80019d6:	4b04      	ldr	r3, [pc, #16]	; (80019e8 <timerRun7SEG+0x30>)
  80019d8:	2201      	movs	r2, #1
  80019da:	601a      	str	r2, [r3, #0]
+		}
+	}
+}
  80019dc:	bf00      	nop
  80019de:	46bd      	mov	sp, r7
  80019e0:	bc80      	pop	{r7}
