@@ -1,4 +1,4 @@
 handle_leds.c:11:6:blinkLEDs	16	static
-handle_leds.c:53:6:Traffic_setColor	16	static
-handle_leds.c:100:6:Pedestrian_setColor	16	static
-handle_leds.c:120:6:updateBuffer	4	static
+handle_leds.c:54:6:Traffic_setColor	16	static
+handle_leds.c:101:6:Pedestrian_setColor	16	static
+handle_leds.c:121:6:updateBuffer	4	static
