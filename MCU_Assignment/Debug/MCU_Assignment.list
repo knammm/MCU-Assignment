@@ -37,13 +37,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  16 .debug_macro  000198dc  00000000  00000000  0003ca98  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   0001265d  00000000  00000000  00056374  2**0
+ 17 .debug_line   000126cc  00000000  00000000  00056374  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    0008b4cd  00000000  00000000  000689d1  2**0
+ 18 .debug_str    0008b4cd  00000000  00000000  00068a40  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000053  00000000  00000000  000f3e9e  2**0
+ 19 .comment      00000053  00000000  00000000  000f3f0d  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00003a70  00000000  00000000  000f3ef4  2**2
+ 20 .debug_frame  00003a70  00000000  00000000  000f3f60  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -77,17 +77,9 @@ Disassembly of section .text:
  8000148:	080050fc 	.word	0x080050fc
 
 0800014c <fsm_automatic_run>:
- *      Author: olkmphy
- */
-
-#include "fsm_automatic.h"
-
-void fsm_automatic_run(){
  800014c:	b580      	push	{r7, lr}
  800014e:	b08e      	sub	sp, #56	; 0x38
  8000150:	af00      	add	r7, sp, #0
-	char str[50];
-	switch(status){
  8000152:	4bb6      	ldr	r3, [pc, #728]	; (800042c <fsm_automatic_run+0x2e0>)
  8000154:	681b      	ldr	r3, [r3, #0]
  8000156:	3b01      	subs	r3, #1
@@ -119,47 +111,33 @@ void fsm_automatic_run(){
  80001b8:	0800029b 	.word	0x0800029b
  80001bc:	08000371 	.word	0x08000371
  80001c0:	0800045d 	.word	0x0800045d
-	case INIT:
-		//TODO
-		status = RED_GREEN;
  80001c4:	4b99      	ldr	r3, [pc, #612]	; (800042c <fsm_automatic_run+0x2e0>)
  80001c6:	2215      	movs	r2, #21
  80001c8:	601a      	str	r2, [r3, #0]
-		setTimer(0, durationGREEN);
  80001ca:	4b99      	ldr	r3, [pc, #612]	; (8000430 <fsm_automatic_run+0x2e4>)
  80001cc:	681b      	ldr	r3, [r3, #0]
  80001ce:	4619      	mov	r1, r3
  80001d0:	2000      	movs	r0, #0
  80001d2:	f001 fb87 	bl	80018e4 <setTimer>
-		setTimerSecond(1000);
  80001d6:	f44f 707a 	mov.w	r0, #1000	; 0x3e8
  80001da:	f001 fb67 	bl	80018ac <setTimerSecond>
-		break;
  80001de:	e1b0      	b.n	8000542 <fsm_automatic_run+0x3f6>
-	case RED_GREEN:
-		//TODO
-		Traffic_setColor(1, OFF_LED);
  80001e0:	2105      	movs	r1, #5
  80001e2:	2001      	movs	r0, #1
  80001e4:	f000 fdba 	bl	8000d5c <Traffic_setColor>
-		Traffic_setColor(2, OFF_LED);
  80001e8:	2105      	movs	r1, #5
  80001ea:	2002      	movs	r0, #2
  80001ec:	f000 fdb6 	bl	8000d5c <Traffic_setColor>
-		Traffic_setColor(1, AUTO_RED);
  80001f0:	2102      	movs	r1, #2
  80001f2:	2001      	movs	r0, #1
  80001f4:	f000 fdb2 	bl	8000d5c <Traffic_setColor>
-		Traffic_setColor(2, AUTO_GREEN);
  80001f8:	2103      	movs	r1, #3
  80001fa:	2002      	movs	r0, #2
  80001fc:	f000 fdae 	bl	8000d5c <Traffic_setColor>
-		if (timerSecond == 1){
  8000200:	4b8c      	ldr	r3, [pc, #560]	; (8000434 <fsm_automatic_run+0x2e8>)
  8000202:	681b      	ldr	r3, [r3, #0]
  8000204:	2b01      	cmp	r3, #1
  8000206:	d139      	bne.n	800027c <fsm_automatic_run+0x130>
-			HAL_UART_Transmit(&huart2, (void *)str, sprintf(str, "\r\n!7SEG1: %d#\r\n",timerTraffic1), 500);
  8000208:	4b8b      	ldr	r3, [pc, #556]	; (8000438 <fsm_automatic_run+0x2ec>)
  800020a:	681a      	ldr	r2, [r3, #0]
  800020c:	1d3b      	adds	r3, r7, #4
@@ -172,7 +150,6 @@ void fsm_automatic_run(){
  800021c:	f44f 73fa 	mov.w	r3, #500	; 0x1f4
  8000220:	4887      	ldr	r0, [pc, #540]	; (8000440 <fsm_automatic_run+0x2f4>)
  8000222:	f003 fd2b 	bl	8003c7c <HAL_UART_Transmit>
-			HAL_UART_Transmit(&huart2, (void *)str, sprintf(str, "\r\n!7SEG2: %d#\r\n\n\n",timerTraffic2), 500);
  8000226:	4b87      	ldr	r3, [pc, #540]	; (8000444 <fsm_automatic_run+0x2f8>)
  8000228:	681a      	ldr	r2, [r3, #0]
  800022a:	1d3b      	adds	r3, r7, #4
@@ -185,22 +162,18 @@ void fsm_automatic_run(){
  800023a:	f44f 73fa 	mov.w	r3, #500	; 0x1f4
  800023e:	4880      	ldr	r0, [pc, #512]	; (8000440 <fsm_automatic_run+0x2f4>)
  8000240:	f003 fd1c 	bl	8003c7c <HAL_UART_Transmit>
-			setTimerSecond(1000);
  8000244:	f44f 707a 	mov.w	r0, #1000	; 0x3e8
  8000248:	f001 fb30 	bl	80018ac <setTimerSecond>
-			timerTraffic1--;
  800024c:	4b7a      	ldr	r3, [pc, #488]	; (8000438 <fsm_automatic_run+0x2ec>)
  800024e:	681b      	ldr	r3, [r3, #0]
  8000250:	3b01      	subs	r3, #1
  8000252:	4a79      	ldr	r2, [pc, #484]	; (8000438 <fsm_automatic_run+0x2ec>)
  8000254:	6013      	str	r3, [r2, #0]
-			timerTraffic2--;
  8000256:	4b7b      	ldr	r3, [pc, #492]	; (8000444 <fsm_automatic_run+0x2f8>)
  8000258:	681b      	ldr	r3, [r3, #0]
  800025a:	3b01      	subs	r3, #1
  800025c:	4a79      	ldr	r2, [pc, #484]	; (8000444 <fsm_automatic_run+0x2f8>)
  800025e:	6013      	str	r3, [r2, #0]
-			if (timerTraffic2 <= 0) timerTraffic2 = durationYELLOW / 1000;
  8000260:	4b78      	ldr	r3, [pc, #480]	; (8000444 <fsm_automatic_run+0x2f8>)
  8000262:	681b      	ldr	r3, [r3, #0]
  8000264:	2b00      	cmp	r3, #0
@@ -214,50 +187,35 @@ void fsm_automatic_run(){
  8000276:	1ad3      	subs	r3, r2, r3
  8000278:	4a72      	ldr	r2, [pc, #456]	; (8000444 <fsm_automatic_run+0x2f8>)
  800027a:	6013      	str	r3, [r2, #0]
-		}
-		// State update
-		if (timerFlag[0] == 1){
  800027c:	4b75      	ldr	r3, [pc, #468]	; (8000454 <fsm_automatic_run+0x308>)
  800027e:	681b      	ldr	r3, [r3, #0]
  8000280:	2b01      	cmp	r3, #1
  8000282:	f040 8157 	bne.w	8000534 <fsm_automatic_run+0x3e8>
-			setTimer(0, durationYELLOW);
  8000286:	4b71      	ldr	r3, [pc, #452]	; (800044c <fsm_automatic_run+0x300>)
  8000288:	681b      	ldr	r3, [r3, #0]
  800028a:	4619      	mov	r1, r3
  800028c:	2000      	movs	r0, #0
  800028e:	f001 fb29 	bl	80018e4 <setTimer>
-			status = RED_YELLOW;
  8000292:	4b66      	ldr	r3, [pc, #408]	; (800042c <fsm_automatic_run+0x2e0>)
  8000294:	2216      	movs	r2, #22
  8000296:	601a      	str	r2, [r3, #0]
-		}
-		break;
  8000298:	e14c      	b.n	8000534 <fsm_automatic_run+0x3e8>
-	case RED_YELLOW:
-		//TODO
-		Traffic_setColor(1, OFF_LED);
  800029a:	2105      	movs	r1, #5
  800029c:	2001      	movs	r0, #1
  800029e:	f000 fd5d 	bl	8000d5c <Traffic_setColor>
-		Traffic_setColor(2, OFF_LED);
  80002a2:	2105      	movs	r1, #5
  80002a4:	2002      	movs	r0, #2
  80002a6:	f000 fd59 	bl	8000d5c <Traffic_setColor>
-		Traffic_setColor(1, AUTO_RED);
  80002aa:	2102      	movs	r1, #2
  80002ac:	2001      	movs	r0, #1
  80002ae:	f000 fd55 	bl	8000d5c <Traffic_setColor>
-		Traffic_setColor(2, AUTO_YELLOW);
  80002b2:	2104      	movs	r1, #4
  80002b4:	2002      	movs	r0, #2
  80002b6:	f000 fd51 	bl	8000d5c <Traffic_setColor>
-		if (timerSecond == 1){
  80002ba:	4b5e      	ldr	r3, [pc, #376]	; (8000434 <fsm_automatic_run+0x2e8>)
  80002bc:	681b      	ldr	r3, [r3, #0]
  80002be:	2b01      	cmp	r3, #1
  80002c0:	d147      	bne.n	8000352 <fsm_automatic_run+0x206>
-			HAL_UART_Transmit(&huart2, (void *)str, sprintf(str, "\r\n!7SEG1: %d#\r\n",timerTraffic1), 500);
  80002c2:	4b5d      	ldr	r3, [pc, #372]	; (8000438 <fsm_automatic_run+0x2ec>)
  80002c4:	681a      	ldr	r2, [r3, #0]
  80002c6:	1d3b      	adds	r3, r7, #4
@@ -270,7 +228,6 @@ void fsm_automatic_run(){
  80002d6:	f44f 73fa 	mov.w	r3, #500	; 0x1f4
  80002da:	4859      	ldr	r0, [pc, #356]	; (8000440 <fsm_automatic_run+0x2f4>)
  80002dc:	f003 fcce 	bl	8003c7c <HAL_UART_Transmit>
-			HAL_UART_Transmit(&huart2, (void *)str, sprintf(str, "\r\n!7SEG2: %d#\r\n\n\n",timerTraffic2), 500);
  80002e0:	4b58      	ldr	r3, [pc, #352]	; (8000444 <fsm_automatic_run+0x2f8>)
  80002e2:	681a      	ldr	r2, [r3, #0]
  80002e4:	1d3b      	adds	r3, r7, #4
@@ -283,16 +240,13 @@ void fsm_automatic_run(){
  80002f4:	f44f 73fa 	mov.w	r3, #500	; 0x1f4
  80002f8:	4851      	ldr	r0, [pc, #324]	; (8000440 <fsm_automatic_run+0x2f4>)
  80002fa:	f003 fcbf 	bl	8003c7c <HAL_UART_Transmit>
-			setTimerSecond(1000);
  80002fe:	f44f 707a 	mov.w	r0, #1000	; 0x3e8
  8000302:	f001 fad3 	bl	80018ac <setTimerSecond>
-			timerTraffic1--;
  8000306:	4b4c      	ldr	r3, [pc, #304]	; (8000438 <fsm_automatic_run+0x2ec>)
  8000308:	681b      	ldr	r3, [r3, #0]
  800030a:	3b01      	subs	r3, #1
  800030c:	4a4a      	ldr	r2, [pc, #296]	; (8000438 <fsm_automatic_run+0x2ec>)
  800030e:	6013      	str	r3, [r2, #0]
-			if (timerTraffic1 <= 0) timerTraffic1 = durationGREEN / 1000;
  8000310:	4b49      	ldr	r3, [pc, #292]	; (8000438 <fsm_automatic_run+0x2ec>)
  8000312:	681b      	ldr	r3, [r3, #0]
  8000314:	2b00      	cmp	r3, #0
@@ -306,13 +260,11 @@ void fsm_automatic_run(){
  8000326:	1ad3      	subs	r3, r2, r3
  8000328:	4a43      	ldr	r2, [pc, #268]	; (8000438 <fsm_automatic_run+0x2ec>)
  800032a:	6013      	str	r3, [r2, #0]
-			timerTraffic2--;
  800032c:	4b45      	ldr	r3, [pc, #276]	; (8000444 <fsm_automatic_run+0x2f8>)
  800032e:	681b      	ldr	r3, [r3, #0]
  8000330:	3b01      	subs	r3, #1
  8000332:	4a44      	ldr	r2, [pc, #272]	; (8000444 <fsm_automatic_run+0x2f8>)
  8000334:	6013      	str	r3, [r2, #0]
-			if (timerTraffic2 <= 0) timerTraffic2 = durationRED / 1000;
  8000336:	4b43      	ldr	r3, [pc, #268]	; (8000444 <fsm_automatic_run+0x2f8>)
  8000338:	681b      	ldr	r3, [r3, #0]
  800033a:	2b00      	cmp	r3, #0
@@ -326,49 +278,35 @@ void fsm_automatic_run(){
  800034c:	1ad3      	subs	r3, r2, r3
  800034e:	4a3d      	ldr	r2, [pc, #244]	; (8000444 <fsm_automatic_run+0x2f8>)
  8000350:	6013      	str	r3, [r2, #0]
-		}
-		// State update
-		if(timerFlag[0] == 1){
  8000352:	4b40      	ldr	r3, [pc, #256]	; (8000454 <fsm_automatic_run+0x308>)
  8000354:	681b      	ldr	r3, [r3, #0]
  8000356:	2b01      	cmp	r3, #1
  8000358:	f040 80ee 	bne.w	8000538 <fsm_automatic_run+0x3ec>
-			setTimer(0, durationGREEN);
  800035c:	4b34      	ldr	r3, [pc, #208]	; (8000430 <fsm_automatic_run+0x2e4>)
  800035e:	681b      	ldr	r3, [r3, #0]
  8000360:	4619      	mov	r1, r3
  8000362:	2000      	movs	r0, #0
  8000364:	f001 fabe 	bl	80018e4 <setTimer>
-			status = GREEN_RED;
  8000368:	4b30      	ldr	r3, [pc, #192]	; (800042c <fsm_automatic_run+0x2e0>)
  800036a:	2217      	movs	r2, #23
  800036c:	601a      	str	r2, [r3, #0]
-		}
-		break;
  800036e:	e0e3      	b.n	8000538 <fsm_automatic_run+0x3ec>
-	case GREEN_RED:
-		Traffic_setColor(1, OFF_LED);
  8000370:	2105      	movs	r1, #5
  8000372:	2001      	movs	r0, #1
  8000374:	f000 fcf2 	bl	8000d5c <Traffic_setColor>
-		Traffic_setColor(2, OFF_LED);
  8000378:	2105      	movs	r1, #5
  800037a:	2002      	movs	r0, #2
  800037c:	f000 fcee 	bl	8000d5c <Traffic_setColor>
-		Traffic_setColor(1, AUTO_GREEN);
  8000380:	2103      	movs	r1, #3
  8000382:	2001      	movs	r0, #1
  8000384:	f000 fcea 	bl	8000d5c <Traffic_setColor>
-		Traffic_setColor(2, AUTO_RED);
  8000388:	2102      	movs	r1, #2
  800038a:	2002      	movs	r0, #2
  800038c:	f000 fce6 	bl	8000d5c <Traffic_setColor>
-		if (timerSecond == 1){
  8000390:	4b28      	ldr	r3, [pc, #160]	; (8000434 <fsm_automatic_run+0x2e8>)
  8000392:	681b      	ldr	r3, [r3, #0]
  8000394:	2b01      	cmp	r3, #1
  8000396:	d139      	bne.n	800040c <fsm_automatic_run+0x2c0>
-			HAL_UART_Transmit(&huart2, (void *)str, sprintf(str, "\r\n!7SEG1: %d#\r\n",timerTraffic1), 500);
  8000398:	4b27      	ldr	r3, [pc, #156]	; (8000438 <fsm_automatic_run+0x2ec>)
  800039a:	681a      	ldr	r2, [r3, #0]
  800039c:	1d3b      	adds	r3, r7, #4
@@ -381,7 +319,6 @@ void fsm_automatic_run(){
  80003ac:	f44f 73fa 	mov.w	r3, #500	; 0x1f4
  80003b0:	4823      	ldr	r0, [pc, #140]	; (8000440 <fsm_automatic_run+0x2f4>)
  80003b2:	f003 fc63 	bl	8003c7c <HAL_UART_Transmit>
-			HAL_UART_Transmit(&huart2, (void *)str, sprintf(str, "\r\n!7SEG2: %d#\r\n\n\n",timerTraffic2), 500);
  80003b6:	4b23      	ldr	r3, [pc, #140]	; (8000444 <fsm_automatic_run+0x2f8>)
  80003b8:	681a      	ldr	r2, [r3, #0]
  80003ba:	1d3b      	adds	r3, r7, #4
@@ -394,16 +331,13 @@ void fsm_automatic_run(){
  80003ca:	f44f 73fa 	mov.w	r3, #500	; 0x1f4
  80003ce:	481c      	ldr	r0, [pc, #112]	; (8000440 <fsm_automatic_run+0x2f4>)
  80003d0:	f003 fc54 	bl	8003c7c <HAL_UART_Transmit>
-			setTimerSecond(1000);
  80003d4:	f44f 707a 	mov.w	r0, #1000	; 0x3e8
  80003d8:	f001 fa68 	bl	80018ac <setTimerSecond>
-			timerTraffic1--;
  80003dc:	4b16      	ldr	r3, [pc, #88]	; (8000438 <fsm_automatic_run+0x2ec>)
  80003de:	681b      	ldr	r3, [r3, #0]
  80003e0:	3b01      	subs	r3, #1
  80003e2:	4a15      	ldr	r2, [pc, #84]	; (8000438 <fsm_automatic_run+0x2ec>)
  80003e4:	6013      	str	r3, [r2, #0]
-			if (timerTraffic1 <= 0) timerTraffic1 = durationYELLOW / 1000;
  80003e6:	4b14      	ldr	r3, [pc, #80]	; (8000438 <fsm_automatic_run+0x2ec>)
  80003e8:	681b      	ldr	r3, [r3, #0]
  80003ea:	2b00      	cmp	r3, #0
@@ -417,31 +351,23 @@ void fsm_automatic_run(){
  80003fc:	1ad3      	subs	r3, r2, r3
  80003fe:	4a0e      	ldr	r2, [pc, #56]	; (8000438 <fsm_automatic_run+0x2ec>)
  8000400:	6013      	str	r3, [r2, #0]
-			timerTraffic2--;
  8000402:	4b10      	ldr	r3, [pc, #64]	; (8000444 <fsm_automatic_run+0x2f8>)
  8000404:	681b      	ldr	r3, [r3, #0]
  8000406:	3b01      	subs	r3, #1
  8000408:	4a0e      	ldr	r2, [pc, #56]	; (8000444 <fsm_automatic_run+0x2f8>)
  800040a:	6013      	str	r3, [r2, #0]
-		}
-		// State update
-		if(timerFlag[0] == 1){
  800040c:	4b11      	ldr	r3, [pc, #68]	; (8000454 <fsm_automatic_run+0x308>)
  800040e:	681b      	ldr	r3, [r3, #0]
  8000410:	2b01      	cmp	r3, #1
  8000412:	f040 8093 	bne.w	800053c <fsm_automatic_run+0x3f0>
-			setTimer(0, durationYELLOW);
  8000416:	4b0d      	ldr	r3, [pc, #52]	; (800044c <fsm_automatic_run+0x300>)
  8000418:	681b      	ldr	r3, [r3, #0]
  800041a:	4619      	mov	r1, r3
  800041c:	2000      	movs	r0, #0
  800041e:	f001 fa61 	bl	80018e4 <setTimer>
-			status = YELLOW_RED;
  8000422:	4b02      	ldr	r3, [pc, #8]	; (800042c <fsm_automatic_run+0x2e0>)
  8000424:	2218      	movs	r2, #24
  8000426:	601a      	str	r2, [r3, #0]
-		}
-		break;
  8000428:	e088      	b.n	800053c <fsm_automatic_run+0x3f0>
  800042a:	bf00      	nop
  800042c:	20000018 	.word	0x20000018
@@ -456,29 +382,22 @@ void fsm_automatic_run(){
  8000450:	10624dd3 	.word	0x10624dd3
  8000454:	200001f4 	.word	0x200001f4
  8000458:	2000001c 	.word	0x2000001c
-	case YELLOW_RED:
-		Traffic_setColor(1, OFF_LED);
  800045c:	2105      	movs	r1, #5
  800045e:	2001      	movs	r0, #1
  8000460:	f000 fc7c 	bl	8000d5c <Traffic_setColor>
-		Traffic_setColor(2, OFF_LED);
  8000464:	2105      	movs	r1, #5
  8000466:	2002      	movs	r0, #2
  8000468:	f000 fc78 	bl	8000d5c <Traffic_setColor>
-		Traffic_setColor(1, AUTO_YELLOW);
  800046c:	2104      	movs	r1, #4
  800046e:	2001      	movs	r0, #1
  8000470:	f000 fc74 	bl	8000d5c <Traffic_setColor>
-		Traffic_setColor(2, AUTO_RED);
  8000474:	2102      	movs	r1, #2
  8000476:	2002      	movs	r0, #2
  8000478:	f000 fc70 	bl	8000d5c <Traffic_setColor>
-		if (timerSecond == 1){
  800047c:	4b68      	ldr	r3, [pc, #416]	; (8000620 <fsm_automatic_run+0x4d4>)
  800047e:	681b      	ldr	r3, [r3, #0]
  8000480:	2b01      	cmp	r3, #1
  8000482:	d147      	bne.n	8000514 <fsm_automatic_run+0x3c8>
-			HAL_UART_Transmit(&huart2, (void *)str, sprintf(str, "\r\n!7SEG1: %d#\r\n",timerTraffic1), 500);
  8000484:	4b67      	ldr	r3, [pc, #412]	; (8000624 <fsm_automatic_run+0x4d8>)
  8000486:	681a      	ldr	r2, [r3, #0]
  8000488:	1d3b      	adds	r3, r7, #4
@@ -491,7 +410,6 @@ void fsm_automatic_run(){
  8000498:	f44f 73fa 	mov.w	r3, #500	; 0x1f4
  800049c:	4863      	ldr	r0, [pc, #396]	; (800062c <fsm_automatic_run+0x4e0>)
  800049e:	f003 fbed 	bl	8003c7c <HAL_UART_Transmit>
-			HAL_UART_Transmit(&huart2, (void *)str, sprintf(str, "\r\n!7SEG2: %d#\r\n\n\n",timerTraffic2), 500);
  80004a2:	4b63      	ldr	r3, [pc, #396]	; (8000630 <fsm_automatic_run+0x4e4>)
  80004a4:	681a      	ldr	r2, [r3, #0]
  80004a6:	1d3b      	adds	r3, r7, #4
@@ -504,16 +422,13 @@ void fsm_automatic_run(){
  80004b6:	f44f 73fa 	mov.w	r3, #500	; 0x1f4
  80004ba:	485c      	ldr	r0, [pc, #368]	; (800062c <fsm_automatic_run+0x4e0>)
  80004bc:	f003 fbde 	bl	8003c7c <HAL_UART_Transmit>
-			setTimerSecond(1000);
  80004c0:	f44f 707a 	mov.w	r0, #1000	; 0x3e8
  80004c4:	f001 f9f2 	bl	80018ac <setTimerSecond>
-			timerTraffic1--;
  80004c8:	4b56      	ldr	r3, [pc, #344]	; (8000624 <fsm_automatic_run+0x4d8>)
  80004ca:	681b      	ldr	r3, [r3, #0]
  80004cc:	3b01      	subs	r3, #1
  80004ce:	4a55      	ldr	r2, [pc, #340]	; (8000624 <fsm_automatic_run+0x4d8>)
  80004d0:	6013      	str	r3, [r2, #0]
-			if (timerTraffic1 <= 0) timerTraffic1 = durationRED / 1000;
  80004d2:	4b54      	ldr	r3, [pc, #336]	; (8000624 <fsm_automatic_run+0x4d8>)
  80004d4:	681b      	ldr	r3, [r3, #0]
  80004d6:	2b00      	cmp	r3, #0
@@ -527,13 +442,11 @@ void fsm_automatic_run(){
  80004e8:	1ad3      	subs	r3, r2, r3
  80004ea:	4a4e      	ldr	r2, [pc, #312]	; (8000624 <fsm_automatic_run+0x4d8>)
  80004ec:	6013      	str	r3, [r2, #0]
-			timerTraffic2--;
  80004ee:	4b50      	ldr	r3, [pc, #320]	; (8000630 <fsm_automatic_run+0x4e4>)
  80004f0:	681b      	ldr	r3, [r3, #0]
  80004f2:	3b01      	subs	r3, #1
  80004f4:	4a4e      	ldr	r2, [pc, #312]	; (8000630 <fsm_automatic_run+0x4e4>)
  80004f6:	6013      	str	r3, [r2, #0]
-			if (timerTraffic2 <= 0) timerTraffic2 = durationGREEN / 1000;
  80004f8:	4b4d      	ldr	r3, [pc, #308]	; (8000630 <fsm_automatic_run+0x4e4>)
  80004fa:	681b      	ldr	r3, [r3, #0]
  80004fc:	2b00      	cmp	r3, #0
@@ -547,50 +460,33 @@ void fsm_automatic_run(){
  800050e:	1ad3      	subs	r3, r2, r3
  8000510:	4a47      	ldr	r2, [pc, #284]	; (8000630 <fsm_automatic_run+0x4e4>)
  8000512:	6013      	str	r3, [r2, #0]
-		}
-		// State update
-		if (timerFlag[0] == 1){
  8000514:	4b4b      	ldr	r3, [pc, #300]	; (8000644 <fsm_automatic_run+0x4f8>)
  8000516:	681b      	ldr	r3, [r3, #0]
  8000518:	2b01      	cmp	r3, #1
  800051a:	d111      	bne.n	8000540 <fsm_automatic_run+0x3f4>
-			setTimer(0, durationGREEN);
  800051c:	4b48      	ldr	r3, [pc, #288]	; (8000640 <fsm_automatic_run+0x4f4>)
  800051e:	681b      	ldr	r3, [r3, #0]
  8000520:	4619      	mov	r1, r3
  8000522:	2000      	movs	r0, #0
  8000524:	f001 f9de 	bl	80018e4 <setTimer>
-			status = RED_GREEN;
  8000528:	4b47      	ldr	r3, [pc, #284]	; (8000648 <fsm_automatic_run+0x4fc>)
  800052a:	2215      	movs	r2, #21
  800052c:	601a      	str	r2, [r3, #0]
-		}
-		break;
  800052e:	e007      	b.n	8000540 <fsm_automatic_run+0x3f4>
-	default:
-		break;
  8000530:	bf00      	nop
  8000532:	e006      	b.n	8000542 <fsm_automatic_run+0x3f6>
-		break;
  8000534:	bf00      	nop
  8000536:	e004      	b.n	8000542 <fsm_automatic_run+0x3f6>
-		break;
  8000538:	bf00      	nop
  800053a:	e002      	b.n	8000542 <fsm_automatic_run+0x3f6>
-		break;
  800053c:	bf00      	nop
  800053e:	e000      	b.n	8000542 <fsm_automatic_run+0x3f6>
-		break;
  8000540:	bf00      	nop
-	}
-	// MODE BUTTON
-	if(isButtonPressed(1) == 1){
  8000542:	2001      	movs	r0, #1
  8000544:	f000 fd6c 	bl	8001020 <isButtonPressed>
  8000548:	4603      	mov	r3, r0
  800054a:	2b01      	cmp	r3, #1
  800054c:	d14d      	bne.n	80005ea <fsm_automatic_run+0x49e>
-		if(status == RED_GREEN || status == RED_YELLOW || status == GREEN_RED || status == YELLOW_RED){
  800054e:	4b3e      	ldr	r3, [pc, #248]	; (8000648 <fsm_automatic_run+0x4fc>)
  8000550:	681b      	ldr	r3, [r3, #0]
  8000552:	2b15      	cmp	r3, #21
@@ -607,27 +503,21 @@ void fsm_automatic_run(){
  8000568:	681b      	ldr	r3, [r3, #0]
  800056a:	2b18      	cmp	r3, #24
  800056c:	d139      	bne.n	80005e2 <fsm_automatic_run+0x496>
-			status = MOD_RED;
  800056e:	4b36      	ldr	r3, [pc, #216]	; (8000648 <fsm_automatic_run+0x4fc>)
  8000570:	220b      	movs	r2, #11
  8000572:	601a      	str	r2, [r3, #0]
-			setTimer(1, 10); // timer for blinky
  8000574:	210a      	movs	r1, #10
  8000576:	2001      	movs	r0, #1
  8000578:	f001 f9b4 	bl	80018e4 <setTimer>
-			setTimer(5, 5000);
  800057c:	f241 3188 	movw	r1, #5000	; 0x1388
  8000580:	2005      	movs	r0, #5
  8000582:	f001 f9af 	bl	80018e4 <setTimer>
-			Traffic_setColor(1, AUTO_RED);
  8000586:	2102      	movs	r1, #2
  8000588:	2001      	movs	r0, #1
  800058a:	f000 fbe7 	bl	8000d5c <Traffic_setColor>
-			Traffic_setColor(2, AUTO_RED);
  800058e:	2102      	movs	r1, #2
  8000590:	2002      	movs	r0, #2
  8000592:	f000 fbe3 	bl	8000d5c <Traffic_setColor>
-			RED_sec = durationRED / 1000;
  8000596:	4b28      	ldr	r3, [pc, #160]	; (8000638 <fsm_automatic_run+0x4ec>)
  8000598:	681b      	ldr	r3, [r3, #0]
  800059a:	4a28      	ldr	r2, [pc, #160]	; (800063c <fsm_automatic_run+0x4f0>)
@@ -637,7 +527,6 @@ void fsm_automatic_run(){
  80005a4:	1ad3      	subs	r3, r2, r3
  80005a6:	4a29      	ldr	r2, [pc, #164]	; (800064c <fsm_automatic_run+0x500>)
  80005a8:	6013      	str	r3, [r2, #0]
-			YELLOW_sec = durationYELLOW / 1000;
  80005aa:	4b29      	ldr	r3, [pc, #164]	; (8000650 <fsm_automatic_run+0x504>)
  80005ac:	681b      	ldr	r3, [r3, #0]
  80005ae:	4a23      	ldr	r2, [pc, #140]	; (800063c <fsm_automatic_run+0x4f0>)
@@ -647,7 +536,6 @@ void fsm_automatic_run(){
  80005b8:	1ad3      	subs	r3, r2, r3
  80005ba:	4a26      	ldr	r2, [pc, #152]	; (8000654 <fsm_automatic_run+0x508>)
  80005bc:	6013      	str	r3, [r2, #0]
-			GREEN_sec = durationGREEN / 1000;
  80005be:	4b20      	ldr	r3, [pc, #128]	; (8000640 <fsm_automatic_run+0x4f4>)
  80005c0:	681b      	ldr	r3, [r3, #0]
  80005c2:	4a1e      	ldr	r2, [pc, #120]	; (800063c <fsm_automatic_run+0x4f0>)
@@ -657,50 +545,34 @@ void fsm_automatic_run(){
  80005cc:	1ad3      	subs	r3, r2, r3
  80005ce:	4a22      	ldr	r2, [pc, #136]	; (8000658 <fsm_automatic_run+0x50c>)
  80005d0:	6013      	str	r3, [r2, #0]
-			timerTraffic1 = RED_sec;
  80005d2:	4b1e      	ldr	r3, [pc, #120]	; (800064c <fsm_automatic_run+0x500>)
  80005d4:	681b      	ldr	r3, [r3, #0]
  80005d6:	4a13      	ldr	r2, [pc, #76]	; (8000624 <fsm_automatic_run+0x4d8>)
  80005d8:	6013      	str	r3, [r2, #0]
-			timerTraffic2 = 2;
  80005da:	4b15      	ldr	r3, [pc, #84]	; (8000630 <fsm_automatic_run+0x4e4>)
  80005dc:	2202      	movs	r2, #2
  80005de:	601a      	str	r2, [r3, #0]
-		setTimer(2, 10000); // 10 secs
-		setTimer(3, 100);
-		setTimer(4, 100);
-	}
-
-}
  80005e0:	e019      	b.n	8000616 <fsm_automatic_run+0x4ca>
-		else setBackButtonFlag(1);
  80005e2:	2001      	movs	r0, #1
  80005e4:	f000 fd3e 	bl	8001064 <setBackButtonFlag>
-}
  80005e8:	e015      	b.n	8000616 <fsm_automatic_run+0x4ca>
-	else if(isButtonPressed(0) == 1){
  80005ea:	2000      	movs	r0, #0
  80005ec:	f000 fd18 	bl	8001020 <isButtonPressed>
  80005f0:	4603      	mov	r3, r0
  80005f2:	2b01      	cmp	r3, #1
  80005f4:	d10f      	bne.n	8000616 <fsm_automatic_run+0x4ca>
-		pedestrianFlag = 1;
  80005f6:	4b19      	ldr	r3, [pc, #100]	; (800065c <fsm_automatic_run+0x510>)
  80005f8:	2201      	movs	r2, #1
  80005fa:	601a      	str	r2, [r3, #0]
-		setTimer(2, 10000); // 10 secs
  80005fc:	f242 7110 	movw	r1, #10000	; 0x2710
  8000600:	2002      	movs	r0, #2
  8000602:	f001 f96f 	bl	80018e4 <setTimer>
-		setTimer(3, 100);
  8000606:	2164      	movs	r1, #100	; 0x64
  8000608:	2003      	movs	r0, #3
  800060a:	f001 f96b 	bl	80018e4 <setTimer>
-		setTimer(4, 100);
  800060e:	2164      	movs	r1, #100	; 0x64
  8000610:	2004      	movs	r0, #4
  8000612:	f001 f967 	bl	80018e4 <setTimer>
-}
  8000616:	bf00      	nop
  8000618:	3738      	adds	r7, #56	; 0x38
  800061a:	46bd      	mov	sp, r7
@@ -724,15 +596,8 @@ void fsm_automatic_run(){
  800065c:	200000d0 	.word	0x200000d0
 
 08000660 <returnAutomatic>:
- *      Author: olkmphy
- */
-#include "fsm_manual.h"
-
-// Return to Automatic
-void returnAutomatic(){
  8000660:	b580      	push	{r7, lr}
  8000662:	af00      	add	r7, sp, #0
-	durationGREEN = durationRED - durationYELLOW;
  8000664:	4b14      	ldr	r3, [pc, #80]	; (80006b8 <returnAutomatic+0x58>)
  8000666:	681a      	ldr	r2, [r3, #0]
  8000668:	4b14      	ldr	r3, [pc, #80]	; (80006bc <returnAutomatic+0x5c>)
@@ -740,7 +605,6 @@ void returnAutomatic(){
  800066c:	1ad3      	subs	r3, r2, r3
  800066e:	4a14      	ldr	r2, [pc, #80]	; (80006c0 <returnAutomatic+0x60>)
  8000670:	6013      	str	r3, [r2, #0]
-	timerTraffic1 = durationRED / 1000;
  8000672:	4b11      	ldr	r3, [pc, #68]	; (80006b8 <returnAutomatic+0x58>)
  8000674:	681b      	ldr	r3, [r3, #0]
  8000676:	4a13      	ldr	r2, [pc, #76]	; (80006c4 <returnAutomatic+0x64>)
@@ -750,7 +614,6 @@ void returnAutomatic(){
  8000680:	1ad3      	subs	r3, r2, r3
  8000682:	4a11      	ldr	r2, [pc, #68]	; (80006c8 <returnAutomatic+0x68>)
  8000684:	6013      	str	r3, [r2, #0]
-	timerTraffic2 = durationGREEN / 1000;
  8000686:	4b0e      	ldr	r3, [pc, #56]	; (80006c0 <returnAutomatic+0x60>)
  8000688:	681b      	ldr	r3, [r3, #0]
  800068a:	4a0e      	ldr	r2, [pc, #56]	; (80006c4 <returnAutomatic+0x64>)
@@ -760,20 +623,16 @@ void returnAutomatic(){
  8000694:	1ad3      	subs	r3, r2, r3
  8000696:	4a0d      	ldr	r2, [pc, #52]	; (80006cc <returnAutomatic+0x6c>)
  8000698:	6013      	str	r3, [r2, #0]
-	setTimer(0, durationGREEN);
  800069a:	4b09      	ldr	r3, [pc, #36]	; (80006c0 <returnAutomatic+0x60>)
  800069c:	681b      	ldr	r3, [r3, #0]
  800069e:	4619      	mov	r1, r3
  80006a0:	2000      	movs	r0, #0
  80006a2:	f001 f91f 	bl	80018e4 <setTimer>
-	setTimerSecond(1000);
  80006a6:	f44f 707a 	mov.w	r0, #1000	; 0x3e8
  80006aa:	f001 f8ff 	bl	80018ac <setTimerSecond>
-	status = RED_GREEN;
  80006ae:	4b08      	ldr	r3, [pc, #32]	; (80006d0 <returnAutomatic+0x70>)
  80006b0:	2215      	movs	r2, #21
  80006b2:	601a      	str	r2, [r3, #0]
-}
  80006b4:	bf00      	nop
  80006b6:	bd80      	pop	{r7, pc}
  80006b8:	2000001c 	.word	0x2000001c
@@ -785,13 +644,9 @@ void returnAutomatic(){
  80006d0:	20000018 	.word	0x20000018
 
 080006d4 <fsm_manual_run>:
-
-void fsm_manual_run(){
  80006d4:	b580      	push	{r7, lr}
  80006d6:	b082      	sub	sp, #8
  80006d8:	af00      	add	r7, sp, #0
-//	char str[50];
-	switch(status){
  80006da:	4bab      	ldr	r3, [pc, #684]	; (8000988 <fsm_manual_run+0x2b4>)
  80006dc:	681b      	ldr	r3, [r3, #0]
  80006de:	2b0d      	cmp	r3, #13
@@ -802,102 +657,77 @@ void fsm_manual_run(){
  80006ec:	d002      	beq.n	80006f4 <fsm_manual_run+0x20>
  80006ee:	2b0c      	cmp	r3, #12
  80006f0:	d064      	beq.n	80007bc <fsm_manual_run+0xe8>
-			if(isButtonPressed(1) == 1) returnAutomatic();
-//			HAL_UART_Transmit(&huart2, (void *)str, sprintf(str, "\r\n!7SEG1: %d#\r\n",timerTraffic1), 5);
-//			HAL_UART_Transmit(&huart2, (void *)str, sprintf(str, "\r\n!7SEG2: %d#\r\n\n\n",timerTraffic2), 5);
-			break;
-		default:
-			break;
  80006f2:	e12b      	b.n	800094c <fsm_manual_run+0x278>
-			if(timerFlag[1] == 1){
  80006f4:	4ba5      	ldr	r3, [pc, #660]	; (800098c <fsm_manual_run+0x2b8>)
  80006f6:	685b      	ldr	r3, [r3, #4]
  80006f8:	2b01      	cmp	r3, #1
  80006fa:	d10b      	bne.n	8000714 <fsm_manual_run+0x40>
-				setTimer(1, 250); // blink every 0.25s
  80006fc:	21fa      	movs	r1, #250	; 0xfa
  80006fe:	2001      	movs	r0, #1
  8000700:	f001 f8f0 	bl	80018e4 <setTimer>
-				blinkLEDs(TRAFFIC_1, AUTO_RED);
  8000704:	2102      	movs	r1, #2
  8000706:	2007      	movs	r0, #7
  8000708:	f000 fa96 	bl	8000c38 <blinkLEDs>
-				blinkLEDs(TRAFFIC_2, AUTO_RED);
  800070c:	2102      	movs	r1, #2
  800070e:	2008      	movs	r0, #8
  8000710:	f000 fa92 	bl	8000c38 <blinkLEDs>
-			if(isButtonPressed(2) == 1){
  8000714:	2002      	movs	r0, #2
  8000716:	f000 fc83 	bl	8001020 <isButtonPressed>
  800071a:	4603      	mov	r3, r0
  800071c:	2b01      	cmp	r3, #1
  800071e:	d119      	bne.n	8000754 <fsm_manual_run+0x80>
-				setTimer(5, 5000);
  8000720:	f241 3188 	movw	r1, #5000	; 0x1388
  8000724:	2005      	movs	r0, #5
  8000726:	f001 f8dd 	bl	80018e4 <setTimer>
-				RED_sec++;
  800072a:	4b99      	ldr	r3, [pc, #612]	; (8000990 <fsm_manual_run+0x2bc>)
  800072c:	681b      	ldr	r3, [r3, #0]
  800072e:	3301      	adds	r3, #1
  8000730:	4a97      	ldr	r2, [pc, #604]	; (8000990 <fsm_manual_run+0x2bc>)
  8000732:	6013      	str	r3, [r2, #0]
-				if(RED_sec >= 100) {
  8000734:	4b96      	ldr	r3, [pc, #600]	; (8000990 <fsm_manual_run+0x2bc>)
  8000736:	681b      	ldr	r3, [r3, #0]
  8000738:	2b63      	cmp	r3, #99	; 0x63
  800073a:	dd06      	ble.n	800074a <fsm_manual_run+0x76>
-					RED_sec = 1;
  800073c:	4b94      	ldr	r3, [pc, #592]	; (8000990 <fsm_manual_run+0x2bc>)
  800073e:	2201      	movs	r2, #1
  8000740:	601a      	str	r2, [r3, #0]
-					timerTraffic1 = 1;
  8000742:	4b94      	ldr	r3, [pc, #592]	; (8000994 <fsm_manual_run+0x2c0>)
  8000744:	2201      	movs	r2, #1
  8000746:	601a      	str	r2, [r3, #0]
  8000748:	e004      	b.n	8000754 <fsm_manual_run+0x80>
-				else timerTraffic1++;
  800074a:	4b92      	ldr	r3, [pc, #584]	; (8000994 <fsm_manual_run+0x2c0>)
  800074c:	681b      	ldr	r3, [r3, #0]
  800074e:	3301      	adds	r3, #1
  8000750:	4a90      	ldr	r2, [pc, #576]	; (8000994 <fsm_manual_run+0x2c0>)
  8000752:	6013      	str	r3, [r2, #0]
-			if(isButtonPressed(3) == 1){
  8000754:	2003      	movs	r0, #3
  8000756:	f000 fc63 	bl	8001020 <isButtonPressed>
  800075a:	4603      	mov	r3, r0
  800075c:	2b01      	cmp	r3, #1
  800075e:	d10c      	bne.n	800077a <fsm_manual_run+0xa6>
-				setTimer(5, 5000);
  8000760:	f241 3188 	movw	r1, #5000	; 0x1388
  8000764:	2005      	movs	r0, #5
  8000766:	f001 f8bd 	bl	80018e4 <setTimer>
-				durationRED = RED_sec * 1000;
  800076a:	4b89      	ldr	r3, [pc, #548]	; (8000990 <fsm_manual_run+0x2bc>)
  800076c:	681b      	ldr	r3, [r3, #0]
  800076e:	f44f 727a 	mov.w	r2, #1000	; 0x3e8
  8000772:	fb02 f303 	mul.w	r3, r2, r3
  8000776:	4a88      	ldr	r2, [pc, #544]	; (8000998 <fsm_manual_run+0x2c4>)
  8000778:	6013      	str	r3, [r2, #0]
-			if(isButtonPressed(1) == 1){
  800077a:	2001      	movs	r0, #1
  800077c:	f000 fc50 	bl	8001020 <isButtonPressed>
  8000780:	4603      	mov	r3, r0
  8000782:	2b01      	cmp	r3, #1
  8000784:	f040 80e4 	bne.w	8000950 <fsm_manual_run+0x27c>
-				setTimer(5, 5000);
  8000788:	f241 3188 	movw	r1, #5000	; 0x1388
  800078c:	2005      	movs	r0, #5
  800078e:	f001 f8a9 	bl	80018e4 <setTimer>
-				setTimer(1, 10);
  8000792:	210a      	movs	r1, #10
  8000794:	2001      	movs	r0, #1
  8000796:	f001 f8a5 	bl	80018e4 <setTimer>
-				status = MOD_YELLOW;
  800079a:	4b7b      	ldr	r3, [pc, #492]	; (8000988 <fsm_manual_run+0x2b4>)
  800079c:	220c      	movs	r2, #12
  800079e:	601a      	str	r2, [r3, #0]
-				timerTraffic1 = durationYELLOW / 1000;
  80007a0:	4b7e      	ldr	r3, [pc, #504]	; (800099c <fsm_manual_run+0x2c8>)
  80007a2:	681b      	ldr	r3, [r3, #0]
  80007a4:	4a7e      	ldr	r2, [pc, #504]	; (80009a0 <fsm_manual_run+0x2cc>)
@@ -907,87 +737,69 @@ void fsm_manual_run(){
  80007ae:	1ad3      	subs	r3, r2, r3
  80007b0:	4a78      	ldr	r2, [pc, #480]	; (8000994 <fsm_manual_run+0x2c0>)
  80007b2:	6013      	str	r3, [r2, #0]
-				timerTraffic2 = 3;
  80007b4:	4b7b      	ldr	r3, [pc, #492]	; (80009a4 <fsm_manual_run+0x2d0>)
  80007b6:	2203      	movs	r2, #3
  80007b8:	601a      	str	r2, [r3, #0]
-			break;
  80007ba:	e0c9      	b.n	8000950 <fsm_manual_run+0x27c>
-			if(timerFlag[1] == 1){
  80007bc:	4b73      	ldr	r3, [pc, #460]	; (800098c <fsm_manual_run+0x2b8>)
  80007be:	685b      	ldr	r3, [r3, #4]
  80007c0:	2b01      	cmp	r3, #1
  80007c2:	d10b      	bne.n	80007dc <fsm_manual_run+0x108>
-				setTimer(1, 250); // blink every 0.25s
  80007c4:	21fa      	movs	r1, #250	; 0xfa
  80007c6:	2001      	movs	r0, #1
  80007c8:	f001 f88c 	bl	80018e4 <setTimer>
-				blinkLEDs(TRAFFIC_1, AUTO_YELLOW);
  80007cc:	2104      	movs	r1, #4
  80007ce:	2007      	movs	r0, #7
  80007d0:	f000 fa32 	bl	8000c38 <blinkLEDs>
-				blinkLEDs(TRAFFIC_2, AUTO_YELLOW);
  80007d4:	2104      	movs	r1, #4
  80007d6:	2008      	movs	r0, #8
  80007d8:	f000 fa2e 	bl	8000c38 <blinkLEDs>
-			if(isButtonPressed(2) == 1){
  80007dc:	2002      	movs	r0, #2
  80007de:	f000 fc1f 	bl	8001020 <isButtonPressed>
  80007e2:	4603      	mov	r3, r0
  80007e4:	2b01      	cmp	r3, #1
  80007e6:	d119      	bne.n	800081c <fsm_manual_run+0x148>
-				setTimer(5, 5000);
  80007e8:	f241 3188 	movw	r1, #5000	; 0x1388
  80007ec:	2005      	movs	r0, #5
  80007ee:	f001 f879 	bl	80018e4 <setTimer>
-				YELLOW_sec++;
  80007f2:	4b6d      	ldr	r3, [pc, #436]	; (80009a8 <fsm_manual_run+0x2d4>)
  80007f4:	681b      	ldr	r3, [r3, #0]
  80007f6:	3301      	adds	r3, #1
  80007f8:	4a6b      	ldr	r2, [pc, #428]	; (80009a8 <fsm_manual_run+0x2d4>)
  80007fa:	6013      	str	r3, [r2, #0]
-				if(YELLOW_sec >= 100) {
  80007fc:	4b6a      	ldr	r3, [pc, #424]	; (80009a8 <fsm_manual_run+0x2d4>)
  80007fe:	681b      	ldr	r3, [r3, #0]
  8000800:	2b63      	cmp	r3, #99	; 0x63
  8000802:	dd06      	ble.n	8000812 <fsm_manual_run+0x13e>
-					YELLOW_sec = 1;
  8000804:	4b68      	ldr	r3, [pc, #416]	; (80009a8 <fsm_manual_run+0x2d4>)
  8000806:	2201      	movs	r2, #1
  8000808:	601a      	str	r2, [r3, #0]
-					timerTraffic1 = 1;
  800080a:	4b62      	ldr	r3, [pc, #392]	; (8000994 <fsm_manual_run+0x2c0>)
  800080c:	2201      	movs	r2, #1
  800080e:	601a      	str	r2, [r3, #0]
  8000810:	e004      	b.n	800081c <fsm_manual_run+0x148>
-				else timerTraffic1++;
  8000812:	4b60      	ldr	r3, [pc, #384]	; (8000994 <fsm_manual_run+0x2c0>)
  8000814:	681b      	ldr	r3, [r3, #0]
  8000816:	3301      	adds	r3, #1
  8000818:	4a5e      	ldr	r2, [pc, #376]	; (8000994 <fsm_manual_run+0x2c0>)
  800081a:	6013      	str	r3, [r2, #0]
-			if(isButtonPressed(3) == 1){
  800081c:	2003      	movs	r0, #3
  800081e:	f000 fbff 	bl	8001020 <isButtonPressed>
  8000822:	4603      	mov	r3, r0
  8000824:	2b01      	cmp	r3, #1
  8000826:	d118      	bne.n	800085a <fsm_manual_run+0x186>
-				setTimer(5, 5000);
  8000828:	f241 3188 	movw	r1, #5000	; 0x1388
  800082c:	2005      	movs	r0, #5
  800082e:	f001 f859 	bl	80018e4 <setTimer>
-				int prevDurationYELLOW = durationYELLOW;
  8000832:	4b5a      	ldr	r3, [pc, #360]	; (800099c <fsm_manual_run+0x2c8>)
  8000834:	681b      	ldr	r3, [r3, #0]
  8000836:	607b      	str	r3, [r7, #4]
-				durationYELLOW = YELLOW_sec * 1000;
  8000838:	4b5b      	ldr	r3, [pc, #364]	; (80009a8 <fsm_manual_run+0x2d4>)
  800083a:	681b      	ldr	r3, [r3, #0]
  800083c:	f44f 727a 	mov.w	r2, #1000	; 0x3e8
  8000840:	fb02 f303 	mul.w	r3, r2, r3
  8000844:	4a55      	ldr	r2, [pc, #340]	; (800099c <fsm_manual_run+0x2c8>)
  8000846:	6013      	str	r3, [r2, #0]
-				if(durationYELLOW > durationRED) durationYELLOW = prevDurationYELLOW; // Check the logic
  8000848:	4b54      	ldr	r3, [pc, #336]	; (800099c <fsm_manual_run+0x2c8>)
  800084a:	681a      	ldr	r2, [r3, #0]
  800084c:	4b52      	ldr	r3, [pc, #328]	; (8000998 <fsm_manual_run+0x2c4>)
@@ -997,21 +809,17 @@ void fsm_manual_run(){
  8000854:	4a51      	ldr	r2, [pc, #324]	; (800099c <fsm_manual_run+0x2c8>)
  8000856:	687b      	ldr	r3, [r7, #4]
  8000858:	6013      	str	r3, [r2, #0]
-			if(isButtonPressed(1) == 1){
  800085a:	2001      	movs	r0, #1
  800085c:	f000 fbe0 	bl	8001020 <isButtonPressed>
  8000860:	4603      	mov	r3, r0
  8000862:	2b01      	cmp	r3, #1
  8000864:	d176      	bne.n	8000954 <fsm_manual_run+0x280>
-				setTimer(1, 10);
  8000866:	210a      	movs	r1, #10
  8000868:	2001      	movs	r0, #1
  800086a:	f001 f83b 	bl	80018e4 <setTimer>
-				status = MOD_GREEN;
  800086e:	4b46      	ldr	r3, [pc, #280]	; (8000988 <fsm_manual_run+0x2b4>)
  8000870:	220d      	movs	r2, #13
  8000872:	601a      	str	r2, [r3, #0]
-				timerTraffic1 = durationGREEN / 1000;
  8000874:	4b4d      	ldr	r3, [pc, #308]	; (80009ac <fsm_manual_run+0x2d8>)
  8000876:	681b      	ldr	r3, [r3, #0]
  8000878:	4a49      	ldr	r2, [pc, #292]	; (80009a0 <fsm_manual_run+0x2cc>)
@@ -1021,87 +829,69 @@ void fsm_manual_run(){
  8000882:	1ad3      	subs	r3, r2, r3
  8000884:	4a43      	ldr	r2, [pc, #268]	; (8000994 <fsm_manual_run+0x2c0>)
  8000886:	6013      	str	r3, [r2, #0]
-				timerTraffic2 = 4;
  8000888:	4b46      	ldr	r3, [pc, #280]	; (80009a4 <fsm_manual_run+0x2d0>)
  800088a:	2204      	movs	r2, #4
  800088c:	601a      	str	r2, [r3, #0]
-				setTimer(5, 5000);
  800088e:	f241 3188 	movw	r1, #5000	; 0x1388
  8000892:	2005      	movs	r0, #5
  8000894:	f001 f826 	bl	80018e4 <setTimer>
-			break;
  8000898:	e05c      	b.n	8000954 <fsm_manual_run+0x280>
-			if(timerFlag[1] == 1){
  800089a:	4b3c      	ldr	r3, [pc, #240]	; (800098c <fsm_manual_run+0x2b8>)
  800089c:	685b      	ldr	r3, [r3, #4]
  800089e:	2b01      	cmp	r3, #1
  80008a0:	d10b      	bne.n	80008ba <fsm_manual_run+0x1e6>
-				setTimer(1, 250); // blink every 0.25s
  80008a2:	21fa      	movs	r1, #250	; 0xfa
  80008a4:	2001      	movs	r0, #1
  80008a6:	f001 f81d 	bl	80018e4 <setTimer>
-				blinkLEDs(TRAFFIC_1, AUTO_GREEN);
  80008aa:	2103      	movs	r1, #3
  80008ac:	2007      	movs	r0, #7
  80008ae:	f000 f9c3 	bl	8000c38 <blinkLEDs>
-				blinkLEDs(TRAFFIC_2, AUTO_GREEN);
  80008b2:	2103      	movs	r1, #3
  80008b4:	2008      	movs	r0, #8
  80008b6:	f000 f9bf 	bl	8000c38 <blinkLEDs>
-			if(isButtonPressed(2) == 1){
  80008ba:	2002      	movs	r0, #2
  80008bc:	f000 fbb0 	bl	8001020 <isButtonPressed>
  80008c0:	4603      	mov	r3, r0
  80008c2:	2b01      	cmp	r3, #1
  80008c4:	d119      	bne.n	80008fa <fsm_manual_run+0x226>
-				setTimer(5, 5000);
  80008c6:	f241 3188 	movw	r1, #5000	; 0x1388
  80008ca:	2005      	movs	r0, #5
  80008cc:	f001 f80a 	bl	80018e4 <setTimer>
-				GREEN_sec++;
  80008d0:	4b37      	ldr	r3, [pc, #220]	; (80009b0 <fsm_manual_run+0x2dc>)
  80008d2:	681b      	ldr	r3, [r3, #0]
  80008d4:	3301      	adds	r3, #1
  80008d6:	4a36      	ldr	r2, [pc, #216]	; (80009b0 <fsm_manual_run+0x2dc>)
  80008d8:	6013      	str	r3, [r2, #0]
-				if(GREEN_sec >= 100){
  80008da:	4b35      	ldr	r3, [pc, #212]	; (80009b0 <fsm_manual_run+0x2dc>)
  80008dc:	681b      	ldr	r3, [r3, #0]
  80008de:	2b63      	cmp	r3, #99	; 0x63
  80008e0:	dd06      	ble.n	80008f0 <fsm_manual_run+0x21c>
-					GREEN_sec = 1;
  80008e2:	4b33      	ldr	r3, [pc, #204]	; (80009b0 <fsm_manual_run+0x2dc>)
  80008e4:	2201      	movs	r2, #1
  80008e6:	601a      	str	r2, [r3, #0]
-					timerTraffic1 = 1;
  80008e8:	4b2a      	ldr	r3, [pc, #168]	; (8000994 <fsm_manual_run+0x2c0>)
  80008ea:	2201      	movs	r2, #1
  80008ec:	601a      	str	r2, [r3, #0]
  80008ee:	e004      	b.n	80008fa <fsm_manual_run+0x226>
-				else timerTraffic1++;
  80008f0:	4b28      	ldr	r3, [pc, #160]	; (8000994 <fsm_manual_run+0x2c0>)
  80008f2:	681b      	ldr	r3, [r3, #0]
  80008f4:	3301      	adds	r3, #1
  80008f6:	4a27      	ldr	r2, [pc, #156]	; (8000994 <fsm_manual_run+0x2c0>)
  80008f8:	6013      	str	r3, [r2, #0]
-			if(isButtonPressed(3) == 1){
  80008fa:	2003      	movs	r0, #3
  80008fc:	f000 fb90 	bl	8001020 <isButtonPressed>
  8000900:	4603      	mov	r3, r0
  8000902:	2b01      	cmp	r3, #1
  8000904:	d119      	bne.n	800093a <fsm_manual_run+0x266>
-				setTimer(5, 5000);
  8000906:	f241 3188 	movw	r1, #5000	; 0x1388
  800090a:	2005      	movs	r0, #5
  800090c:	f000 ffea 	bl	80018e4 <setTimer>
-				durationGREEN = GREEN_sec * 1000;
  8000910:	4b27      	ldr	r3, [pc, #156]	; (80009b0 <fsm_manual_run+0x2dc>)
  8000912:	681b      	ldr	r3, [r3, #0]
  8000914:	f44f 727a 	mov.w	r2, #1000	; 0x3e8
  8000918:	fb02 f303 	mul.w	r3, r2, r3
  800091c:	4a23      	ldr	r2, [pc, #140]	; (80009ac <fsm_manual_run+0x2d8>)
  800091e:	6013      	str	r3, [r2, #0]
-				if(durationGREEN < durationRED) durationYELLOW = durationRED - durationGREEN;
  8000920:	4b22      	ldr	r3, [pc, #136]	; (80009ac <fsm_manual_run+0x2d8>)
  8000922:	681a      	ldr	r2, [r3, #0]
  8000924:	4b1c      	ldr	r3, [pc, #112]	; (8000998 <fsm_manual_run+0x2c4>)
@@ -1115,29 +905,20 @@ void fsm_manual_run(){
  8000934:	1ad3      	subs	r3, r2, r3
  8000936:	4a19      	ldr	r2, [pc, #100]	; (800099c <fsm_manual_run+0x2c8>)
  8000938:	6013      	str	r3, [r2, #0]
-			if(isButtonPressed(1) == 1) returnAutomatic();
  800093a:	2001      	movs	r0, #1
  800093c:	f000 fb70 	bl	8001020 <isButtonPressed>
  8000940:	4603      	mov	r3, r0
  8000942:	2b01      	cmp	r3, #1
  8000944:	d108      	bne.n	8000958 <fsm_manual_run+0x284>
  8000946:	f7ff fe8b 	bl	8000660 <returnAutomatic>
-			break;
  800094a:	e005      	b.n	8000958 <fsm_manual_run+0x284>
-			break;
  800094c:	bf00      	nop
  800094e:	e004      	b.n	800095a <fsm_manual_run+0x286>
-			break;
  8000950:	bf00      	nop
  8000952:	e002      	b.n	800095a <fsm_manual_run+0x286>
-			break;
  8000954:	bf00      	nop
  8000956:	e000      	b.n	800095a <fsm_manual_run+0x286>
-			break;
  8000958:	bf00      	nop
-	}
-	// Check time out
-	if(status == MOD_RED || status == MOD_YELLOW || status == MOD_GREEN){
  800095a:	4b0b      	ldr	r3, [pc, #44]	; (8000988 <fsm_manual_run+0x2b4>)
  800095c:	681b      	ldr	r3, [r3, #0]
  800095e:	2b0b      	cmp	r3, #11
@@ -1150,15 +931,11 @@ void fsm_manual_run(){
  800096c:	681b      	ldr	r3, [r3, #0]
  800096e:	2b0d      	cmp	r3, #13
  8000970:	d105      	bne.n	800097e <fsm_manual_run+0x2aa>
-		// Go back to automatic...
-		if(timerFlag[5] == 1) returnAutomatic();
  8000972:	4b06      	ldr	r3, [pc, #24]	; (800098c <fsm_manual_run+0x2b8>)
  8000974:	695b      	ldr	r3, [r3, #20]
  8000976:	2b01      	cmp	r3, #1
  8000978:	d101      	bne.n	800097e <fsm_manual_run+0x2aa>
  800097a:	f7ff fe71 	bl	8000660 <returnAutomatic>
-	}
-}
  800097e:	bf00      	nop
  8000980:	3708      	adds	r7, #8
  8000982:	46bd      	mov	sp, r7
@@ -1362,15 +1139,15 @@ void fsm_pedestrian_run() {
  8000ae8:	2114      	movs	r1, #20
  8000aea:	2004      	movs	r0, #4
  8000aec:	f000 fefa 	bl	80018e4 <setTimer>
-                    if (timerFlag[4] == 1) {
+                    if (timerFlag[4]==1){
  8000af0:	4b4e      	ldr	r3, [pc, #312]	; (8000c2c <fsm_pedestrian_run+0x258>)
  8000af2:	691b      	ldr	r3, [r3, #16]
  8000af4:	2b01      	cmp	r3, #1
  8000af6:	d15b      	bne.n	8000bb0 <fsm_pedestrian_run+0x1dc>
-                        buzzerProcess(0);
+                    	buzzerProcess(0);
  8000af8:	2000      	movs	r0, #0
  8000afa:	f7ff ff5b 	bl	80009b4 <buzzerProcess>
-                    if (timerFlag[4] == 1) {
+                    if (timerFlag[4]==1){
  8000afe:	e057      	b.n	8000bb0 <fsm_pedestrian_run+0x1dc>
                 } else if (status == RED_YELLOW) {
  8000b00:	4b49      	ldr	r3, [pc, #292]	; (8000c28 <fsm_pedestrian_run+0x254>)
@@ -1535,29 +1312,19 @@ void fsm_pedestrian_run() {
  8000c34:	20000004 	.word	0x20000004
 
 08000c38 <blinkLEDs>:
- */
-#include "handle_leds.h"
-int blinkFlag1 = 0;
-int blinkFlag2 = 0;
-
-void blinkLEDs(int traffic, int color){
  8000c38:	b580      	push	{r7, lr}
  8000c3a:	b082      	sub	sp, #8
  8000c3c:	af00      	add	r7, sp, #0
  8000c3e:	6078      	str	r0, [r7, #4]
  8000c40:	6039      	str	r1, [r7, #0]
-	// set flag for blinking
-	if(traffic == TRAFFIC_1){
  8000c42:	687b      	ldr	r3, [r7, #4]
  8000c44:	2b07      	cmp	r3, #7
  8000c46:	d13c      	bne.n	8000cc2 <blinkLEDs+0x8a>
-		blinkFlag1 = 1 - blinkFlag1;
  8000c48:	4b42      	ldr	r3, [pc, #264]	; (8000d54 <blinkLEDs+0x11c>)
  8000c4a:	681b      	ldr	r3, [r3, #0]
  8000c4c:	f1c3 0301 	rsb	r3, r3, #1
  8000c50:	4a40      	ldr	r2, [pc, #256]	; (8000d54 <blinkLEDs+0x11c>)
  8000c52:	6013      	str	r3, [r2, #0]
-		switch(color){
  8000c54:	683b      	ldr	r3, [r7, #0]
  8000c56:	2b04      	cmp	r3, #4
  8000c58:	d017      	beq.n	8000c8a <blinkLEDs+0x52>
@@ -1570,14 +1337,7 @@ void blinkLEDs(int traffic, int color){
  8000c66:	683b      	ldr	r3, [r7, #0]
  8000c68:	2b03      	cmp	r3, #3
  8000c6a:	d01c      	beq.n	8000ca6 <blinkLEDs+0x6e>
-			case AUTO_GREEN:
-				if(blinkFlag1) Traffic_setColor(1, AUTO_GREEN);
-				else Traffic_setColor(1, OFF_LED);
-				break;
-			default:
-				break;
  8000c6c:	e069      	b.n	8000d42 <blinkLEDs+0x10a>
-				if(blinkFlag1) Traffic_setColor(1, AUTO_RED);
  8000c6e:	4b39      	ldr	r3, [pc, #228]	; (8000d54 <blinkLEDs+0x11c>)
  8000c70:	681b      	ldr	r3, [r3, #0]
  8000c72:	2b00      	cmp	r3, #0
@@ -1585,15 +1345,11 @@ void blinkLEDs(int traffic, int color){
  8000c76:	2102      	movs	r1, #2
  8000c78:	2001      	movs	r0, #1
  8000c7a:	f000 f86f 	bl	8000d5c <Traffic_setColor>
-				break;
  8000c7e:	e065      	b.n	8000d4c <blinkLEDs+0x114>
-				else Traffic_setColor(1, OFF_LED);
  8000c80:	2105      	movs	r1, #5
  8000c82:	2001      	movs	r0, #1
  8000c84:	f000 f86a 	bl	8000d5c <Traffic_setColor>
-				break;
  8000c88:	e060      	b.n	8000d4c <blinkLEDs+0x114>
-				if(blinkFlag1) Traffic_setColor(1, AUTO_YELLOW);
  8000c8a:	4b32      	ldr	r3, [pc, #200]	; (8000d54 <blinkLEDs+0x11c>)
  8000c8c:	681b      	ldr	r3, [r3, #0]
  8000c8e:	2b00      	cmp	r3, #0
@@ -1601,15 +1357,11 @@ void blinkLEDs(int traffic, int color){
  8000c92:	2104      	movs	r1, #4
  8000c94:	2001      	movs	r0, #1
  8000c96:	f000 f861 	bl	8000d5c <Traffic_setColor>
-				break;
  8000c9a:	e057      	b.n	8000d4c <blinkLEDs+0x114>
-				else Traffic_setColor(1, OFF_LED);
  8000c9c:	2105      	movs	r1, #5
  8000c9e:	2001      	movs	r0, #1
  8000ca0:	f000 f85c 	bl	8000d5c <Traffic_setColor>
-				break;
  8000ca4:	e052      	b.n	8000d4c <blinkLEDs+0x114>
-				if(blinkFlag1) Traffic_setColor(1, AUTO_GREEN);
  8000ca6:	4b2b      	ldr	r3, [pc, #172]	; (8000d54 <blinkLEDs+0x11c>)
  8000ca8:	681b      	ldr	r3, [r3, #0]
  8000caa:	2b00      	cmp	r3, #0
@@ -1617,27 +1369,19 @@ void blinkLEDs(int traffic, int color){
  8000cae:	2103      	movs	r1, #3
  8000cb0:	2001      	movs	r0, #1
  8000cb2:	f000 f853 	bl	8000d5c <Traffic_setColor>
-				break;
  8000cb6:	e049      	b.n	8000d4c <blinkLEDs+0x114>
-				else Traffic_setColor(1, OFF_LED);
  8000cb8:	2105      	movs	r1, #5
  8000cba:	2001      	movs	r0, #1
  8000cbc:	f000 f84e 	bl	8000d5c <Traffic_setColor>
-				break;
  8000cc0:	e044      	b.n	8000d4c <blinkLEDs+0x114>
-		}
-	}
-	else if(traffic == TRAFFIC_2){
  8000cc2:	687b      	ldr	r3, [r7, #4]
  8000cc4:	2b08      	cmp	r3, #8
  8000cc6:	d13e      	bne.n	8000d46 <blinkLEDs+0x10e>
-		blinkFlag2 = 1 - blinkFlag2;
  8000cc8:	4b23      	ldr	r3, [pc, #140]	; (8000d58 <blinkLEDs+0x120>)
  8000cca:	681b      	ldr	r3, [r3, #0]
  8000ccc:	f1c3 0301 	rsb	r3, r3, #1
  8000cd0:	4a21      	ldr	r2, [pc, #132]	; (8000d58 <blinkLEDs+0x120>)
  8000cd2:	6013      	str	r3, [r2, #0]
-		switch(color){
  8000cd4:	683b      	ldr	r3, [r7, #0]
  8000cd6:	2b04      	cmp	r3, #4
  8000cd8:	d017      	beq.n	8000d0a <blinkLEDs+0xd2>
@@ -1650,14 +1394,7 @@ void blinkLEDs(int traffic, int color){
  8000ce6:	683b      	ldr	r3, [r7, #0]
  8000ce8:	2b03      	cmp	r3, #3
  8000cea:	d01c      	beq.n	8000d26 <blinkLEDs+0xee>
-			case AUTO_GREEN:
-				if(blinkFlag2) Traffic_setColor(2, AUTO_GREEN);
-				else Traffic_setColor(2, OFF_LED);
-				break;
-			default:
-				break;
  8000cec:	e02d      	b.n	8000d4a <blinkLEDs+0x112>
-				if(blinkFlag2) Traffic_setColor(2, AUTO_RED);
  8000cee:	4b1a      	ldr	r3, [pc, #104]	; (8000d58 <blinkLEDs+0x120>)
  8000cf0:	681b      	ldr	r3, [r3, #0]
  8000cf2:	2b00      	cmp	r3, #0
@@ -1665,15 +1402,11 @@ void blinkLEDs(int traffic, int color){
  8000cf6:	2102      	movs	r1, #2
  8000cf8:	2002      	movs	r0, #2
  8000cfa:	f000 f82f 	bl	8000d5c <Traffic_setColor>
-				break;
  8000cfe:	e025      	b.n	8000d4c <blinkLEDs+0x114>
-				else Traffic_setColor(2, OFF_LED);
  8000d00:	2105      	movs	r1, #5
  8000d02:	2002      	movs	r0, #2
  8000d04:	f000 f82a 	bl	8000d5c <Traffic_setColor>
-				break;
  8000d08:	e020      	b.n	8000d4c <blinkLEDs+0x114>
-				if(blinkFlag2) Traffic_setColor(2, AUTO_YELLOW);
  8000d0a:	4b13      	ldr	r3, [pc, #76]	; (8000d58 <blinkLEDs+0x120>)
  8000d0c:	681b      	ldr	r3, [r3, #0]
  8000d0e:	2b00      	cmp	r3, #0
@@ -1681,15 +1414,11 @@ void blinkLEDs(int traffic, int color){
  8000d12:	2104      	movs	r1, #4
  8000d14:	2002      	movs	r0, #2
  8000d16:	f000 f821 	bl	8000d5c <Traffic_setColor>
-				break;
  8000d1a:	e017      	b.n	8000d4c <blinkLEDs+0x114>
-				else Traffic_setColor(2, OFF_LED);
  8000d1c:	2105      	movs	r1, #5
  8000d1e:	2002      	movs	r0, #2
  8000d20:	f000 f81c 	bl	8000d5c <Traffic_setColor>
-				break;
  8000d24:	e012      	b.n	8000d4c <blinkLEDs+0x114>
-				if(blinkFlag2) Traffic_setColor(2, AUTO_GREEN);
  8000d26:	4b0c      	ldr	r3, [pc, #48]	; (8000d58 <blinkLEDs+0x120>)
  8000d28:	681b      	ldr	r3, [r3, #0]
  8000d2a:	2b00      	cmp	r3, #0
@@ -1697,24 +1426,16 @@ void blinkLEDs(int traffic, int color){
  8000d2e:	2103      	movs	r1, #3
  8000d30:	2002      	movs	r0, #2
  8000d32:	f000 f813 	bl	8000d5c <Traffic_setColor>
-				break;
  8000d36:	e009      	b.n	8000d4c <blinkLEDs+0x114>
-				else Traffic_setColor(2, OFF_LED);
  8000d38:	2105      	movs	r1, #5
  8000d3a:	2002      	movs	r0, #2
  8000d3c:	f000 f80e 	bl	8000d5c <Traffic_setColor>
-				break;
  8000d40:	e004      	b.n	8000d4c <blinkLEDs+0x114>
-				break;
  8000d42:	bf00      	nop
  8000d44:	e002      	b.n	8000d4c <blinkLEDs+0x114>
-		}
-	}
  8000d46:	bf00      	nop
  8000d48:	e000      	b.n	8000d4c <blinkLEDs+0x114>
-				break;
  8000d4a:	bf00      	nop
-}
  8000d4c:	bf00      	nop
  8000d4e:	3708      	adds	r7, #8
  8000d50:	46bd      	mov	sp, r7
@@ -1723,14 +1444,11 @@ void blinkLEDs(int traffic, int color){
  8000d58:	200000e8 	.word	0x200000e8
 
 08000d5c <Traffic_setColor>:
-
-void Traffic_setColor(int option, int color){
  8000d5c:	b580      	push	{r7, lr}
  8000d5e:	b082      	sub	sp, #8
  8000d60:	af00      	add	r7, sp, #0
  8000d62:	6078      	str	r0, [r7, #4]
  8000d64:	6039      	str	r1, [r7, #0]
-	if(option == 1){
  8000d66:	687b      	ldr	r3, [r7, #4]
  8000d68:	2b01      	cmp	r3, #1
  8000d6a:	d13f      	bne.n	8000dec <Traffic_setColor+0x90>
@@ -1745,64 +1463,42 @@ void Traffic_setColor(int option, int color){
  8000d80:	08000dbd 	.word	0x08000dbd
  8000d84:	08000da5 	.word	0x08000da5
  8000d88:	08000dd5 	.word	0x08000dd5
-		switch(color){
-			case AUTO_RED:
-				HAL_GPIO_WritePin(D2_GPIO_Port, D2_Pin, SET);
  8000d8c:	2210      	movs	r2, #16
  8000d8e:	f44f 6180 	mov.w	r1, #1024	; 0x400
  8000d92:	483a      	ldr	r0, [pc, #232]	; (8000e7c <Traffic_setColor+0x120>)
  8000d94:	f001 fb95 	bl	80024c2 <HAL_GPIO_WritePin>
-				HAL_GPIO_WritePin(D3_GPIO_Port, D3_Pin, RESET);
  8000d98:	2200      	movs	r2, #0
  8000d9a:	2108      	movs	r1, #8
  8000d9c:	4838      	ldr	r0, [pc, #224]	; (8000e80 <Traffic_setColor+0x124>)
  8000d9e:	f001 fb90 	bl	80024c2 <HAL_GPIO_WritePin>
-				break;
  8000da2:	e066      	b.n	8000e72 <Traffic_setColor+0x116>
-			case AUTO_YELLOW:
-				HAL_GPIO_WritePin(D2_GPIO_Port, D2_Pin, SET);
  8000da4:	2210      	movs	r2, #16
  8000da6:	f44f 6180 	mov.w	r1, #1024	; 0x400
  8000daa:	4834      	ldr	r0, [pc, #208]	; (8000e7c <Traffic_setColor+0x120>)
  8000dac:	f001 fb89 	bl	80024c2 <HAL_GPIO_WritePin>
-				HAL_GPIO_WritePin(D3_GPIO_Port, D3_Pin, SET);
  8000db0:	2210      	movs	r2, #16
  8000db2:	2108      	movs	r1, #8
  8000db4:	4832      	ldr	r0, [pc, #200]	; (8000e80 <Traffic_setColor+0x124>)
  8000db6:	f001 fb84 	bl	80024c2 <HAL_GPIO_WritePin>
-				break;
  8000dba:	e05a      	b.n	8000e72 <Traffic_setColor+0x116>
-			case AUTO_GREEN:
-				HAL_GPIO_WritePin(D2_GPIO_Port, D2_Pin, RESET);
  8000dbc:	2200      	movs	r2, #0
  8000dbe:	f44f 6180 	mov.w	r1, #1024	; 0x400
  8000dc2:	482e      	ldr	r0, [pc, #184]	; (8000e7c <Traffic_setColor+0x120>)
  8000dc4:	f001 fb7d 	bl	80024c2 <HAL_GPIO_WritePin>
-				HAL_GPIO_WritePin(D3_GPIO_Port, D3_Pin, SET);
  8000dc8:	2210      	movs	r2, #16
  8000dca:	2108      	movs	r1, #8
  8000dcc:	482c      	ldr	r0, [pc, #176]	; (8000e80 <Traffic_setColor+0x124>)
  8000dce:	f001 fb78 	bl	80024c2 <HAL_GPIO_WritePin>
-				break;
  8000dd2:	e04e      	b.n	8000e72 <Traffic_setColor+0x116>
-			case OFF_LED:
-				HAL_GPIO_WritePin(D2_GPIO_Port, D2_Pin, RESET);
  8000dd4:	2200      	movs	r2, #0
  8000dd6:	f44f 6180 	mov.w	r1, #1024	; 0x400
  8000dda:	4828      	ldr	r0, [pc, #160]	; (8000e7c <Traffic_setColor+0x120>)
  8000ddc:	f001 fb71 	bl	80024c2 <HAL_GPIO_WritePin>
-				HAL_GPIO_WritePin(D3_GPIO_Port, D3_Pin, RESET);
  8000de0:	2200      	movs	r2, #0
  8000de2:	2108      	movs	r1, #8
  8000de4:	4826      	ldr	r0, [pc, #152]	; (8000e80 <Traffic_setColor+0x124>)
  8000de6:	f001 fb6c 	bl	80024c2 <HAL_GPIO_WritePin>
-				break;
  8000dea:	e042      	b.n	8000e72 <Traffic_setColor+0x116>
-			default:
-				break;
-		}
-	}
-	else if(option == 2){
  8000dec:	687b      	ldr	r3, [r7, #4]
  8000dee:	2b02      	cmp	r3, #2
  8000df0:	d13c      	bne.n	8000e6c <Traffic_setColor+0x110>
@@ -1816,71 +1512,47 @@ void Traffic_setColor(int option, int color){
  8000e04:	08000e3d 	.word	0x08000e3d
  8000e08:	08000e27 	.word	0x08000e27
  8000e0c:	08000e53 	.word	0x08000e53
-		switch(color){
-			case AUTO_RED:
-				HAL_GPIO_WritePin(D4_GPIO_Port, D4_Pin, SET);
  8000e10:	2210      	movs	r2, #16
  8000e12:	2120      	movs	r1, #32
  8000e14:	481a      	ldr	r0, [pc, #104]	; (8000e80 <Traffic_setColor+0x124>)
  8000e16:	f001 fb54 	bl	80024c2 <HAL_GPIO_WritePin>
-				HAL_GPIO_WritePin(D5_GPIO_Port, D5_Pin, RESET);
  8000e1a:	2200      	movs	r2, #0
  8000e1c:	2110      	movs	r1, #16
  8000e1e:	4818      	ldr	r0, [pc, #96]	; (8000e80 <Traffic_setColor+0x124>)
  8000e20:	f001 fb4f 	bl	80024c2 <HAL_GPIO_WritePin>
-				break;
  8000e24:	e025      	b.n	8000e72 <Traffic_setColor+0x116>
-			case AUTO_YELLOW:
-				HAL_GPIO_WritePin(D4_GPIO_Port, D4_Pin, SET);
  8000e26:	2210      	movs	r2, #16
  8000e28:	2120      	movs	r1, #32
  8000e2a:	4815      	ldr	r0, [pc, #84]	; (8000e80 <Traffic_setColor+0x124>)
  8000e2c:	f001 fb49 	bl	80024c2 <HAL_GPIO_WritePin>
-				HAL_GPIO_WritePin(D5_GPIO_Port, D5_Pin, SET);
  8000e30:	2210      	movs	r2, #16
  8000e32:	2110      	movs	r1, #16
  8000e34:	4812      	ldr	r0, [pc, #72]	; (8000e80 <Traffic_setColor+0x124>)
  8000e36:	f001 fb44 	bl	80024c2 <HAL_GPIO_WritePin>
-				break;
  8000e3a:	e01a      	b.n	8000e72 <Traffic_setColor+0x116>
-			case AUTO_GREEN:
-				HAL_GPIO_WritePin(D4_GPIO_Port, D4_Pin, RESET);
  8000e3c:	2200      	movs	r2, #0
  8000e3e:	2120      	movs	r1, #32
  8000e40:	480f      	ldr	r0, [pc, #60]	; (8000e80 <Traffic_setColor+0x124>)
  8000e42:	f001 fb3e 	bl	80024c2 <HAL_GPIO_WritePin>
-				HAL_GPIO_WritePin(D5_GPIO_Port, D5_Pin, SET);
  8000e46:	2210      	movs	r2, #16
  8000e48:	2110      	movs	r1, #16
  8000e4a:	480d      	ldr	r0, [pc, #52]	; (8000e80 <Traffic_setColor+0x124>)
  8000e4c:	f001 fb39 	bl	80024c2 <HAL_GPIO_WritePin>
-				break;
  8000e50:	e00f      	b.n	8000e72 <Traffic_setColor+0x116>
-			case OFF_LED:
-				HAL_GPIO_WritePin(D4_GPIO_Port, D4_Pin, RESET);
  8000e52:	2200      	movs	r2, #0
  8000e54:	2120      	movs	r1, #32
  8000e56:	480a      	ldr	r0, [pc, #40]	; (8000e80 <Traffic_setColor+0x124>)
  8000e58:	f001 fb33 	bl	80024c2 <HAL_GPIO_WritePin>
-				HAL_GPIO_WritePin(D5_GPIO_Port, D5_Pin, RESET);
  8000e5c:	2200      	movs	r2, #0
  8000e5e:	2110      	movs	r1, #16
  8000e60:	4807      	ldr	r0, [pc, #28]	; (8000e80 <Traffic_setColor+0x124>)
  8000e62:	f001 fb2e 	bl	80024c2 <HAL_GPIO_WritePin>
-				break;
  8000e66:	e004      	b.n	8000e72 <Traffic_setColor+0x116>
-				break;
  8000e68:	bf00      	nop
  8000e6a:	e002      	b.n	8000e72 <Traffic_setColor+0x116>
-			default:
-				break;
-		}
-	}
  8000e6c:	bf00      	nop
  8000e6e:	e000      	b.n	8000e72 <Traffic_setColor+0x116>
-				break;
  8000e70:	bf00      	nop
-}
  8000e72:	bf00      	nop
  8000e74:	3708      	adds	r7, #8
  8000e76:	46bd      	mov	sp, r7
@@ -1890,65 +1562,45 @@ void Traffic_setColor(int option, int color){
  8000e80:	40010c00 	.word	0x40010c00
 
 08000e84 <Pedestrian_setColor>:
-
-void Pedestrian_setColor(int color){
  8000e84:	b580      	push	{r7, lr}
  8000e86:	b082      	sub	sp, #8
  8000e88:	af00      	add	r7, sp, #0
  8000e8a:	6078      	str	r0, [r7, #4]
-	if(color == AUTO_RED){
  8000e8c:	687b      	ldr	r3, [r7, #4]
  8000e8e:	2b02      	cmp	r3, #2
  8000e90:	d10c      	bne.n	8000eac <Pedestrian_setColor+0x28>
-		// RED LED
-		HAL_GPIO_WritePin(D6_GPIO_Port, D6_Pin, SET);
  8000e92:	2210      	movs	r2, #16
  8000e94:	f44f 6180 	mov.w	r1, #1024	; 0x400
  8000e98:	4816      	ldr	r0, [pc, #88]	; (8000ef4 <Pedestrian_setColor+0x70>)
  8000e9a:	f001 fb12 	bl	80024c2 <HAL_GPIO_WritePin>
-		HAL_GPIO_WritePin(D7_GPIO_Port, D7_Pin, RESET);
  8000e9e:	2200      	movs	r2, #0
  8000ea0:	f44f 7180 	mov.w	r1, #256	; 0x100
  8000ea4:	4814      	ldr	r0, [pc, #80]	; (8000ef8 <Pedestrian_setColor+0x74>)
  8000ea6:	f001 fb0c 	bl	80024c2 <HAL_GPIO_WritePin>
-	else if(color == OFF_LED){
-		// OFF LED
-		HAL_GPIO_WritePin(D6_GPIO_Port, D6_Pin, RESET);
-		HAL_GPIO_WritePin(D7_GPIO_Port, D7_Pin, RESET);
-	}
-}
  8000eaa:	e01e      	b.n	8000eea <Pedestrian_setColor+0x66>
-	else if(color == AUTO_GREEN){
  8000eac:	687b      	ldr	r3, [r7, #4]
  8000eae:	2b03      	cmp	r3, #3
  8000eb0:	d10c      	bne.n	8000ecc <Pedestrian_setColor+0x48>
-		HAL_GPIO_WritePin(D6_GPIO_Port, D6_Pin, RESET);
  8000eb2:	2200      	movs	r2, #0
  8000eb4:	f44f 6180 	mov.w	r1, #1024	; 0x400
  8000eb8:	480e      	ldr	r0, [pc, #56]	; (8000ef4 <Pedestrian_setColor+0x70>)
  8000eba:	f001 fb02 	bl	80024c2 <HAL_GPIO_WritePin>
-		HAL_GPIO_WritePin(D7_GPIO_Port, D7_Pin, SET);
  8000ebe:	2210      	movs	r2, #16
  8000ec0:	f44f 7180 	mov.w	r1, #256	; 0x100
  8000ec4:	480c      	ldr	r0, [pc, #48]	; (8000ef8 <Pedestrian_setColor+0x74>)
  8000ec6:	f001 fafc 	bl	80024c2 <HAL_GPIO_WritePin>
-}
  8000eca:	e00e      	b.n	8000eea <Pedestrian_setColor+0x66>
-	else if(color == OFF_LED){
  8000ecc:	687b      	ldr	r3, [r7, #4]
  8000ece:	2b05      	cmp	r3, #5
  8000ed0:	d10b      	bne.n	8000eea <Pedestrian_setColor+0x66>
-		HAL_GPIO_WritePin(D6_GPIO_Port, D6_Pin, RESET);
  8000ed2:	2200      	movs	r2, #0
  8000ed4:	f44f 6180 	mov.w	r1, #1024	; 0x400
  8000ed8:	4806      	ldr	r0, [pc, #24]	; (8000ef4 <Pedestrian_setColor+0x70>)
  8000eda:	f001 faf2 	bl	80024c2 <HAL_GPIO_WritePin>
-		HAL_GPIO_WritePin(D7_GPIO_Port, D7_Pin, RESET);
  8000ede:	2200      	movs	r2, #0
  8000ee0:	f44f 7180 	mov.w	r1, #256	; 0x100
  8000ee4:	4804      	ldr	r0, [pc, #16]	; (8000ef8 <Pedestrian_setColor+0x74>)
  8000ee6:	f001 faec 	bl	80024c2 <HAL_GPIO_WritePin>
-}
  8000eea:	bf00      	nop
  8000eec:	3708      	adds	r7, #8
  8000eee:	46bd      	mov	sp, r7
@@ -1958,20 +1610,12 @@ void Pedestrian_setColor(int color){
  8000ef8:	40010800 	.word	0x40010800
 
 08000efc <button_reading>:
-int buttonTimeOut[NO_OF_BUTTONS] = {0};
-
-uint16_t pins[NO_OF_BUTTONS] = {A0_Pin, A1_Pin, A2_Pin, A3_Pin};
-GPIO_TypeDef* ports[NO_OF_BUTTONS] = {A0_GPIO_Port, A1_GPIO_Port, A2_GPIO_Port, A3_GPIO_Port};
-
-void button_reading(){
  8000efc:	b580      	push	{r7, lr}
  8000efe:	b082      	sub	sp, #8
  8000f00:	af00      	add	r7, sp, #0
-	for(int i = 0; i < NO_OF_BUTTONS; i++){
  8000f02:	2300      	movs	r3, #0
  8000f04:	607b      	str	r3, [r7, #4]
  8000f06:	e073      	b.n	8000ff0 <button_reading+0xf4>
-		debounceButtonBuffer3[i] = debounceButtonBuffer2[i];
  8000f08:	4a3d      	ldr	r2, [pc, #244]	; (8001000 <button_reading+0x104>)
  8000f0a:	687b      	ldr	r3, [r7, #4]
  8000f0c:	4413      	add	r3, r2
@@ -1981,7 +1625,6 @@ void button_reading(){
  8000f14:	4413      	add	r3, r2
  8000f16:	460a      	mov	r2, r1
  8000f18:	701a      	strb	r2, [r3, #0]
-		debounceButtonBuffer2[i] = debounceButtonBuffer1[i];
  8000f1a:	4a3b      	ldr	r2, [pc, #236]	; (8001008 <button_reading+0x10c>)
  8000f1c:	687b      	ldr	r3, [r7, #4]
  8000f1e:	4413      	add	r3, r2
@@ -1991,7 +1634,6 @@ void button_reading(){
  8000f26:	4413      	add	r3, r2
  8000f28:	460a      	mov	r2, r1
  8000f2a:	701a      	strb	r2, [r3, #0]
-		debounceButtonBuffer1[i] = HAL_GPIO_ReadPin(ports[i], pins[i]);
  8000f2c:	4a37      	ldr	r2, [pc, #220]	; (800100c <button_reading+0x110>)
  8000f2e:	687b      	ldr	r3, [r7, #4]
  8000f30:	f852 2023 	ldr.w	r2, [r2, r3, lsl #2]
@@ -2008,7 +1650,6 @@ void button_reading(){
  8000f4c:	4413      	add	r3, r2
  8000f4e:	460a      	mov	r2, r1
  8000f50:	701a      	strb	r2, [r3, #0]
-		if((debounceButtonBuffer3[i] == debounceButtonBuffer2[i]) && (debounceButtonBuffer2[i] == debounceButtonBuffer1[i])){
  8000f52:	4a2c      	ldr	r2, [pc, #176]	; (8001004 <button_reading+0x108>)
  8000f54:	687b      	ldr	r3, [r7, #4]
  8000f56:	4413      	add	r3, r2
@@ -2029,7 +1670,6 @@ void button_reading(){
  8000f74:	781b      	ldrb	r3, [r3, #0]
  8000f76:	429a      	cmp	r2, r3
  8000f78:	d137      	bne.n	8000fea <button_reading+0xee>
-			if(debounceButtonBuffer1[i] != buttonBuffer[i]){
  8000f7a:	4a23      	ldr	r2, [pc, #140]	; (8001008 <button_reading+0x10c>)
  8000f7c:	687b      	ldr	r3, [r7, #4]
  8000f7e:	4413      	add	r3, r2
@@ -2040,7 +1680,6 @@ void button_reading(){
  8000f88:	781b      	ldrb	r3, [r3, #0]
  8000f8a:	429a      	cmp	r2, r3
  8000f8c:	d019      	beq.n	8000fc2 <button_reading+0xc6>
-				buttonBuffer[i] = debounceButtonBuffer1[i];
  8000f8e:	4a1e      	ldr	r2, [pc, #120]	; (8001008 <button_reading+0x10c>)
  8000f90:	687b      	ldr	r3, [r7, #4]
  8000f92:	4413      	add	r3, r2
@@ -2050,28 +1689,21 @@ void button_reading(){
  8000f9a:	4413      	add	r3, r2
  8000f9c:	460a      	mov	r2, r1
  8000f9e:	701a      	strb	r2, [r3, #0]
-				if(buttonBuffer[i] == BUTTON_IS_PRESSED){
  8000fa0:	4a1c      	ldr	r2, [pc, #112]	; (8001014 <button_reading+0x118>)
  8000fa2:	687b      	ldr	r3, [r7, #4]
  8000fa4:	4413      	add	r3, r2
  8000fa6:	781b      	ldrb	r3, [r3, #0]
  8000fa8:	2b00      	cmp	r3, #0
  8000faa:	d11e      	bne.n	8000fea <button_reading+0xee>
-					buttonFlag[i] = 1;
  8000fac:	4a1a      	ldr	r2, [pc, #104]	; (8001018 <button_reading+0x11c>)
  8000fae:	687b      	ldr	r3, [r7, #4]
  8000fb0:	2101      	movs	r1, #1
  8000fb2:	f842 1023 	str.w	r1, [r2, r3, lsl #2]
-					buttonTimeOut[i] = 100;
  8000fb6:	4a19      	ldr	r2, [pc, #100]	; (800101c <button_reading+0x120>)
  8000fb8:	687b      	ldr	r3, [r7, #4]
  8000fba:	2164      	movs	r1, #100	; 0x64
  8000fbc:	f842 1023 	str.w	r1, [r2, r3, lsl #2]
  8000fc0:	e013      	b.n	8000fea <button_reading+0xee>
-				}
-			}
-			else{
-				buttonTimeOut[i]--;
  8000fc2:	4a16      	ldr	r2, [pc, #88]	; (800101c <button_reading+0x120>)
  8000fc4:	687b      	ldr	r3, [r7, #4]
  8000fc6:	f852 3023 	ldr.w	r3, [r2, r3, lsl #2]
@@ -2079,30 +1711,22 @@ void button_reading(){
  8000fcc:	4913      	ldr	r1, [pc, #76]	; (800101c <button_reading+0x120>)
  8000fce:	687b      	ldr	r3, [r7, #4]
  8000fd0:	f841 2023 	str.w	r2, [r1, r3, lsl #2]
-				if(buttonTimeOut[i] <= 0){
  8000fd4:	4a11      	ldr	r2, [pc, #68]	; (800101c <button_reading+0x120>)
  8000fd6:	687b      	ldr	r3, [r7, #4]
  8000fd8:	f852 3023 	ldr.w	r3, [r2, r3, lsl #2]
  8000fdc:	2b00      	cmp	r3, #0
  8000fde:	dc04      	bgt.n	8000fea <button_reading+0xee>
-					buttonBuffer[i] = BUTTON_IS_RELEASED;
  8000fe0:	4a0c      	ldr	r2, [pc, #48]	; (8001014 <button_reading+0x118>)
  8000fe2:	687b      	ldr	r3, [r7, #4]
  8000fe4:	4413      	add	r3, r2
  8000fe6:	2201      	movs	r2, #1
  8000fe8:	701a      	strb	r2, [r3, #0]
-	for(int i = 0; i < NO_OF_BUTTONS; i++){
  8000fea:	687b      	ldr	r3, [r7, #4]
  8000fec:	3301      	adds	r3, #1
  8000fee:	607b      	str	r3, [r7, #4]
  8000ff0:	687b      	ldr	r3, [r7, #4]
  8000ff2:	2b03      	cmp	r3, #3
  8000ff4:	dd88      	ble.n	8000f08 <button_reading+0xc>
-				}
-			}
-		}
-	}
-}
  8000ff6:	bf00      	nop
  8000ff8:	bf00      	nop
  8000ffa:	3708      	adds	r7, #8
@@ -2118,13 +1742,10 @@ void button_reading(){
  800101c:	20000108 	.word	0x20000108
 
 08001020 <isButtonPressed>:
-
-int isButtonPressed(int button_index){
  8001020:	b480      	push	{r7}
  8001022:	b083      	sub	sp, #12
  8001024:	af00      	add	r7, sp, #0
  8001026:	6078      	str	r0, [r7, #4]
-	if(button_index >= NO_OF_BUTTONS || button_index < 0) return 0;
  8001028:	687b      	ldr	r3, [r7, #4]
  800102a:	2b03      	cmp	r3, #3
  800102c:	dc02      	bgt.n	8001034 <isButtonPressed+0x14>
@@ -2133,24 +1754,18 @@ int isButtonPressed(int button_index){
  8001032:	da01      	bge.n	8001038 <isButtonPressed+0x18>
  8001034:	2300      	movs	r3, #0
  8001036:	e00d      	b.n	8001054 <isButtonPressed+0x34>
-	if(buttonFlag[button_index] == 1){
  8001038:	4a09      	ldr	r2, [pc, #36]	; (8001060 <isButtonPressed+0x40>)
  800103a:	687b      	ldr	r3, [r7, #4]
  800103c:	f852 3023 	ldr.w	r3, [r2, r3, lsl #2]
  8001040:	2b01      	cmp	r3, #1
  8001042:	d106      	bne.n	8001052 <isButtonPressed+0x32>
-		buttonFlag[button_index] = 0;
  8001044:	4a06      	ldr	r2, [pc, #24]	; (8001060 <isButtonPressed+0x40>)
  8001046:	687b      	ldr	r3, [r7, #4]
  8001048:	2100      	movs	r1, #0
  800104a:	f842 1023 	str.w	r1, [r2, r3, lsl #2]
-		return 1;
  800104e:	2301      	movs	r3, #1
  8001050:	e000      	b.n	8001054 <isButtonPressed+0x34>
-	}
-	return 0;
  8001052:	2300      	movs	r3, #0
-}
  8001054:	4618      	mov	r0, r3
  8001056:	370c      	adds	r7, #12
  8001058:	46bd      	mov	sp, r7
@@ -2160,18 +1775,14 @@ int isButtonPressed(int button_index){
  8001060:	200000f8 	.word	0x200000f8
 
 08001064 <setBackButtonFlag>:
-
-void setBackButtonFlag(int index){
  8001064:	b480      	push	{r7}
  8001066:	b083      	sub	sp, #12
  8001068:	af00      	add	r7, sp, #0
  800106a:	6078      	str	r0, [r7, #4]
-	buttonFlag[index] = 1;
  800106c:	4a04      	ldr	r2, [pc, #16]	; (8001080 <setBackButtonFlag+0x1c>)
  800106e:	687b      	ldr	r3, [r7, #4]
  8001070:	2101      	movs	r1, #1
  8001072:	f842 1023 	str.w	r1, [r2, r3, lsl #2]
-}
  8001076:	bf00      	nop
  8001078:	370c      	adds	r7, #12
  800107a:	46bd      	mov	sp, r7
@@ -2180,115 +1791,61 @@ void setBackButtonFlag(int index){
  8001080:	200000f8 	.word	0x200000f8
 
 08001084 <main>:
-/**
-  * @brief  The application entry point.
-  * @retval int
-  */
-int main(void)
-{
  8001084:	b580      	push	{r7, lr}
  8001086:	af00      	add	r7, sp, #0
-  /* USER CODE END 1 */
-
-  /* MCU Configuration--------------------------------------------------------*/
-
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  HAL_Init();
  8001088:	f000 fe5e 	bl	8001d48 <HAL_Init>
-  /* USER CODE BEGIN Init */
-
-  /* USER CODE END Init */
-
-  /* Configure the system clock */
-  SystemClock_Config();
  800108c:	f000 f85a 	bl	8001144 <SystemClock_Config>
-  /* USER CODE BEGIN SysInit */
-
-  /* USER CODE END SysInit */
-
-  /* Initialize all configured peripherals */
-  MX_GPIO_Init();
  8001090:	f000 f986 	bl	80013a0 <MX_GPIO_Init>
-  MX_TIM2_Init();
  8001094:	f000 f898 	bl	80011c8 <MX_TIM2_Init>
-  MX_TIM3_Init();
  8001098:	f000 f8e2 	bl	8001260 <MX_TIM3_Init>
-  MX_USART2_UART_Init();
  800109c:	f000 f956 	bl	800134c <MX_USART2_UART_Init>
-  /* USER CODE BEGIN 2 */
-  HAL_TIM_Base_Start_IT(&htim2);
  80010a0:	481f      	ldr	r0, [pc, #124]	; (8001120 <main+0x9c>)
  80010a2:	f001 fe85 	bl	8002db0 <HAL_TIM_Base_Start_IT>
-  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
  80010a6:	2100      	movs	r1, #0
  80010a8:	481e      	ldr	r0, [pc, #120]	; (8001124 <main+0xa0>)
  80010aa:	f001 ff2b 	bl	8002f04 <HAL_TIM_PWM_Start>
-  /* USER CODE END 2 */
-
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
-  setTimer(0, 10);
  80010ae:	210a      	movs	r1, #10
  80010b0:	2000      	movs	r0, #0
  80010b2:	f000 fc17 	bl	80018e4 <setTimer>
-  setTimer(1, 10);
  80010b6:	210a      	movs	r1, #10
  80010b8:	2001      	movs	r0, #1
  80010ba:	f000 fc13 	bl	80018e4 <setTimer>
-  setTimer(2, 10);
  80010be:	210a      	movs	r1, #10
  80010c0:	2002      	movs	r0, #2
  80010c2:	f000 fc0f 	bl	80018e4 <setTimer>
-  setTimer(3, 10);
  80010c6:	210a      	movs	r1, #10
  80010c8:	2003      	movs	r0, #3
  80010ca:	f000 fc0b 	bl	80018e4 <setTimer>
-   SCH_Init();
  80010ce:	f000 f9e5 	bl	800149c <SCH_Init>
-   //blinkLEDs(TRAFFIC_1, AUTO_RED);
-   SCH_Add_Task(timerRun, 0, 1);
  80010d2:	2201      	movs	r2, #1
  80010d4:	2100      	movs	r1, #0
  80010d6:	4814      	ldr	r0, [pc, #80]	; (8001128 <main+0xa4>)
  80010d8:	f000 fa46 	bl	8001568 <SCH_Add_Task>
-   SCH_Add_Task(timerRunSecond, 0, 1);
  80010dc:	2201      	movs	r2, #1
  80010de:	2100      	movs	r1, #0
  80010e0:	4812      	ldr	r0, [pc, #72]	; (800112c <main+0xa8>)
  80010e2:	f000 fa41 	bl	8001568 <SCH_Add_Task>
-   SCH_Add_Task(timerRun7SEG, 0, 1);
  80010e6:	2201      	movs	r2, #1
  80010e8:	2100      	movs	r1, #0
  80010ea:	4811      	ldr	r0, [pc, #68]	; (8001130 <main+0xac>)
  80010ec:	f000 fa3c 	bl	8001568 <SCH_Add_Task>
-   SCH_Add_Task(button_reading, 0, 1);
  80010f0:	2201      	movs	r2, #1
  80010f2:	2100      	movs	r1, #0
  80010f4:	480f      	ldr	r0, [pc, #60]	; (8001134 <main+0xb0>)
  80010f6:	f000 fa37 	bl	8001568 <SCH_Add_Task>
-   //SCH_Add_Task(update7SEG, 1, 25);
-   //SCH_Add_Task(updateBuffer, 1,10);
-   SCH_Add_Task(fsm_pedestrian_run, 0, 1);
  80010fa:	2201      	movs	r2, #1
  80010fc:	2100      	movs	r1, #0
  80010fe:	480e      	ldr	r0, [pc, #56]	; (8001138 <main+0xb4>)
  8001100:	f000 fa32 	bl	8001568 <SCH_Add_Task>
-   SCH_Add_Task(fsm_automatic_run, 0, 1);
  8001104:	2201      	movs	r2, #1
  8001106:	2100      	movs	r1, #0
  8001108:	480c      	ldr	r0, [pc, #48]	; (800113c <main+0xb8>)
  800110a:	f000 fa2d 	bl	8001568 <SCH_Add_Task>
-   SCH_Add_Task(fsm_manual_run, 0, 1);
  800110e:	2201      	movs	r2, #1
  8001110:	2100      	movs	r1, #0
  8001112:	480b      	ldr	r0, [pc, #44]	; (8001140 <main+0xbc>)
  8001114:	f000 fa28 	bl	8001568 <SCH_Add_Task>
-   while (1)
-   {
-    /* USER CODE END WHILE */
-	   SCH_Dispatch_Tasks();
  8001118:	f000 fb90 	bl	800183c <SCH_Dispatch_Tasks>
-   {
  800111c:	e7fc      	b.n	8001118 <main+0x94>
  800111e:	bf00      	nop
  8001120:	20000284 	.word	0x20000284
@@ -2302,22 +1859,14 @@ int main(void)
  8001140:	080006d5 	.word	0x080006d5
 
 08001144 <SystemClock_Config>:
-/**
-  * @brief System Clock Configuration
-  * @retval None
-  */
-void SystemClock_Config(void)
-{
  8001144:	b580      	push	{r7, lr}
  8001146:	b090      	sub	sp, #64	; 0x40
  8001148:	af00      	add	r7, sp, #0
-  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
  800114a:	f107 0318 	add.w	r3, r7, #24
  800114e:	2228      	movs	r2, #40	; 0x28
  8001150:	2100      	movs	r1, #0
  8001152:	4618      	mov	r0, r3
  8001154:	f003 fb90 	bl	8004878 <memset>
-  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
  8001158:	1d3b      	adds	r3, r7, #4
  800115a:	2200      	movs	r2, #0
  800115c:	601a      	str	r2, [r3, #0]
@@ -2325,59 +1874,35 @@ void SystemClock_Config(void)
  8001160:	609a      	str	r2, [r3, #8]
  8001162:	60da      	str	r2, [r3, #12]
  8001164:	611a      	str	r2, [r3, #16]
-
-  /** Initializes the RCC Oscillators according to the specified parameters
-  * in the RCC_OscInitTypeDef structure.
-  */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
  8001166:	2302      	movs	r3, #2
  8001168:	61bb      	str	r3, [r7, #24]
-  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
  800116a:	2301      	movs	r3, #1
  800116c:	62bb      	str	r3, [r7, #40]	; 0x28
-  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
  800116e:	2310      	movs	r3, #16
  8001170:	62fb      	str	r3, [r7, #44]	; 0x2c
-  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
  8001172:	2302      	movs	r3, #2
  8001174:	637b      	str	r3, [r7, #52]	; 0x34
-  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI_DIV2;
  8001176:	2300      	movs	r3, #0
  8001178:	63bb      	str	r3, [r7, #56]	; 0x38
-  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL16;
  800117a:	f44f 1360 	mov.w	r3, #3670016	; 0x380000
  800117e:	63fb      	str	r3, [r7, #60]	; 0x3c
-  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
  8001180:	f107 0318 	add.w	r3, r7, #24
  8001184:	4618      	mov	r0, r3
  8001186:	f001 f9b5 	bl	80024f4 <HAL_RCC_OscConfig>
  800118a:	4603      	mov	r3, r0
  800118c:	2b00      	cmp	r3, #0
  800118e:	d001      	beq.n	8001194 <SystemClock_Config+0x50>
-  {
-    Error_Handler();
  8001190:	f000 f97e 	bl	8001490 <Error_Handler>
-  }
-  /** Initializes the CPU, AHB and APB buses clocks
-  */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
  8001194:	230f      	movs	r3, #15
  8001196:	607b      	str	r3, [r7, #4]
-                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
  8001198:	2302      	movs	r3, #2
  800119a:	60bb      	str	r3, [r7, #8]
-  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
  800119c:	2300      	movs	r3, #0
  800119e:	60fb      	str	r3, [r7, #12]
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
  80011a0:	f44f 6380 	mov.w	r3, #1024	; 0x400
  80011a4:	613b      	str	r3, [r7, #16]
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
  80011a6:	2300      	movs	r3, #0
  80011a8:	617b      	str	r3, [r7, #20]
-
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
  80011aa:	1d3b      	adds	r3, r7, #4
  80011ac:	2102      	movs	r1, #2
  80011ae:	4618      	mov	r0, r3
@@ -2385,11 +1910,7 @@ void SystemClock_Config(void)
  80011b4:	4603      	mov	r3, r0
  80011b6:	2b00      	cmp	r3, #0
  80011b8:	d001      	beq.n	80011be <SystemClock_Config+0x7a>
-  {
-    Error_Handler();
  80011ba:	f000 f969 	bl	8001490 <Error_Handler>
-  }
-}
  80011be:	bf00      	nop
  80011c0:	3740      	adds	r7, #64	; 0x40
  80011c2:	46bd      	mov	sp, r7
@@ -2397,74 +1918,45 @@ void SystemClock_Config(void)
 	...
 
 080011c8 <MX_TIM2_Init>:
-  * @brief TIM2 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_TIM2_Init(void)
-{
  80011c8:	b580      	push	{r7, lr}
  80011ca:	b086      	sub	sp, #24
  80011cc:	af00      	add	r7, sp, #0
-
-  /* USER CODE BEGIN TIM2_Init 0 */
-
-  /* USER CODE END TIM2_Init 0 */
-
-  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
  80011ce:	f107 0308 	add.w	r3, r7, #8
  80011d2:	2200      	movs	r2, #0
  80011d4:	601a      	str	r2, [r3, #0]
  80011d6:	605a      	str	r2, [r3, #4]
  80011d8:	609a      	str	r2, [r3, #8]
  80011da:	60da      	str	r2, [r3, #12]
-  TIM_MasterConfigTypeDef sMasterConfig = {0};
  80011dc:	463b      	mov	r3, r7
  80011de:	2200      	movs	r2, #0
  80011e0:	601a      	str	r2, [r3, #0]
  80011e2:	605a      	str	r2, [r3, #4]
-
-  /* USER CODE BEGIN TIM2_Init 1 */
-
-  /* USER CODE END TIM2_Init 1 */
-  htim2.Instance = TIM2;
  80011e4:	4b1d      	ldr	r3, [pc, #116]	; (800125c <MX_TIM2_Init+0x94>)
  80011e6:	f04f 4280 	mov.w	r2, #1073741824	; 0x40000000
  80011ea:	601a      	str	r2, [r3, #0]
-  htim2.Init.Prescaler = 6399;
  80011ec:	4b1b      	ldr	r3, [pc, #108]	; (800125c <MX_TIM2_Init+0x94>)
  80011ee:	f641 02ff 	movw	r2, #6399	; 0x18ff
  80011f2:	605a      	str	r2, [r3, #4]
-  htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
  80011f4:	4b19      	ldr	r3, [pc, #100]	; (800125c <MX_TIM2_Init+0x94>)
  80011f6:	2200      	movs	r2, #0
  80011f8:	609a      	str	r2, [r3, #8]
-  htim2.Init.Period = 99;
  80011fa:	4b18      	ldr	r3, [pc, #96]	; (800125c <MX_TIM2_Init+0x94>)
  80011fc:	2263      	movs	r2, #99	; 0x63
  80011fe:	60da      	str	r2, [r3, #12]
-  htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
  8001200:	4b16      	ldr	r3, [pc, #88]	; (800125c <MX_TIM2_Init+0x94>)
  8001202:	2200      	movs	r2, #0
  8001204:	611a      	str	r2, [r3, #16]
-  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
  8001206:	4b15      	ldr	r3, [pc, #84]	; (800125c <MX_TIM2_Init+0x94>)
  8001208:	2200      	movs	r2, #0
  800120a:	619a      	str	r2, [r3, #24]
-  if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
  800120c:	4813      	ldr	r0, [pc, #76]	; (800125c <MX_TIM2_Init+0x94>)
  800120e:	f001 fd7f 	bl	8002d10 <HAL_TIM_Base_Init>
  8001212:	4603      	mov	r3, r0
  8001214:	2b00      	cmp	r3, #0
  8001216:	d001      	beq.n	800121c <MX_TIM2_Init+0x54>
-  {
-    Error_Handler();
  8001218:	f000 f93a 	bl	8001490 <Error_Handler>
-  }
-  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
  800121c:	f44f 5380 	mov.w	r3, #4096	; 0x1000
  8001220:	60bb      	str	r3, [r7, #8]
-  if (HAL_TIM_ConfigClockSource(&htim2, &sClockSourceConfig) != HAL_OK)
  8001222:	f107 0308 	add.w	r3, r7, #8
  8001226:	4619      	mov	r1, r3
  8001228:	480c      	ldr	r0, [pc, #48]	; (800125c <MX_TIM2_Init+0x94>)
@@ -2472,17 +1964,11 @@ static void MX_TIM2_Init(void)
  800122e:	4603      	mov	r3, r0
  8001230:	2b00      	cmp	r3, #0
  8001232:	d001      	beq.n	8001238 <MX_TIM2_Init+0x70>
-  {
-    Error_Handler();
  8001234:	f000 f92c 	bl	8001490 <Error_Handler>
-  }
-  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
  8001238:	2300      	movs	r3, #0
  800123a:	603b      	str	r3, [r7, #0]
-  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
  800123c:	2300      	movs	r3, #0
  800123e:	607b      	str	r3, [r7, #4]
-  if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK)
  8001240:	463b      	mov	r3, r7
  8001242:	4619      	mov	r1, r3
  8001244:	4805      	ldr	r0, [pc, #20]	; (800125c <MX_TIM2_Init+0x94>)
@@ -2490,15 +1976,7 @@ static void MX_TIM2_Init(void)
  800124a:	4603      	mov	r3, r0
  800124c:	2b00      	cmp	r3, #0
  800124e:	d001      	beq.n	8001254 <MX_TIM2_Init+0x8c>
-  {
-    Error_Handler();
  8001250:	f000 f91e 	bl	8001490 <Error_Handler>
-  }
-  /* USER CODE BEGIN TIM2_Init 2 */
-
-  /* USER CODE END TIM2_Init 2 */
-
-}
  8001254:	bf00      	nop
  8001256:	3718      	adds	r7, #24
  8001258:	46bd      	mov	sp, r7
@@ -2506,33 +1984,19 @@ static void MX_TIM2_Init(void)
  800125c:	20000284 	.word	0x20000284
 
 08001260 <MX_TIM3_Init>:
-  * @brief TIM3 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_TIM3_Init(void)
-{
  8001260:	b580      	push	{r7, lr}
  8001262:	b08e      	sub	sp, #56	; 0x38
  8001264:	af00      	add	r7, sp, #0
-
-  /* USER CODE BEGIN TIM3_Init 0 */
-
-  /* USER CODE END TIM3_Init 0 */
-
-  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
  8001266:	f107 0328 	add.w	r3, r7, #40	; 0x28
  800126a:	2200      	movs	r2, #0
  800126c:	601a      	str	r2, [r3, #0]
  800126e:	605a      	str	r2, [r3, #4]
  8001270:	609a      	str	r2, [r3, #8]
  8001272:	60da      	str	r2, [r3, #12]
-  TIM_MasterConfigTypeDef sMasterConfig = {0};
  8001274:	f107 0320 	add.w	r3, r7, #32
  8001278:	2200      	movs	r2, #0
  800127a:	601a      	str	r2, [r3, #0]
  800127c:	605a      	str	r2, [r3, #4]
-  TIM_OC_InitTypeDef sConfigOC = {0};
  800127e:	1d3b      	adds	r3, r7, #4
  8001280:	2200      	movs	r2, #0
  8001282:	601a      	str	r2, [r3, #0]
@@ -2542,48 +2006,32 @@ static void MX_TIM3_Init(void)
  800128a:	611a      	str	r2, [r3, #16]
  800128c:	615a      	str	r2, [r3, #20]
  800128e:	619a      	str	r2, [r3, #24]
-
-  /* USER CODE BEGIN TIM3_Init 1 */
-
-  /* USER CODE END TIM3_Init 1 */
-  htim3.Instance = TIM3;
  8001290:	4b2c      	ldr	r3, [pc, #176]	; (8001344 <MX_TIM3_Init+0xe4>)
  8001292:	4a2d      	ldr	r2, [pc, #180]	; (8001348 <MX_TIM3_Init+0xe8>)
  8001294:	601a      	str	r2, [r3, #0]
-  htim3.Init.Prescaler = 63;
  8001296:	4b2b      	ldr	r3, [pc, #172]	; (8001344 <MX_TIM3_Init+0xe4>)
  8001298:	223f      	movs	r2, #63	; 0x3f
  800129a:	605a      	str	r2, [r3, #4]
-  htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
  800129c:	4b29      	ldr	r3, [pc, #164]	; (8001344 <MX_TIM3_Init+0xe4>)
  800129e:	2200      	movs	r2, #0
  80012a0:	609a      	str	r2, [r3, #8]
-  htim3.Init.Period = 999;
  80012a2:	4b28      	ldr	r3, [pc, #160]	; (8001344 <MX_TIM3_Init+0xe4>)
  80012a4:	f240 32e7 	movw	r2, #999	; 0x3e7
  80012a8:	60da      	str	r2, [r3, #12]
-  htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
  80012aa:	4b26      	ldr	r3, [pc, #152]	; (8001344 <MX_TIM3_Init+0xe4>)
  80012ac:	2200      	movs	r2, #0
  80012ae:	611a      	str	r2, [r3, #16]
-  htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
  80012b0:	4b24      	ldr	r3, [pc, #144]	; (8001344 <MX_TIM3_Init+0xe4>)
  80012b2:	2200      	movs	r2, #0
  80012b4:	619a      	str	r2, [r3, #24]
-  if (HAL_TIM_Base_Init(&htim3) != HAL_OK)
  80012b6:	4823      	ldr	r0, [pc, #140]	; (8001344 <MX_TIM3_Init+0xe4>)
  80012b8:	f001 fd2a 	bl	8002d10 <HAL_TIM_Base_Init>
  80012bc:	4603      	mov	r3, r0
  80012be:	2b00      	cmp	r3, #0
  80012c0:	d001      	beq.n	80012c6 <MX_TIM3_Init+0x66>
-  {
-    Error_Handler();
  80012c2:	f000 f8e5 	bl	8001490 <Error_Handler>
-  }
-  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
  80012c6:	f44f 5380 	mov.w	r3, #4096	; 0x1000
  80012ca:	62bb      	str	r3, [r7, #40]	; 0x28
-  if (HAL_TIM_ConfigClockSource(&htim3, &sClockSourceConfig) != HAL_OK)
  80012cc:	f107 0328 	add.w	r3, r7, #40	; 0x28
  80012d0:	4619      	mov	r1, r3
  80012d2:	481c      	ldr	r0, [pc, #112]	; (8001344 <MX_TIM3_Init+0xe4>)
@@ -2591,27 +2039,17 @@ static void MX_TIM3_Init(void)
  80012d8:	4603      	mov	r3, r0
  80012da:	2b00      	cmp	r3, #0
  80012dc:	d001      	beq.n	80012e2 <MX_TIM3_Init+0x82>
-  {
-    Error_Handler();
  80012de:	f000 f8d7 	bl	8001490 <Error_Handler>
-  }
-  if (HAL_TIM_PWM_Init(&htim3) != HAL_OK)
  80012e2:	4818      	ldr	r0, [pc, #96]	; (8001344 <MX_TIM3_Init+0xe4>)
  80012e4:	f001 fdb6 	bl	8002e54 <HAL_TIM_PWM_Init>
  80012e8:	4603      	mov	r3, r0
  80012ea:	2b00      	cmp	r3, #0
  80012ec:	d001      	beq.n	80012f2 <MX_TIM3_Init+0x92>
-  {
-    Error_Handler();
  80012ee:	f000 f8cf 	bl	8001490 <Error_Handler>
-  }
-  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
  80012f2:	2300      	movs	r3, #0
  80012f4:	623b      	str	r3, [r7, #32]
-  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
  80012f6:	2300      	movs	r3, #0
  80012f8:	627b      	str	r3, [r7, #36]	; 0x24
-  if (HAL_TIMEx_MasterConfigSynchronization(&htim3, &sMasterConfig) != HAL_OK)
  80012fa:	f107 0320 	add.w	r3, r7, #32
  80012fe:	4619      	mov	r1, r3
  8001300:	4810      	ldr	r0, [pc, #64]	; (8001344 <MX_TIM3_Init+0xe4>)
@@ -2619,23 +2057,15 @@ static void MX_TIM3_Init(void)
  8001306:	4603      	mov	r3, r0
  8001308:	2b00      	cmp	r3, #0
  800130a:	d001      	beq.n	8001310 <MX_TIM3_Init+0xb0>
-  {
-    Error_Handler();
  800130c:	f000 f8c0 	bl	8001490 <Error_Handler>
-  }
-  sConfigOC.OCMode = TIM_OCMODE_PWM1;
  8001310:	2360      	movs	r3, #96	; 0x60
  8001312:	607b      	str	r3, [r7, #4]
-  sConfigOC.Pulse = 0;
  8001314:	2300      	movs	r3, #0
  8001316:	60bb      	str	r3, [r7, #8]
-  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
  8001318:	2300      	movs	r3, #0
  800131a:	60fb      	str	r3, [r7, #12]
-  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
  800131c:	2300      	movs	r3, #0
  800131e:	617b      	str	r3, [r7, #20]
-  if (HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
  8001320:	1d3b      	adds	r3, r7, #4
  8001322:	2200      	movs	r2, #0
  8001324:	4619      	mov	r1, r3
@@ -2644,18 +2074,9 @@ static void MX_TIM3_Init(void)
  800132c:	4603      	mov	r3, r0
  800132e:	2b00      	cmp	r3, #0
  8001330:	d001      	beq.n	8001336 <MX_TIM3_Init+0xd6>
-  {
-    Error_Handler();
  8001332:	f000 f8ad 	bl	8001490 <Error_Handler>
-  }
-  /* USER CODE BEGIN TIM3_Init 2 */
-
-  /* USER CODE END TIM3_Init 2 */
-  HAL_TIM_MspPostInit(&htim3);
  8001336:	4803      	ldr	r0, [pc, #12]	; (8001344 <MX_TIM3_Init+0xe4>)
  8001338:	f000 fbca 	bl	8001ad0 <HAL_TIM_MspPostInit>
-
-}
  800133c:	bf00      	nop
  800133e:	3738      	adds	r7, #56	; 0x38
  8001340:	46bd      	mov	sp, r7
@@ -2664,66 +2085,38 @@ static void MX_TIM3_Init(void)
  8001348:	40000400 	.word	0x40000400
 
 0800134c <MX_USART2_UART_Init>:
-  * @brief USART2 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_USART2_UART_Init(void)
-{
  800134c:	b580      	push	{r7, lr}
  800134e:	af00      	add	r7, sp, #0
-  /* USER CODE END USART2_Init 0 */
-
-  /* USER CODE BEGIN USART2_Init 1 */
-
-  /* USER CODE END USART2_Init 1 */
-  huart2.Instance = USART2;
  8001350:	4b11      	ldr	r3, [pc, #68]	; (8001398 <MX_USART2_UART_Init+0x4c>)
  8001352:	4a12      	ldr	r2, [pc, #72]	; (800139c <MX_USART2_UART_Init+0x50>)
  8001354:	601a      	str	r2, [r3, #0]
-  huart2.Init.BaudRate = 9600;
  8001356:	4b10      	ldr	r3, [pc, #64]	; (8001398 <MX_USART2_UART_Init+0x4c>)
  8001358:	f44f 5216 	mov.w	r2, #9600	; 0x2580
  800135c:	605a      	str	r2, [r3, #4]
-  huart2.Init.WordLength = UART_WORDLENGTH_8B;
  800135e:	4b0e      	ldr	r3, [pc, #56]	; (8001398 <MX_USART2_UART_Init+0x4c>)
  8001360:	2200      	movs	r2, #0
  8001362:	609a      	str	r2, [r3, #8]
-  huart2.Init.StopBits = UART_STOPBITS_1;
  8001364:	4b0c      	ldr	r3, [pc, #48]	; (8001398 <MX_USART2_UART_Init+0x4c>)
  8001366:	2200      	movs	r2, #0
  8001368:	60da      	str	r2, [r3, #12]
-  huart2.Init.Parity = UART_PARITY_NONE;
  800136a:	4b0b      	ldr	r3, [pc, #44]	; (8001398 <MX_USART2_UART_Init+0x4c>)
  800136c:	2200      	movs	r2, #0
  800136e:	611a      	str	r2, [r3, #16]
-  huart2.Init.Mode = UART_MODE_TX_RX;
  8001370:	4b09      	ldr	r3, [pc, #36]	; (8001398 <MX_USART2_UART_Init+0x4c>)
  8001372:	220c      	movs	r2, #12
  8001374:	615a      	str	r2, [r3, #20]
-  huart2.Init.HwFlowCtl = UART_HWCONTROL_NONE;
  8001376:	4b08      	ldr	r3, [pc, #32]	; (8001398 <MX_USART2_UART_Init+0x4c>)
  8001378:	2200      	movs	r2, #0
  800137a:	619a      	str	r2, [r3, #24]
-  huart2.Init.OverSampling = UART_OVERSAMPLING_16;
  800137c:	4b06      	ldr	r3, [pc, #24]	; (8001398 <MX_USART2_UART_Init+0x4c>)
  800137e:	2200      	movs	r2, #0
  8001380:	61da      	str	r2, [r3, #28]
-  if (HAL_UART_Init(&huart2) != HAL_OK)
  8001382:	4805      	ldr	r0, [pc, #20]	; (8001398 <MX_USART2_UART_Init+0x4c>)
  8001384:	f002 fc2a 	bl	8003bdc <HAL_UART_Init>
  8001388:	4603      	mov	r3, r0
  800138a:	2b00      	cmp	r3, #0
  800138c:	d001      	beq.n	8001392 <MX_USART2_UART_Init+0x46>
-  {
-    Error_Handler();
  800138e:	f000 f87f 	bl	8001490 <Error_Handler>
-  }
-  /* USER CODE BEGIN USART2_Init 2 */
-
-  /* USER CODE END USART2_Init 2 */
-
-}
  8001392:	bf00      	nop
  8001394:	bd80      	pop	{r7, pc}
  8001396:	bf00      	nop
@@ -2731,25 +2124,15 @@ static void MX_USART2_UART_Init(void)
  800139c:	40004400 	.word	0x40004400
 
 080013a0 <MX_GPIO_Init>:
-  * @brief GPIO Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_GPIO_Init(void)
-{
  80013a0:	b580      	push	{r7, lr}
  80013a2:	b086      	sub	sp, #24
  80013a4:	af00      	add	r7, sp, #0
-  GPIO_InitTypeDef GPIO_InitStruct = {0};
  80013a6:	f107 0308 	add.w	r3, r7, #8
  80013aa:	2200      	movs	r2, #0
  80013ac:	601a      	str	r2, [r3, #0]
  80013ae:	605a      	str	r2, [r3, #4]
  80013b0:	609a      	str	r2, [r3, #8]
  80013b2:	60da      	str	r2, [r3, #12]
-
-  /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOA_CLK_ENABLE();
  80013b4:	4b2e      	ldr	r3, [pc, #184]	; (8001470 <MX_GPIO_Init+0xd0>)
  80013b6:	699b      	ldr	r3, [r3, #24]
  80013b8:	4a2d      	ldr	r2, [pc, #180]	; (8001470 <MX_GPIO_Init+0xd0>)
@@ -2760,7 +2143,6 @@ static void MX_GPIO_Init(void)
  80013c4:	f003 0304 	and.w	r3, r3, #4
  80013c8:	607b      	str	r3, [r7, #4]
  80013ca:	687b      	ldr	r3, [r7, #4]
-  __HAL_RCC_GPIOB_CLK_ENABLE();
  80013cc:	4b28      	ldr	r3, [pc, #160]	; (8001470 <MX_GPIO_Init+0xd0>)
  80013ce:	699b      	ldr	r3, [r3, #24]
  80013d0:	4a27      	ldr	r2, [pc, #156]	; (8001470 <MX_GPIO_Init+0xd0>)
@@ -2771,92 +2153,58 @@ static void MX_GPIO_Init(void)
  80013dc:	f003 0308 	and.w	r3, r3, #8
  80013e0:	603b      	str	r3, [r7, #0]
  80013e2:	683b      	ldr	r3, [r7, #0]
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, D6_Pin|D3_Pin|D5_Pin|D4_Pin, GPIO_PIN_RESET);
  80013e4:	2200      	movs	r2, #0
  80013e6:	f44f 6187 	mov.w	r1, #1080	; 0x438
  80013ea:	4822      	ldr	r0, [pc, #136]	; (8001474 <MX_GPIO_Init+0xd4>)
  80013ec:	f001 f869 	bl	80024c2 <HAL_GPIO_WritePin>
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, D7_Pin|D2_Pin, GPIO_PIN_RESET);
  80013f0:	2200      	movs	r2, #0
  80013f2:	f44f 61a0 	mov.w	r1, #1280	; 0x500
  80013f6:	4820      	ldr	r0, [pc, #128]	; (8001478 <MX_GPIO_Init+0xd8>)
  80013f8:	f001 f863 	bl	80024c2 <HAL_GPIO_WritePin>
-
-  /*Configure GPIO pins : A0_Pin A1_Pin A2_Pin */
-  GPIO_InitStruct.Pin = A0_Pin|A1_Pin|A2_Pin;
  80013fc:	2313      	movs	r3, #19
  80013fe:	60bb      	str	r3, [r7, #8]
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
  8001400:	2300      	movs	r3, #0
  8001402:	60fb      	str	r3, [r7, #12]
-  GPIO_InitStruct.Pull = GPIO_PULLUP;
  8001404:	2301      	movs	r3, #1
  8001406:	613b      	str	r3, [r7, #16]
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
  8001408:	f107 0308 	add.w	r3, r7, #8
  800140c:	4619      	mov	r1, r3
  800140e:	481a      	ldr	r0, [pc, #104]	; (8001478 <MX_GPIO_Init+0xd8>)
  8001410:	f000 febc 	bl	800218c <HAL_GPIO_Init>
-
-  /*Configure GPIO pin : A3_Pin */
-  GPIO_InitStruct.Pin = A3_Pin;
  8001414:	2301      	movs	r3, #1
  8001416:	60bb      	str	r3, [r7, #8]
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
  8001418:	2300      	movs	r3, #0
  800141a:	60fb      	str	r3, [r7, #12]
-  GPIO_InitStruct.Pull = GPIO_PULLUP;
  800141c:	2301      	movs	r3, #1
  800141e:	613b      	str	r3, [r7, #16]
-  HAL_GPIO_Init(A3_GPIO_Port, &GPIO_InitStruct);
  8001420:	f107 0308 	add.w	r3, r7, #8
  8001424:	4619      	mov	r1, r3
  8001426:	4813      	ldr	r0, [pc, #76]	; (8001474 <MX_GPIO_Init+0xd4>)
  8001428:	f000 feb0 	bl	800218c <HAL_GPIO_Init>
-
-  /*Configure GPIO pins : D6_Pin D3_Pin D5_Pin D4_Pin */
-  GPIO_InitStruct.Pin = D6_Pin|D3_Pin|D5_Pin|D4_Pin;
  800142c:	f44f 6387 	mov.w	r3, #1080	; 0x438
  8001430:	60bb      	str	r3, [r7, #8]
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
  8001432:	2301      	movs	r3, #1
  8001434:	60fb      	str	r3, [r7, #12]
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
  8001436:	2300      	movs	r3, #0
  8001438:	613b      	str	r3, [r7, #16]
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
  800143a:	2302      	movs	r3, #2
  800143c:	617b      	str	r3, [r7, #20]
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
  800143e:	f107 0308 	add.w	r3, r7, #8
  8001442:	4619      	mov	r1, r3
  8001444:	480b      	ldr	r0, [pc, #44]	; (8001474 <MX_GPIO_Init+0xd4>)
  8001446:	f000 fea1 	bl	800218c <HAL_GPIO_Init>
-
-  /*Configure GPIO pins : D7_Pin D2_Pin */
-  GPIO_InitStruct.Pin = D7_Pin|D2_Pin;
  800144a:	f44f 63a0 	mov.w	r3, #1280	; 0x500
  800144e:	60bb      	str	r3, [r7, #8]
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
  8001450:	2301      	movs	r3, #1
  8001452:	60fb      	str	r3, [r7, #12]
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
  8001454:	2300      	movs	r3, #0
  8001456:	613b      	str	r3, [r7, #16]
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
  8001458:	2302      	movs	r3, #2
  800145a:	617b      	str	r3, [r7, #20]
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
  800145c:	f107 0308 	add.w	r3, r7, #8
  8001460:	4619      	mov	r1, r3
  8001462:	4805      	ldr	r0, [pc, #20]	; (8001478 <MX_GPIO_Init+0xd8>)
  8001464:	f000 fe92 	bl	800218c <HAL_GPIO_Init>
-
-}
  8001468:	bf00      	nop
  800146a:	3718      	adds	r7, #24
  800146c:	46bd      	mov	sp, r7
@@ -2866,65 +2214,31 @@ static void MX_GPIO_Init(void)
  8001478:	40010800 	.word	0x40010800
 
 0800147c <HAL_TIM_PeriodElapsedCallback>:
-
-/* USER CODE BEGIN 4 */
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
  800147c:	b580      	push	{r7, lr}
  800147e:	b082      	sub	sp, #8
  8001480:	af00      	add	r7, sp, #0
  8001482:	6078      	str	r0, [r7, #4]
-//	timerRun();
-//	timerRun7SEG();
-//	timerRunSecond();
-//	button_reading();
-	SCH_Update();
  8001484:	f000 f850 	bl	8001528 <SCH_Update>
-}
  8001488:	bf00      	nop
  800148a:	3708      	adds	r7, #8
  800148c:	46bd      	mov	sp, r7
  800148e:	bd80      	pop	{r7, pc}
 
 08001490 <Error_Handler>:
-/**
-  * @brief  This function is executed in case of error occurrence.
-  * @retval None
-  */
-void Error_Handler(void)
-{
  8001490:	b480      	push	{r7}
  8001492:	af00      	add	r7, sp, #0
-  \details Disables IRQ interrupts by setting the I-bit in the CPSR.
-           Can only be executed in Privileged modes.
- */
-__STATIC_FORCEINLINE void __disable_irq(void)
-{
-  __ASM volatile ("cpsid i" : : : "memory");
  8001494:	b672      	cpsid	i
-}
  8001496:	bf00      	nop
-  /* USER CODE BEGIN Error_Handler_Debug */
-  /* User can add his own implementation to report the HAL error return state */
-  __disable_irq();
-  while (1)
  8001498:	e7fe      	b.n	8001498 <Error_Handler+0x8>
 	...
 
 0800149c <SCH_Init>:
-
-
-static uint32_t Get_New_Task_ID(void);
-
-
-void SCH_Init(void){
  800149c:	b480      	push	{r7}
  800149e:	b083      	sub	sp, #12
  80014a0:	af00      	add	r7, sp, #0
-    for (int i=0; i<SCH_MAX_TASKS; i++){
  80014a2:	2300      	movs	r3, #0
  80014a4:	607b      	str	r3, [r7, #4]
  80014a6:	e034      	b.n	8001512 <SCH_Init+0x76>
-        SCH_tasks_Array[i].pTask = 0;
  80014a8:	491e      	ldr	r1, [pc, #120]	; (8001524 <SCH_Init+0x88>)
  80014aa:	687a      	ldr	r2, [r7, #4]
  80014ac:	4613      	mov	r3, r2
@@ -2934,7 +2248,6 @@ void SCH_Init(void){
  80014b4:	440b      	add	r3, r1
  80014b6:	2200      	movs	r2, #0
  80014b8:	601a      	str	r2, [r3, #0]
-        SCH_tasks_Array[i].Delay = 0;
  80014ba:	491a      	ldr	r1, [pc, #104]	; (8001524 <SCH_Init+0x88>)
  80014bc:	687a      	ldr	r2, [r7, #4]
  80014be:	4613      	mov	r3, r2
@@ -2945,7 +2258,6 @@ void SCH_Init(void){
  80014c8:	3304      	adds	r3, #4
  80014ca:	2200      	movs	r2, #0
  80014cc:	601a      	str	r2, [r3, #0]
-        SCH_tasks_Array[i].Period = 0;
  80014ce:	4915      	ldr	r1, [pc, #84]	; (8001524 <SCH_Init+0x88>)
  80014d0:	687a      	ldr	r2, [r7, #4]
  80014d2:	4613      	mov	r3, r2
@@ -2956,7 +2268,6 @@ void SCH_Init(void){
  80014dc:	3308      	adds	r3, #8
  80014de:	2200      	movs	r2, #0
  80014e0:	601a      	str	r2, [r3, #0]
-        SCH_tasks_Array[i].RunMe = 0;
  80014e2:	4910      	ldr	r1, [pc, #64]	; (8001524 <SCH_Init+0x88>)
  80014e4:	687a      	ldr	r2, [r7, #4]
  80014e6:	4613      	mov	r3, r2
@@ -2967,8 +2278,6 @@ void SCH_Init(void){
  80014f0:	330c      	adds	r3, #12
  80014f2:	2200      	movs	r2, #0
  80014f4:	701a      	strb	r2, [r3, #0]
-
-        SCH_tasks_Array[i].TaskID = -1;
  80014f6:	490b      	ldr	r1, [pc, #44]	; (8001524 <SCH_Init+0x88>)
  80014f8:	687a      	ldr	r2, [r7, #4]
  80014fa:	4613      	mov	r3, r2
@@ -2979,15 +2288,12 @@ void SCH_Init(void){
  8001504:	3310      	adds	r3, #16
  8001506:	f04f 32ff 	mov.w	r2, #4294967295
  800150a:	601a      	str	r2, [r3, #0]
-    for (int i=0; i<SCH_MAX_TASKS; i++){
  800150c:	687b      	ldr	r3, [r7, #4]
  800150e:	3301      	adds	r3, #1
  8001510:	607b      	str	r3, [r7, #4]
  8001512:	687b      	ldr	r3, [r7, #4]
  8001514:	2b09      	cmp	r3, #9
  8001516:	ddc7      	ble.n	80014a8 <SCH_Init+0xc>
-    }
-}
  8001518:	bf00      	nop
  800151a:	bf00      	nop
  800151c:	370c      	adds	r7, #12
@@ -2997,11 +2303,8 @@ void SCH_Init(void){
  8001524:	20000118 	.word	0x20000118
 
 08001528 <SCH_Update>:
-
-void SCH_Update(){
  8001528:	b480      	push	{r7}
  800152a:	af00      	add	r7, sp, #0
-	if (SCH_tasks_Array[0].pTask && SCH_tasks_Array[0].RunMe == 0) {
  800152c:	4b0d      	ldr	r3, [pc, #52]	; (8001564 <SCH_Update+0x3c>)
  800152e:	681b      	ldr	r3, [r3, #0]
  8001530:	2b00      	cmp	r3, #0
@@ -3010,30 +2313,22 @@ void SCH_Update(){
  8001536:	7b1b      	ldrb	r3, [r3, #12]
  8001538:	2b00      	cmp	r3, #0
  800153a:	d10f      	bne.n	800155c <SCH_Update+0x34>
-		if(SCH_tasks_Array[0].Delay > 0){
  800153c:	4b09      	ldr	r3, [pc, #36]	; (8001564 <SCH_Update+0x3c>)
  800153e:	685b      	ldr	r3, [r3, #4]
  8001540:	2b00      	cmp	r3, #0
  8001542:	d004      	beq.n	800154e <SCH_Update+0x26>
-			SCH_tasks_Array[0].Delay = SCH_tasks_Array[0].Delay - 1;
  8001544:	4b07      	ldr	r3, [pc, #28]	; (8001564 <SCH_Update+0x3c>)
  8001546:	685b      	ldr	r3, [r3, #4]
  8001548:	3b01      	subs	r3, #1
  800154a:	4a06      	ldr	r2, [pc, #24]	; (8001564 <SCH_Update+0x3c>)
  800154c:	6053      	str	r3, [r2, #4]
-		}
-		if (SCH_tasks_Array[0].Delay == 0) {
  800154e:	4b05      	ldr	r3, [pc, #20]	; (8001564 <SCH_Update+0x3c>)
  8001550:	685b      	ldr	r3, [r3, #4]
  8001552:	2b00      	cmp	r3, #0
  8001554:	d102      	bne.n	800155c <SCH_Update+0x34>
-			SCH_tasks_Array[0].RunMe = 1;
  8001556:	4b03      	ldr	r3, [pc, #12]	; (8001564 <SCH_Update+0x3c>)
  8001558:	2201      	movs	r2, #1
  800155a:	731a      	strb	r2, [r3, #12]
-		}
-	}
-}
  800155c:	bf00      	nop
  800155e:	46bd      	mov	sp, r7
  8001560:	bc80      	pop	{r7}
@@ -3041,31 +2336,21 @@ void SCH_Update(){
  8001564:	20000118 	.word	0x20000118
 
 08001568 <SCH_Add_Task>:
-
-void SCH_Add_Task(void (*pFunction)(), uint32_t DELAY, uint32_t PERIOD) {
  8001568:	b5f0      	push	{r4, r5, r6, r7, lr}
  800156a:	b093      	sub	sp, #76	; 0x4c
  800156c:	af00      	add	r7, sp, #0
  800156e:	60f8      	str	r0, [r7, #12]
  8001570:	60b9      	str	r1, [r7, #8]
  8001572:	607a      	str	r2, [r7, #4]
-    uint8_t newTaskIndex = 0;
  8001574:	2300      	movs	r3, #0
  8001576:	f887 3047 	strb.w	r3, [r7, #71]	; 0x47
-    uint32_t sumDelay = 0;
  800157a:	2300      	movs	r3, #0
  800157c:	643b      	str	r3, [r7, #64]	; 0x40
-    uint32_t newDelay = 0;
  800157e:	2300      	movs	r3, #0
  8001580:	63bb      	str	r3, [r7, #56]	; 0x38
-
-    // Iterate through the task array to find the appropriate position for the new task
-    for (newTaskIndex = 0; newTaskIndex < SCH_MAX_TASKS; newTaskIndex++) {
  8001582:	2300      	movs	r3, #0
  8001584:	f887 3047 	strb.w	r3, [r7, #71]	; 0x47
  8001588:	e0d5      	b.n	8001736 <SCH_Add_Task+0x1ce>
-        // Calculate the cumulative delay of existing tasks
-        sumDelay += SCH_tasks_Array[newTaskIndex].Delay;
  800158a:	f897 2047 	ldrb.w	r2, [r7, #71]	; 0x47
  800158e:	496e      	ldr	r1, [pc, #440]	; (8001748 <SCH_Add_Task+0x1e0>)
  8001590:	4613      	mov	r3, r2
@@ -3078,15 +2363,10 @@ void SCH_Add_Task(void (*pFunction)(), uint32_t DELAY, uint32_t PERIOD) {
  800159e:	6c3a      	ldr	r2, [r7, #64]	; 0x40
  80015a0:	4413      	add	r3, r2
  80015a2:	643b      	str	r3, [r7, #64]	; 0x40
-
-        // Check if the cumulative delay is greater than the specified initial delay (DELAY)
-        if (sumDelay > DELAY) {
  80015a4:	6c3a      	ldr	r2, [r7, #64]	; 0x40
  80015a6:	68bb      	ldr	r3, [r7, #8]
  80015a8:	429a      	cmp	r2, r3
  80015aa:	d979      	bls.n	80016a0 <SCH_Add_Task+0x138>
-            // Calculate the new delay for the current task
-            newDelay = DELAY - (sumDelay - SCH_tasks_Array[newTaskIndex].Delay);
  80015ac:	f897 2047 	ldrb.w	r2, [r7, #71]	; 0x47
  80015b0:	4965      	ldr	r1, [pc, #404]	; (8001748 <SCH_Add_Task+0x1e0>)
  80015b2:	4613      	mov	r3, r2
@@ -3101,9 +2381,6 @@ void SCH_Add_Task(void (*pFunction)(), uint32_t DELAY, uint32_t PERIOD) {
  80015c4:	68ba      	ldr	r2, [r7, #8]
  80015c6:	4413      	add	r3, r2
  80015c8:	63bb      	str	r3, [r7, #56]	; 0x38
-
-            // Adjust the delay of the current task and shift existing tasks to make room
-            SCH_tasks_Array[newTaskIndex].Delay = sumDelay - DELAY;
  80015ca:	f897 2047 	ldrb.w	r2, [r7, #71]	; 0x47
  80015ce:	6c39      	ldr	r1, [r7, #64]	; 0x40
  80015d0:	68bb      	ldr	r3, [r7, #8]
@@ -3116,11 +2393,9 @@ void SCH_Add_Task(void (*pFunction)(), uint32_t DELAY, uint32_t PERIOD) {
  80015de:	4403      	add	r3, r0
  80015e0:	3304      	adds	r3, #4
  80015e2:	6019      	str	r1, [r3, #0]
-            for (uint8_t i = SCH_MAX_TASKS - 1; i > newTaskIndex; i--) {
  80015e4:	2309      	movs	r3, #9
  80015e6:	f887 303f 	strb.w	r3, [r7, #63]	; 0x3f
  80015ea:	e01b      	b.n	8001624 <SCH_Add_Task+0xbc>
-                SCH_tasks_Array[i] = SCH_tasks_Array[i - 1];
  80015ec:	f897 303f 	ldrb.w	r3, [r7, #63]	; 0x3f
  80015f0:	1e5a      	subs	r2, r3, #1
  80015f2:	f897 103f 	ldrb.w	r1, [r7, #63]	; 0x3f
@@ -3142,7 +2417,6 @@ void SCH_Add_Task(void (*pFunction)(), uint32_t DELAY, uint32_t PERIOD) {
  8001614:	c40f      	stmia	r4!, {r0, r1, r2, r3}
  8001616:	682b      	ldr	r3, [r5, #0]
  8001618:	6023      	str	r3, [r4, #0]
-            for (uint8_t i = SCH_MAX_TASKS - 1; i > newTaskIndex; i--) {
  800161a:	f897 303f 	ldrb.w	r3, [r7, #63]	; 0x3f
  800161e:	3b01      	subs	r3, #1
  8001620:	f887 303f 	strb.w	r3, [r7, #63]	; 0x3f
@@ -3150,15 +2424,7 @@ void SCH_Add_Task(void (*pFunction)(), uint32_t DELAY, uint32_t PERIOD) {
  8001628:	f897 3047 	ldrb.w	r3, [r7, #71]	; 0x47
  800162c:	429a      	cmp	r2, r3
  800162e:	d8dd      	bhi.n	80015ec <SCH_Add_Task+0x84>
-            }
-
-            // Add the new task at the appropriate position in the array
-            SCH_tasks_Array[newTaskIndex] = (sTask){
  8001630:	f897 4047 	ldrb.w	r4, [r7, #71]	; 0x47
-                .pTask = pFunction,
-                .Delay = newDelay,
-                .Period = PERIOD,
-                .RunMe = (newDelay == 0),  // Set RunMe flag based on newDelay
  8001634:	6bbb      	ldr	r3, [r7, #56]	; 0x38
  8001636:	2b00      	cmp	r3, #0
  8001638:	bf0c      	ite	eq
@@ -3166,10 +2432,8 @@ void SCH_Add_Task(void (*pFunction)(), uint32_t DELAY, uint32_t PERIOD) {
  800163c:	2300      	movne	r3, #0
  800163e:	b2db      	uxtb	r3, r3
  8001640:	461d      	mov	r5, r3
-                .TaskID = Get_New_Task_ID(),  // Assign a unique TaskID
  8001642:	f000 f923 	bl	800188c <Get_New_Task_ID>
  8001646:	4601      	mov	r1, r0
-            SCH_tasks_Array[newTaskIndex] = (sTask){
  8001648:	4a3f      	ldr	r2, [pc, #252]	; (8001748 <SCH_Add_Task+0x1e0>)
  800164a:	4623      	mov	r3, r4
  800164c:	009b      	lsls	r3, r3, #2
@@ -3214,12 +2478,6 @@ void SCH_Add_Task(void (*pFunction)(), uint32_t DELAY, uint32_t PERIOD) {
  800169a:	3310      	adds	r3, #16
  800169c:	6019      	str	r1, [r3, #0]
  800169e:	e04f      	b.n	8001740 <SCH_Add_Task+0x1d8>
-            };
-
-            return;
-        } else {
-            // If the current task slot is empty, add the new task to this slot
-            if (SCH_tasks_Array[newTaskIndex].pTask == 0) {
  80016a0:	f897 2047 	ldrb.w	r2, [r7, #71]	; 0x47
  80016a4:	4928      	ldr	r1, [pc, #160]	; (8001748 <SCH_Add_Task+0x1e0>)
  80016a6:	4613      	mov	r3, r2
@@ -3230,15 +2488,10 @@ void SCH_Add_Task(void (*pFunction)(), uint32_t DELAY, uint32_t PERIOD) {
  80016b0:	681b      	ldr	r3, [r3, #0]
  80016b2:	2b00      	cmp	r3, #0
  80016b4:	d13a      	bne.n	800172c <SCH_Add_Task+0x1c4>
-                SCH_tasks_Array[newTaskIndex] = (sTask){
  80016b6:	f897 4047 	ldrb.w	r4, [r7, #71]	; 0x47
-                    .pTask = pFunction,
-                    .Delay = DELAY - sumDelay,
  80016ba:	68ba      	ldr	r2, [r7, #8]
  80016bc:	6c3b      	ldr	r3, [r7, #64]	; 0x40
  80016be:	1ad5      	subs	r5, r2, r3
-                    .Period = PERIOD,
-                    .RunMe = (DELAY - sumDelay == 0),  // Set RunMe flag based on remaining delay
  80016c0:	68ba      	ldr	r2, [r7, #8]
  80016c2:	6c3b      	ldr	r3, [r7, #64]	; 0x40
  80016c4:	429a      	cmp	r2, r3
@@ -3247,10 +2500,8 @@ void SCH_Add_Task(void (*pFunction)(), uint32_t DELAY, uint32_t PERIOD) {
  80016ca:	2300      	movne	r3, #0
  80016cc:	b2db      	uxtb	r3, r3
  80016ce:	461e      	mov	r6, r3
-                    .TaskID = Get_New_Task_ID(),  // Assign a unique TaskID
  80016d0:	f000 f8dc 	bl	800188c <Get_New_Task_ID>
  80016d4:	4601      	mov	r1, r0
-                SCH_tasks_Array[newTaskIndex] = (sTask){
  80016d6:	4a1c      	ldr	r2, [pc, #112]	; (8001748 <SCH_Add_Task+0x1e0>)
  80016d8:	4623      	mov	r3, r4
  80016da:	009b      	lsls	r3, r3, #2
@@ -3294,19 +2545,12 @@ void SCH_Add_Task(void (*pFunction)(), uint32_t DELAY, uint32_t PERIOD) {
  8001726:	3310      	adds	r3, #16
  8001728:	6019      	str	r1, [r3, #0]
  800172a:	e009      	b.n	8001740 <SCH_Add_Task+0x1d8>
-    for (newTaskIndex = 0; newTaskIndex < SCH_MAX_TASKS; newTaskIndex++) {
  800172c:	f897 3047 	ldrb.w	r3, [r7, #71]	; 0x47
  8001730:	3301      	adds	r3, #1
  8001732:	f887 3047 	strb.w	r3, [r7, #71]	; 0x47
  8001736:	f897 3047 	ldrb.w	r3, [r7, #71]	; 0x47
  800173a:	2b09      	cmp	r3, #9
  800173c:	f67f af25 	bls.w	800158a <SCH_Add_Task+0x22>
-
-                return;
-            }
-        }
-    }
-}
  8001740:	374c      	adds	r7, #76	; 0x4c
  8001742:	46bd      	mov	sp, r7
  8001744:	bdf0      	pop	{r4, r5, r6, r7, pc}
@@ -3314,26 +2558,16 @@ void SCH_Add_Task(void (*pFunction)(), uint32_t DELAY, uint32_t PERIOD) {
  8001748:	20000118 	.word	0x20000118
 
 0800174c <SCH_Delete_Task>:
-
-
-
-void SCH_Delete_Task(uint32_t taskID) {
  800174c:	b4b0      	push	{r4, r5, r7}
  800174e:	b089      	sub	sp, #36	; 0x24
  8001750:	af00      	add	r7, sp, #0
  8001752:	6078      	str	r0, [r7, #4]
-    // Check if the provided task ID is NO_TASK_ID (invalid).
-    if (taskID == NO_TASK_ID) return;
  8001754:	687b      	ldr	r3, [r7, #4]
  8001756:	2b00      	cmp	r3, #0
  8001758:	d068      	beq.n	800182c <SCH_Delete_Task+0xe0>
-
-    // Iterate through the task array to find the task with the specified TaskID
-    for (uint8_t taskIndex = 0; taskIndex < SCH_MAX_TASKS; taskIndex++) {
  800175a:	2300      	movs	r3, #0
  800175c:	77fb      	strb	r3, [r7, #31]
  800175e:	e061      	b.n	8001824 <SCH_Delete_Task+0xd8>
-        if (SCH_tasks_Array[taskIndex].TaskID == taskID) {
  8001760:	7ffa      	ldrb	r2, [r7, #31]
  8001762:	4935      	ldr	r1, [pc, #212]	; (8001838 <SCH_Delete_Task+0xec>)
  8001764:	4613      	mov	r3, r2
@@ -3346,11 +2580,6 @@ void SCH_Delete_Task(uint32_t taskID) {
  8001772:	687a      	ldr	r2, [r7, #4]
  8001774:	429a      	cmp	r2, r3
  8001776:	d152      	bne.n	800181e <SCH_Delete_Task+0xd2>
-            // Task found, proceed with deletion
-
-            // If the current task is not the last one and the next task is not empty,
-            // adjust the delay of the next task to include the delay of the deleted task.
-            if (taskIndex < SCH_MAX_TASKS - 1 && SCH_tasks_Array[taskIndex + 1].pTask != 0) {
  8001778:	7ffb      	ldrb	r3, [r7, #31]
  800177a:	2b08      	cmp	r3, #8
  800177c:	d828      	bhi.n	80017d0 <SCH_Delete_Task+0x84>
@@ -3365,7 +2594,6 @@ void SCH_Delete_Task(uint32_t taskID) {
  800178e:	681b      	ldr	r3, [r3, #0]
  8001790:	2b00      	cmp	r3, #0
  8001792:	d01d      	beq.n	80017d0 <SCH_Delete_Task+0x84>
-                SCH_tasks_Array[taskIndex + 1].Delay += SCH_tasks_Array[taskIndex].Delay;
  8001794:	7ffb      	ldrb	r3, [r7, #31]
  8001796:	1c5a      	adds	r2, r3, #1
  8001798:	4927      	ldr	r1, [pc, #156]	; (8001838 <SCH_Delete_Task+0xec>)
@@ -3396,14 +2624,9 @@ void SCH_Delete_Task(uint32_t taskID) {
  80017ca:	4403      	add	r3, r0
  80017cc:	3304      	adds	r3, #4
  80017ce:	6019      	str	r1, [r3, #0]
-            }
-
-            // Shift the remaining tasks to fill the gap created by the deleted task
-            for (uint8_t j = taskIndex; j < SCH_MAX_TASKS - 1; j++) {
  80017d0:	7ffb      	ldrb	r3, [r7, #31]
  80017d2:	77bb      	strb	r3, [r7, #30]
  80017d4:	e017      	b.n	8001806 <SCH_Delete_Task+0xba>
-                SCH_tasks_Array[j] = SCH_tasks_Array[j + 1];
  80017d6:	7fbb      	ldrb	r3, [r7, #30]
  80017d8:	1c5a      	adds	r2, r3, #1
  80017da:	7fb9      	ldrb	r1, [r7, #30]
@@ -3425,17 +2648,12 @@ void SCH_Delete_Task(uint32_t taskID) {
  80017fa:	c40f      	stmia	r4!, {r0, r1, r2, r3}
  80017fc:	682b      	ldr	r3, [r5, #0]
  80017fe:	6023      	str	r3, [r4, #0]
-            for (uint8_t j = taskIndex; j < SCH_MAX_TASKS - 1; j++) {
  8001800:	7fbb      	ldrb	r3, [r7, #30]
  8001802:	3301      	adds	r3, #1
  8001804:	77bb      	strb	r3, [r7, #30]
  8001806:	7fbb      	ldrb	r3, [r7, #30]
  8001808:	2b08      	cmp	r3, #8
  800180a:	d9e4      	bls.n	80017d6 <SCH_Delete_Task+0x8a>
-            }
-
-            // Clear the last task slot to ensure no leftover data
-            SCH_tasks_Array[SCH_MAX_TASKS - 1] = (sTask){0};
  800180c:	4b0a      	ldr	r3, [pc, #40]	; (8001838 <SCH_Delete_Task+0xec>)
  800180e:	33b4      	adds	r3, #180	; 0xb4
  8001810:	2200      	movs	r2, #0
@@ -3445,23 +2663,14 @@ void SCH_Delete_Task(uint32_t taskID) {
  8001818:	60da      	str	r2, [r3, #12]
  800181a:	611a      	str	r2, [r3, #16]
  800181c:	e007      	b.n	800182e <SCH_Delete_Task+0xe2>
-    for (uint8_t taskIndex = 0; taskIndex < SCH_MAX_TASKS; taskIndex++) {
  800181e:	7ffb      	ldrb	r3, [r7, #31]
  8001820:	3301      	adds	r3, #1
  8001822:	77fb      	strb	r3, [r7, #31]
  8001824:	7ffb      	ldrb	r3, [r7, #31]
  8001826:	2b09      	cmp	r3, #9
  8001828:	d99a      	bls.n	8001760 <SCH_Delete_Task+0x14>
-
-            return;
-        }
-    }
-
-    return; // Task ID not found, exit the function
  800182a:	e000      	b.n	800182e <SCH_Delete_Task+0xe2>
-    if (taskID == NO_TASK_ID) return;
  800182c:	bf00      	nop
-}
  800182e:	3724      	adds	r7, #36	; 0x24
  8001830:	46bd      	mov	sp, r7
  8001832:	bcb0      	pop	{r4, r5, r7}
@@ -3470,26 +2679,19 @@ void SCH_Delete_Task(uint32_t taskID) {
  8001838:	20000118 	.word	0x20000118
 
 0800183c <SCH_Dispatch_Tasks>:
-
-
-void SCH_Dispatch_Tasks(){
  800183c:	b5b0      	push	{r4, r5, r7, lr}
  800183e:	b086      	sub	sp, #24
  8001840:	af00      	add	r7, sp, #0
-	if(SCH_tasks_Array[0].RunMe > 0) {
  8001842:	4b11      	ldr	r3, [pc, #68]	; (8001888 <SCH_Dispatch_Tasks+0x4c>)
  8001844:	7b1b      	ldrb	r3, [r3, #12]
  8001846:	2b00      	cmp	r3, #0
  8001848:	d019      	beq.n	800187e <SCH_Dispatch_Tasks+0x42>
-		(*SCH_tasks_Array[0].pTask)(); // Function pointer -> Run task
  800184a:	4b0f      	ldr	r3, [pc, #60]	; (8001888 <SCH_Dispatch_Tasks+0x4c>)
  800184c:	681b      	ldr	r3, [r3, #0]
  800184e:	4798      	blx	r3
-		SCH_tasks_Array[0].RunMe = 0; // Set back RunMe flag
  8001850:	4b0d      	ldr	r3, [pc, #52]	; (8001888 <SCH_Dispatch_Tasks+0x4c>)
  8001852:	2200      	movs	r2, #0
  8001854:	731a      	strb	r2, [r3, #12]
-		sTask temtask = SCH_tasks_Array[0];
  8001856:	4b0c      	ldr	r3, [pc, #48]	; (8001888 <SCH_Dispatch_Tasks+0x4c>)
  8001858:	1d3c      	adds	r4, r7, #4
  800185a:	461d      	mov	r5, r3
@@ -3497,23 +2699,17 @@ void SCH_Dispatch_Tasks(){
  800185e:	c40f      	stmia	r4!, {r0, r1, r2, r3}
  8001860:	682b      	ldr	r3, [r5, #0]
  8001862:	6023      	str	r3, [r4, #0]
-		SCH_Delete_Task(temtask.TaskID);
  8001864:	697b      	ldr	r3, [r7, #20]
  8001866:	4618      	mov	r0, r3
  8001868:	f7ff ff70 	bl	800174c <SCH_Delete_Task>
-		if (temtask.Period != 0) {
  800186c:	68fb      	ldr	r3, [r7, #12]
  800186e:	2b00      	cmp	r3, #0
  8001870:	d005      	beq.n	800187e <SCH_Dispatch_Tasks+0x42>
-			SCH_Add_Task(temtask.pTask, temtask.Period, temtask.Period);
  8001872:	687b      	ldr	r3, [r7, #4]
  8001874:	68f9      	ldr	r1, [r7, #12]
  8001876:	68fa      	ldr	r2, [r7, #12]
  8001878:	4618      	mov	r0, r3
  800187a:	f7ff fe75 	bl	8001568 <SCH_Add_Task>
-		}
-	}
-}
  800187e:	bf00      	nop
  8001880:	3718      	adds	r7, #24
  8001882:	46bd      	mov	sp, r7
@@ -3522,11 +2718,8 @@ void SCH_Dispatch_Tasks(){
  8001888:	20000118 	.word	0x20000118
 
 0800188c <Get_New_Task_ID>:
-
-static uint32_t Get_New_Task_ID() {
  800188c:	b480      	push	{r7}
  800188e:	af00      	add	r7, sp, #0
-    return ++newTaskID;
  8001890:	4b05      	ldr	r3, [pc, #20]	; (80018a8 <Get_New_Task_ID+0x1c>)
  8001892:	681b      	ldr	r3, [r3, #0]
  8001894:	3301      	adds	r3, #1
@@ -3534,7 +2727,6 @@ static uint32_t Get_New_Task_ID() {
  8001898:	6013      	str	r3, [r2, #0]
  800189a:	4b03      	ldr	r3, [pc, #12]	; (80018a8 <Get_New_Task_ID+0x1c>)
  800189c:	681b      	ldr	r3, [r3, #0]
-}
  800189e:	4618      	mov	r0, r3
  80018a0:	46bd      	mov	sp, r7
  80018a2:	bc80      	pop	{r7}
@@ -3543,17 +2735,10 @@ static uint32_t Get_New_Task_ID() {
  80018a8:	200001e0 	.word	0x200001e0
 
 080018ac <setTimerSecond>:
-void setTimer7SEG(int duration){
-	counter7SEG = duration/PERIOD;
-	timer7SEG = 0;
-}
-
-void setTimerSecond(int duration){
  80018ac:	b480      	push	{r7}
  80018ae:	b083      	sub	sp, #12
  80018b0:	af00      	add	r7, sp, #0
  80018b2:	6078      	str	r0, [r7, #4]
-	counterSecond = duration/PERIOD;
  80018b4:	687b      	ldr	r3, [r7, #4]
  80018b6:	4a08      	ldr	r2, [pc, #32]	; (80018d8 <setTimerSecond+0x2c>)
  80018b8:	fb82 1203 	smull	r1, r2, r2, r3
@@ -3562,11 +2747,9 @@ void setTimerSecond(int duration){
  80018c0:	1ad3      	subs	r3, r2, r3
  80018c2:	4a06      	ldr	r2, [pc, #24]	; (80018dc <setTimerSecond+0x30>)
  80018c4:	6013      	str	r3, [r2, #0]
-	timerSecond = 0;
  80018c6:	4b06      	ldr	r3, [pc, #24]	; (80018e0 <setTimerSecond+0x34>)
  80018c8:	2200      	movs	r2, #0
  80018ca:	601a      	str	r2, [r3, #0]
-}
  80018cc:	bf00      	nop
  80018ce:	370c      	adds	r7, #12
  80018d0:	46bd      	mov	sp, r7
@@ -3578,14 +2761,11 @@ void setTimerSecond(int duration){
  80018e0:	200001ec 	.word	0x200001ec
 
 080018e4 <setTimer>:
-
-void setTimer(int index, int duration){
  80018e4:	b480      	push	{r7}
  80018e6:	b083      	sub	sp, #12
  80018e8:	af00      	add	r7, sp, #0
  80018ea:	6078      	str	r0, [r7, #4]
  80018ec:	6039      	str	r1, [r7, #0]
-	counter[index] = duration/PERIOD;
  80018ee:	683b      	ldr	r3, [r7, #0]
  80018f0:	4a09      	ldr	r2, [pc, #36]	; (8001918 <setTimer+0x34>)
  80018f2:	fb82 1203 	smull	r1, r2, r2, r3
@@ -3595,12 +2775,10 @@ void setTimer(int index, int duration){
  80018fc:	4907      	ldr	r1, [pc, #28]	; (800191c <setTimer+0x38>)
  80018fe:	687b      	ldr	r3, [r7, #4]
  8001900:	f841 2023 	str.w	r2, [r1, r3, lsl #2]
-	timerFlag[index] = 0;
  8001904:	4a06      	ldr	r2, [pc, #24]	; (8001920 <setTimer+0x3c>)
  8001906:	687b      	ldr	r3, [r7, #4]
  8001908:	2100      	movs	r1, #0
  800190a:	f842 1023 	str.w	r1, [r2, r3, lsl #2]
-}
  800190e:	bf00      	nop
  8001910:	370c      	adds	r7, #12
  8001912:	46bd      	mov	sp, r7
@@ -3611,22 +2789,17 @@ void setTimer(int index, int duration){
  8001920:	200001f4 	.word	0x200001f4
 
 08001924 <timerRun>:
-
-void timerRun(){
  8001924:	b480      	push	{r7}
  8001926:	b083      	sub	sp, #12
  8001928:	af00      	add	r7, sp, #0
-	for (int i = 0; i < NO_OF_COUNTERS; i++){
  800192a:	2300      	movs	r3, #0
  800192c:	607b      	str	r3, [r7, #4]
  800192e:	e01c      	b.n	800196a <timerRun+0x46>
-		if (counter[i] > 0){
  8001930:	4a12      	ldr	r2, [pc, #72]	; (800197c <timerRun+0x58>)
  8001932:	687b      	ldr	r3, [r7, #4]
  8001934:	f852 3023 	ldr.w	r3, [r2, r3, lsl #2]
  8001938:	2b00      	cmp	r3, #0
  800193a:	dd13      	ble.n	8001964 <timerRun+0x40>
-			counter[i]--;
  800193c:	4a0f      	ldr	r2, [pc, #60]	; (800197c <timerRun+0x58>)
  800193e:	687b      	ldr	r3, [r7, #4]
  8001940:	f852 3023 	ldr.w	r3, [r2, r3, lsl #2]
@@ -3634,28 +2807,21 @@ void timerRun(){
  8001946:	490d      	ldr	r1, [pc, #52]	; (800197c <timerRun+0x58>)
  8001948:	687b      	ldr	r3, [r7, #4]
  800194a:	f841 2023 	str.w	r2, [r1, r3, lsl #2]
-			if (counter[i] <= 0){
  800194e:	4a0b      	ldr	r2, [pc, #44]	; (800197c <timerRun+0x58>)
  8001950:	687b      	ldr	r3, [r7, #4]
  8001952:	f852 3023 	ldr.w	r3, [r2, r3, lsl #2]
  8001956:	2b00      	cmp	r3, #0
  8001958:	dc04      	bgt.n	8001964 <timerRun+0x40>
-				timerFlag[i] = 1;
  800195a:	4a09      	ldr	r2, [pc, #36]	; (8001980 <timerRun+0x5c>)
  800195c:	687b      	ldr	r3, [r7, #4]
  800195e:	2101      	movs	r1, #1
  8001960:	f842 1023 	str.w	r1, [r2, r3, lsl #2]
-	for (int i = 0; i < NO_OF_COUNTERS; i++){
  8001964:	687b      	ldr	r3, [r7, #4]
  8001966:	3301      	adds	r3, #1
  8001968:	607b      	str	r3, [r7, #4]
  800196a:	687b      	ldr	r3, [r7, #4]
  800196c:	2b05      	cmp	r3, #5
  800196e:	dddf      	ble.n	8001930 <timerRun+0xc>
-			}
-		}
-	}
-}
  8001970:	bf00      	nop
  8001972:	bf00      	nop
  8001974:	370c      	adds	r7, #12
@@ -3666,33 +2832,24 @@ void timerRun(){
  8001980:	200001f4 	.word	0x200001f4
 
 08001984 <timerRunSecond>:
-
-void timerRunSecond(){
  8001984:	b480      	push	{r7}
  8001986:	af00      	add	r7, sp, #0
-	if (counterSecond > 0){
  8001988:	4b09      	ldr	r3, [pc, #36]	; (80019b0 <timerRunSecond+0x2c>)
  800198a:	681b      	ldr	r3, [r3, #0]
  800198c:	2b00      	cmp	r3, #0
  800198e:	dd0b      	ble.n	80019a8 <timerRunSecond+0x24>
-		counterSecond--;
  8001990:	4b07      	ldr	r3, [pc, #28]	; (80019b0 <timerRunSecond+0x2c>)
  8001992:	681b      	ldr	r3, [r3, #0]
  8001994:	3b01      	subs	r3, #1
  8001996:	4a06      	ldr	r2, [pc, #24]	; (80019b0 <timerRunSecond+0x2c>)
  8001998:	6013      	str	r3, [r2, #0]
-		if (counterSecond <= 0){
  800199a:	4b05      	ldr	r3, [pc, #20]	; (80019b0 <timerRunSecond+0x2c>)
  800199c:	681b      	ldr	r3, [r3, #0]
  800199e:	2b00      	cmp	r3, #0
  80019a0:	dc02      	bgt.n	80019a8 <timerRunSecond+0x24>
-			timerSecond = 1;
  80019a2:	4b04      	ldr	r3, [pc, #16]	; (80019b4 <timerRunSecond+0x30>)
  80019a4:	2201      	movs	r2, #1
  80019a6:	601a      	str	r2, [r3, #0]
-		}
-	}
-}
  80019a8:	bf00      	nop
  80019aa:	46bd      	mov	sp, r7
  80019ac:	bc80      	pop	{r7}
@@ -3701,33 +2858,24 @@ void timerRunSecond(){
  80019b4:	200001ec 	.word	0x200001ec
 
 080019b8 <timerRun7SEG>:
-
-void timerRun7SEG(){
  80019b8:	b480      	push	{r7}
  80019ba:	af00      	add	r7, sp, #0
-	if (counter7SEG > 0){
  80019bc:	4b09      	ldr	r3, [pc, #36]	; (80019e4 <timerRun7SEG+0x2c>)
  80019be:	681b      	ldr	r3, [r3, #0]
  80019c0:	2b00      	cmp	r3, #0
  80019c2:	dd0b      	ble.n	80019dc <timerRun7SEG+0x24>
-		counter7SEG--;
  80019c4:	4b07      	ldr	r3, [pc, #28]	; (80019e4 <timerRun7SEG+0x2c>)
  80019c6:	681b      	ldr	r3, [r3, #0]
  80019c8:	3b01      	subs	r3, #1
  80019ca:	4a06      	ldr	r2, [pc, #24]	; (80019e4 <timerRun7SEG+0x2c>)
  80019cc:	6013      	str	r3, [r2, #0]
-		if (counter7SEG <= 0){
  80019ce:	4b05      	ldr	r3, [pc, #20]	; (80019e4 <timerRun7SEG+0x2c>)
  80019d0:	681b      	ldr	r3, [r3, #0]
  80019d2:	2b00      	cmp	r3, #0
  80019d4:	dc02      	bgt.n	80019dc <timerRun7SEG+0x24>
-			timer7SEG = 1;
  80019d6:	4b04      	ldr	r3, [pc, #16]	; (80019e8 <timerRun7SEG+0x30>)
  80019d8:	2201      	movs	r2, #1
  80019da:	601a      	str	r2, [r3, #0]
-		}
-	}
-}
  80019dc:	bf00      	nop
  80019de:	46bd      	mov	sp, r7
  80019e0:	bc80      	pop	{r7}
@@ -3736,20 +2884,9 @@ void timerRun7SEG(){
  80019e8:	200001e4 	.word	0x200001e4
 
 080019ec <HAL_MspInit>:
-void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
-                    /**
-  * Initializes the Global MSP.
-  */
-void HAL_MspInit(void)
-{
  80019ec:	b480      	push	{r7}
  80019ee:	b085      	sub	sp, #20
  80019f0:	af00      	add	r7, sp, #0
-  /* USER CODE BEGIN MspInit 0 */
-
-  /* USER CODE END MspInit 0 */
-
-  __HAL_RCC_AFIO_CLK_ENABLE();
  80019f2:	4b15      	ldr	r3, [pc, #84]	; (8001a48 <HAL_MspInit+0x5c>)
  80019f4:	699b      	ldr	r3, [r3, #24]
  80019f6:	4a14      	ldr	r2, [pc, #80]	; (8001a48 <HAL_MspInit+0x5c>)
@@ -3760,7 +2897,6 @@ void HAL_MspInit(void)
  8001a02:	f003 0301 	and.w	r3, r3, #1
  8001a06:	60bb      	str	r3, [r7, #8]
  8001a08:	68bb      	ldr	r3, [r7, #8]
-  __HAL_RCC_PWR_CLK_ENABLE();
  8001a0a:	4b0f      	ldr	r3, [pc, #60]	; (8001a48 <HAL_MspInit+0x5c>)
  8001a0c:	69db      	ldr	r3, [r3, #28]
  8001a0e:	4a0e      	ldr	r2, [pc, #56]	; (8001a48 <HAL_MspInit+0x5c>)
@@ -3771,12 +2907,6 @@ void HAL_MspInit(void)
  8001a1a:	f003 5380 	and.w	r3, r3, #268435456	; 0x10000000
  8001a1e:	607b      	str	r3, [r7, #4]
  8001a20:	687b      	ldr	r3, [r7, #4]
-
-  /* System interrupt init*/
-
-  /** NOJTAG: JTAG-DP Disabled and SW-DP Enabled
-  */
-  __HAL_AFIO_REMAP_SWJ_NOJTAG();
  8001a22:	4b0a      	ldr	r3, [pc, #40]	; (8001a4c <HAL_MspInit+0x60>)
  8001a24:	685b      	ldr	r3, [r3, #4]
  8001a26:	60fb      	str	r3, [r7, #12]
@@ -3789,11 +2919,6 @@ void HAL_MspInit(void)
  8001a38:	4a04      	ldr	r2, [pc, #16]	; (8001a4c <HAL_MspInit+0x60>)
  8001a3a:	68fb      	ldr	r3, [r7, #12]
  8001a3c:	6053      	str	r3, [r2, #4]
-
-  /* USER CODE BEGIN MspInit 1 */
-
-  /* USER CODE END MspInit 1 */
-}
  8001a3e:	bf00      	nop
  8001a40:	3714      	adds	r7, #20
  8001a42:	46bd      	mov	sp, r7
@@ -3803,27 +2928,14 @@ void HAL_MspInit(void)
  8001a4c:	40010000 	.word	0x40010000
 
 08001a50 <HAL_TIM_Base_MspInit>:
-* This function configures the hardware resources used in this example
-* @param htim_base: TIM_Base handle pointer
-* @retval None
-*/
-void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* htim_base)
-{
  8001a50:	b580      	push	{r7, lr}
  8001a52:	b084      	sub	sp, #16
  8001a54:	af00      	add	r7, sp, #0
  8001a56:	6078      	str	r0, [r7, #4]
-  if(htim_base->Instance==TIM2)
  8001a58:	687b      	ldr	r3, [r7, #4]
  8001a5a:	681b      	ldr	r3, [r3, #0]
  8001a5c:	f1b3 4f80 	cmp.w	r3, #1073741824	; 0x40000000
  8001a60:	d114      	bne.n	8001a8c <HAL_TIM_Base_MspInit+0x3c>
-  {
-  /* USER CODE BEGIN TIM2_MspInit 0 */
-
-  /* USER CODE END TIM2_MspInit 0 */
-    /* Peripheral clock enable */
-    __HAL_RCC_TIM2_CLK_ENABLE();
  8001a62:	4b19      	ldr	r3, [pc, #100]	; (8001ac8 <HAL_TIM_Base_MspInit+0x78>)
  8001a64:	69db      	ldr	r3, [r3, #28]
  8001a66:	4a18      	ldr	r2, [pc, #96]	; (8001ac8 <HAL_TIM_Base_MspInit+0x78>)
@@ -3834,29 +2946,18 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* htim_base)
  8001a72:	f003 0301 	and.w	r3, r3, #1
  8001a76:	60fb      	str	r3, [r7, #12]
  8001a78:	68fb      	ldr	r3, [r7, #12]
-    /* TIM2 interrupt Init */
-    HAL_NVIC_SetPriority(TIM2_IRQn, 0, 0);
  8001a7a:	2200      	movs	r2, #0
  8001a7c:	2100      	movs	r1, #0
  8001a7e:	201c      	movs	r0, #28
  8001a80:	f000 fa9b 	bl	8001fba <HAL_NVIC_SetPriority>
-    HAL_NVIC_EnableIRQ(TIM2_IRQn);
  8001a84:	201c      	movs	r0, #28
  8001a86:	f000 fab4 	bl	8001ff2 <HAL_NVIC_EnableIRQ>
-  /* USER CODE BEGIN TIM3_MspInit 1 */
-
-  /* USER CODE END TIM3_MspInit 1 */
-  }
-
-}
  8001a8a:	e018      	b.n	8001abe <HAL_TIM_Base_MspInit+0x6e>
-  else if(htim_base->Instance==TIM3)
  8001a8c:	687b      	ldr	r3, [r7, #4]
  8001a8e:	681b      	ldr	r3, [r3, #0]
  8001a90:	4a0e      	ldr	r2, [pc, #56]	; (8001acc <HAL_TIM_Base_MspInit+0x7c>)
  8001a92:	4293      	cmp	r3, r2
  8001a94:	d113      	bne.n	8001abe <HAL_TIM_Base_MspInit+0x6e>
-    __HAL_RCC_TIM3_CLK_ENABLE();
  8001a96:	4b0c      	ldr	r3, [pc, #48]	; (8001ac8 <HAL_TIM_Base_MspInit+0x78>)
  8001a98:	69db      	ldr	r3, [r3, #28]
  8001a9a:	4a0b      	ldr	r2, [pc, #44]	; (8001ac8 <HAL_TIM_Base_MspInit+0x78>)
@@ -3867,15 +2968,12 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* htim_base)
  8001aa6:	f003 0302 	and.w	r3, r3, #2
  8001aaa:	60bb      	str	r3, [r7, #8]
  8001aac:	68bb      	ldr	r3, [r7, #8]
-    HAL_NVIC_SetPriority(TIM3_IRQn, 0, 0);
  8001aae:	2200      	movs	r2, #0
  8001ab0:	2100      	movs	r1, #0
  8001ab2:	201d      	movs	r0, #29
  8001ab4:	f000 fa81 	bl	8001fba <HAL_NVIC_SetPriority>
-    HAL_NVIC_EnableIRQ(TIM3_IRQn);
  8001ab8:	201d      	movs	r0, #29
  8001aba:	f000 fa9a 	bl	8001ff2 <HAL_NVIC_EnableIRQ>
-}
  8001abe:	bf00      	nop
  8001ac0:	3710      	adds	r7, #16
  8001ac2:	46bd      	mov	sp, r7
@@ -3885,32 +2983,21 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* htim_base)
  8001acc:	40000400 	.word	0x40000400
 
 08001ad0 <HAL_TIM_MspPostInit>:
-
-void HAL_TIM_MspPostInit(TIM_HandleTypeDef* htim)
-{
  8001ad0:	b580      	push	{r7, lr}
  8001ad2:	b088      	sub	sp, #32
  8001ad4:	af00      	add	r7, sp, #0
  8001ad6:	6078      	str	r0, [r7, #4]
-  GPIO_InitTypeDef GPIO_InitStruct = {0};
  8001ad8:	f107 0310 	add.w	r3, r7, #16
  8001adc:	2200      	movs	r2, #0
  8001ade:	601a      	str	r2, [r3, #0]
  8001ae0:	605a      	str	r2, [r3, #4]
  8001ae2:	609a      	str	r2, [r3, #8]
  8001ae4:	60da      	str	r2, [r3, #12]
-  if(htim->Instance==TIM3)
  8001ae6:	687b      	ldr	r3, [r7, #4]
  8001ae8:	681b      	ldr	r3, [r3, #0]
  8001aea:	4a0f      	ldr	r2, [pc, #60]	; (8001b28 <HAL_TIM_MspPostInit+0x58>)
  8001aec:	4293      	cmp	r3, r2
  8001aee:	d117      	bne.n	8001b20 <HAL_TIM_MspPostInit+0x50>
-  {
-  /* USER CODE BEGIN TIM3_MspPostInit 0 */
-
-  /* USER CODE END TIM3_MspPostInit 0 */
-
-    __HAL_RCC_GPIOA_CLK_ENABLE();
  8001af0:	4b0e      	ldr	r3, [pc, #56]	; (8001b2c <HAL_TIM_MspPostInit+0x5c>)
  8001af2:	699b      	ldr	r3, [r3, #24]
  8001af4:	4a0d      	ldr	r2, [pc, #52]	; (8001b2c <HAL_TIM_MspPostInit+0x5c>)
@@ -3921,29 +3008,16 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef* htim)
  8001b00:	f003 0304 	and.w	r3, r3, #4
  8001b04:	60fb      	str	r3, [r7, #12]
  8001b06:	68fb      	ldr	r3, [r7, #12]
-    /**TIM3 GPIO Configuration
-    PA6     ------> TIM3_CH1
-    */
-    GPIO_InitStruct.Pin = GPIO_PIN_6;
  8001b08:	2340      	movs	r3, #64	; 0x40
  8001b0a:	613b      	str	r3, [r7, #16]
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
  8001b0c:	2302      	movs	r3, #2
  8001b0e:	617b      	str	r3, [r7, #20]
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
  8001b10:	2302      	movs	r3, #2
  8001b12:	61fb      	str	r3, [r7, #28]
-    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
  8001b14:	f107 0310 	add.w	r3, r7, #16
  8001b18:	4619      	mov	r1, r3
  8001b1a:	4805      	ldr	r0, [pc, #20]	; (8001b30 <HAL_TIM_MspPostInit+0x60>)
  8001b1c:	f000 fb36 	bl	800218c <HAL_GPIO_Init>
-  /* USER CODE BEGIN TIM3_MspPostInit 1 */
-
-  /* USER CODE END TIM3_MspPostInit 1 */
-  }
-
-}
  8001b20:	bf00      	nop
  8001b22:	3720      	adds	r7, #32
  8001b24:	46bd      	mov	sp, r7
@@ -3953,35 +3027,21 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef* htim)
  8001b30:	40010800 	.word	0x40010800
 
 08001b34 <HAL_UART_MspInit>:
-* This function configures the hardware resources used in this example
-* @param huart: UART handle pointer
-* @retval None
-*/
-void HAL_UART_MspInit(UART_HandleTypeDef* huart)
-{
  8001b34:	b580      	push	{r7, lr}
  8001b36:	b088      	sub	sp, #32
  8001b38:	af00      	add	r7, sp, #0
  8001b3a:	6078      	str	r0, [r7, #4]
-  GPIO_InitTypeDef GPIO_InitStruct = {0};
  8001b3c:	f107 0310 	add.w	r3, r7, #16
  8001b40:	2200      	movs	r2, #0
  8001b42:	601a      	str	r2, [r3, #0]
  8001b44:	605a      	str	r2, [r3, #4]
  8001b46:	609a      	str	r2, [r3, #8]
  8001b48:	60da      	str	r2, [r3, #12]
-  if(huart->Instance==USART2)
  8001b4a:	687b      	ldr	r3, [r7, #4]
  8001b4c:	681b      	ldr	r3, [r3, #0]
  8001b4e:	4a1f      	ldr	r2, [pc, #124]	; (8001bcc <HAL_UART_MspInit+0x98>)
  8001b50:	4293      	cmp	r3, r2
  8001b52:	d137      	bne.n	8001bc4 <HAL_UART_MspInit+0x90>
-  {
-  /* USER CODE BEGIN USART2_MspInit 0 */
-
-  /* USER CODE END USART2_MspInit 0 */
-    /* Peripheral clock enable */
-    __HAL_RCC_USART2_CLK_ENABLE();
  8001b54:	4b1e      	ldr	r3, [pc, #120]	; (8001bd0 <HAL_UART_MspInit+0x9c>)
  8001b56:	69db      	ldr	r3, [r3, #28]
  8001b58:	4a1d      	ldr	r2, [pc, #116]	; (8001bd0 <HAL_UART_MspInit+0x9c>)
@@ -3992,8 +3052,6 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
  8001b64:	f403 3300 	and.w	r3, r3, #131072	; 0x20000
  8001b68:	60fb      	str	r3, [r7, #12]
  8001b6a:	68fb      	ldr	r3, [r7, #12]
-
-    __HAL_RCC_GPIOA_CLK_ENABLE();
  8001b6c:	4b18      	ldr	r3, [pc, #96]	; (8001bd0 <HAL_UART_MspInit+0x9c>)
  8001b6e:	699b      	ldr	r3, [r3, #24]
  8001b70:	4a17      	ldr	r2, [pc, #92]	; (8001bd0 <HAL_UART_MspInit+0x9c>)
@@ -4004,55 +3062,32 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
  8001b7c:	f003 0304 	and.w	r3, r3, #4
  8001b80:	60bb      	str	r3, [r7, #8]
  8001b82:	68bb      	ldr	r3, [r7, #8]
-    /**USART2 GPIO Configuration
-    PA2     ------> USART2_TX
-    PA3     ------> USART2_RX
-    */
-    GPIO_InitStruct.Pin = GPIO_PIN_2;
  8001b84:	2304      	movs	r3, #4
  8001b86:	613b      	str	r3, [r7, #16]
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
  8001b88:	2302      	movs	r3, #2
  8001b8a:	617b      	str	r3, [r7, #20]
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
  8001b8c:	2303      	movs	r3, #3
  8001b8e:	61fb      	str	r3, [r7, #28]
-    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
  8001b90:	f107 0310 	add.w	r3, r7, #16
  8001b94:	4619      	mov	r1, r3
  8001b96:	480f      	ldr	r0, [pc, #60]	; (8001bd4 <HAL_UART_MspInit+0xa0>)
  8001b98:	f000 faf8 	bl	800218c <HAL_GPIO_Init>
-
-    GPIO_InitStruct.Pin = GPIO_PIN_3;
  8001b9c:	2308      	movs	r3, #8
  8001b9e:	613b      	str	r3, [r7, #16]
-    GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
  8001ba0:	2300      	movs	r3, #0
  8001ba2:	617b      	str	r3, [r7, #20]
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
  8001ba4:	2300      	movs	r3, #0
  8001ba6:	61bb      	str	r3, [r7, #24]
-    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
  8001ba8:	f107 0310 	add.w	r3, r7, #16
  8001bac:	4619      	mov	r1, r3
  8001bae:	4809      	ldr	r0, [pc, #36]	; (8001bd4 <HAL_UART_MspInit+0xa0>)
  8001bb0:	f000 faec 	bl	800218c <HAL_GPIO_Init>
-
-    /* USART2 interrupt Init */
-    HAL_NVIC_SetPriority(USART2_IRQn, 0, 0);
  8001bb4:	2200      	movs	r2, #0
  8001bb6:	2100      	movs	r1, #0
  8001bb8:	2026      	movs	r0, #38	; 0x26
  8001bba:	f000 f9fe 	bl	8001fba <HAL_NVIC_SetPriority>
-    HAL_NVIC_EnableIRQ(USART2_IRQn);
  8001bbe:	2026      	movs	r0, #38	; 0x26
  8001bc0:	f000 fa17 	bl	8001ff2 <HAL_NVIC_EnableIRQ>
-  /* USER CODE BEGIN USART2_MspInit 1 */
-
-  /* USER CODE END USART2_MspInit 1 */
-  }
-
-}
  8001bc4:	bf00      	nop
  8001bc6:	3720      	adds	r7, #32
  8001bc8:	46bd      	mov	sp, r7
@@ -4062,253 +3097,131 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
  8001bd4:	40010800 	.word	0x40010800
 
 08001bd8 <NMI_Handler>:
-/******************************************************************************/
-/**
-  * @brief This function handles Non maskable interrupt.
-  */
-void NMI_Handler(void)
-{
  8001bd8:	b480      	push	{r7}
  8001bda:	af00      	add	r7, sp, #0
-  /* USER CODE BEGIN NonMaskableInt_IRQn 0 */
-
-  /* USER CODE END NonMaskableInt_IRQn 0 */
-  /* USER CODE BEGIN NonMaskableInt_IRQn 1 */
-  while (1)
  8001bdc:	e7fe      	b.n	8001bdc <NMI_Handler+0x4>
 
 08001bde <HardFault_Handler>:
-
-/**
-  * @brief This function handles Hard fault interrupt.
-  */
-void HardFault_Handler(void)
-{
  8001bde:	b480      	push	{r7}
  8001be0:	af00      	add	r7, sp, #0
-  /* USER CODE BEGIN HardFault_IRQn 0 */
-
-  /* USER CODE END HardFault_IRQn 0 */
-  while (1)
  8001be2:	e7fe      	b.n	8001be2 <HardFault_Handler+0x4>
 
 08001be4 <MemManage_Handler>:
-
-/**
-  * @brief This function handles Memory management fault.
-  */
-void MemManage_Handler(void)
-{
  8001be4:	b480      	push	{r7}
  8001be6:	af00      	add	r7, sp, #0
-  /* USER CODE BEGIN MemoryManagement_IRQn 0 */
-
-  /* USER CODE END MemoryManagement_IRQn 0 */
-  while (1)
  8001be8:	e7fe      	b.n	8001be8 <MemManage_Handler+0x4>
 
 08001bea <BusFault_Handler>:
-
-/**
-  * @brief This function handles Prefetch fault, memory access fault.
-  */
-void BusFault_Handler(void)
-{
  8001bea:	b480      	push	{r7}
  8001bec:	af00      	add	r7, sp, #0
-  /* USER CODE BEGIN BusFault_IRQn 0 */
-
-  /* USER CODE END BusFault_IRQn 0 */
-  while (1)
  8001bee:	e7fe      	b.n	8001bee <BusFault_Handler+0x4>
 
 08001bf0 <UsageFault_Handler>:
-
-/**
-  * @brief This function handles Undefined instruction or illegal state.
-  */
-void UsageFault_Handler(void)
-{
  8001bf0:	b480      	push	{r7}
  8001bf2:	af00      	add	r7, sp, #0
-  /* USER CODE BEGIN UsageFault_IRQn 0 */
-
-  /* USER CODE END UsageFault_IRQn 0 */
-  while (1)
  8001bf4:	e7fe      	b.n	8001bf4 <UsageFault_Handler+0x4>
 
 08001bf6 <SVC_Handler>:
-
-/**
-  * @brief This function handles System service call via SWI instruction.
-  */
-void SVC_Handler(void)
-{
  8001bf6:	b480      	push	{r7}
  8001bf8:	af00      	add	r7, sp, #0
-
-  /* USER CODE END SVCall_IRQn 0 */
-  /* USER CODE BEGIN SVCall_IRQn 1 */
-
-  /* USER CODE END SVCall_IRQn 1 */
-}
  8001bfa:	bf00      	nop
  8001bfc:	46bd      	mov	sp, r7
  8001bfe:	bc80      	pop	{r7}
  8001c00:	4770      	bx	lr
 
 08001c02 <DebugMon_Handler>:
-
-/**
-  * @brief This function handles Debug monitor.
-  */
-void DebugMon_Handler(void)
-{
  8001c02:	b480      	push	{r7}
  8001c04:	af00      	add	r7, sp, #0
-
-  /* USER CODE END DebugMonitor_IRQn 0 */
-  /* USER CODE BEGIN DebugMonitor_IRQn 1 */
-
-  /* USER CODE END DebugMonitor_IRQn 1 */
-}
  8001c06:	bf00      	nop
  8001c08:	46bd      	mov	sp, r7
  8001c0a:	bc80      	pop	{r7}
  8001c0c:	4770      	bx	lr
 
 08001c0e <PendSV_Handler>:
-
-/**
-  * @brief This function handles Pendable request for system service.
-  */
-void PendSV_Handler(void)
-{
  8001c0e:	b480      	push	{r7}
  8001c10:	af00      	add	r7, sp, #0
-
-  /* USER CODE END PendSV_IRQn 0 */
-  /* USER CODE BEGIN PendSV_IRQn 1 */
-
-  /* USER CODE END PendSV_IRQn 1 */
-}
  8001c12:	bf00      	nop
  8001c14:	46bd      	mov	sp, r7
  8001c16:	bc80      	pop	{r7}
  8001c18:	4770      	bx	lr
 
 08001c1a <SysTick_Handler>:
-
-/**
-  * @brief This function handles System tick timer.
-  */
-void SysTick_Handler(void)
-{
  8001c1a:	b580      	push	{r7, lr}
  8001c1c:	af00      	add	r7, sp, #0
-  /* USER CODE BEGIN SysTick_IRQn 0 */
-
-  /* USER CODE END SysTick_IRQn 0 */
-  HAL_IncTick();
  8001c1e:	f000 f8d9 	bl	8001dd4 <HAL_IncTick>
-  /* USER CODE BEGIN SysTick_IRQn 1 */
-
-  /* USER CODE END SysTick_IRQn 1 */
-}
  8001c22:	bf00      	nop
  8001c24:	bd80      	pop	{r7, pc}
 	...
 
 08001c28 <TIM2_IRQHandler>:
-
-/**
-  * @brief This function handles TIM2 global interrupt.
-  */
-void TIM2_IRQHandler(void)
-{
  8001c28:	b580      	push	{r7, lr}
  8001c2a:	af00      	add	r7, sp, #0
-  /* USER CODE BEGIN TIM2_IRQn 0 */
-
-  /* USER CODE END TIM2_IRQn 0 */
-  HAL_TIM_IRQHandler(&htim2);
  8001c2c:	4802      	ldr	r0, [pc, #8]	; (8001c38 <TIM2_IRQHandler+0x10>)
  8001c2e:	f001 fa0b 	bl	8003048 <HAL_TIM_IRQHandler>
-  /* USER CODE BEGIN TIM2_IRQn 1 */
-
-  /* USER CODE END TIM2_IRQn 1 */
-}
  8001c32:	bf00      	nop
  8001c34:	bd80      	pop	{r7, pc}
  8001c36:	bf00      	nop
  8001c38:	20000284 	.word	0x20000284
 
 08001c3c <TIM3_IRQHandler>:
-
-/**
-  * @brief This function handles TIM3 global interrupt.
-  */
-void TIM3_IRQHandler(void)
-{
  8001c3c:	b580      	push	{r7, lr}
  8001c3e:	af00      	add	r7, sp, #0
-  /* USER CODE BEGIN TIM3_IRQn 0 */
-
-  /* USER CODE END TIM3_IRQn 0 */
-  HAL_TIM_IRQHandler(&htim3);
  8001c40:	4802      	ldr	r0, [pc, #8]	; (8001c4c <TIM3_IRQHandler+0x10>)
  8001c42:	f001 fa01 	bl	8003048 <HAL_TIM_IRQHandler>
-  /* USER CODE BEGIN TIM3_IRQn 1 */
-
-  /* USER CODE END TIM3_IRQn 1 */
-}
  8001c46:	bf00      	nop
  8001c48:	bd80      	pop	{r7, pc}
  8001c4a:	bf00      	nop
  8001c4c:	2000023c 	.word	0x2000023c
 
 08001c50 <USART2_IRQHandler>:
-
-/**
-  * @brief This function handles USART2 global interrupt.
-  */
-void USART2_IRQHandler(void)
-{
  8001c50:	b580      	push	{r7, lr}
  8001c52:	af00      	add	r7, sp, #0
-  /* USER CODE BEGIN USART2_IRQn 0 */
-
-  /* USER CODE END USART2_IRQn 0 */
-  HAL_UART_IRQHandler(&huart2);
  8001c54:	4802      	ldr	r0, [pc, #8]	; (8001c60 <USART2_IRQHandler+0x10>)
  8001c56:	f002 f895 	bl	8003d84 <HAL_UART_IRQHandler>
-  /* USER CODE BEGIN USART2_IRQn 1 */
-
-  /* USER CODE END USART2_IRQn 1 */
-}
  8001c5a:	bf00      	nop
  8001c5c:	bd80      	pop	{r7, pc}
  8001c5e:	bf00      	nop
  8001c60:	200002cc 	.word	0x200002cc
 
 08001c64 <_sbrk>:
+ *
+ * @param incr Memory size
+ * @return Pointer to allocated memory
+ */
+void *_sbrk(ptrdiff_t incr)
+{
  8001c64:	b580      	push	{r7, lr}
  8001c66:	b086      	sub	sp, #24
  8001c68:	af00      	add	r7, sp, #0
  8001c6a:	6078      	str	r0, [r7, #4]
+  extern uint8_t _end; /* Symbol defined in the linker script */
+  extern uint8_t _estack; /* Symbol defined in the linker script */
+  extern uint32_t _Min_Stack_Size; /* Symbol defined in the linker script */
+  const uint32_t stack_limit = (uint32_t)&_estack - (uint32_t)&_Min_Stack_Size;
  8001c6c:	4a14      	ldr	r2, [pc, #80]	; (8001cc0 <_sbrk+0x5c>)
  8001c6e:	4b15      	ldr	r3, [pc, #84]	; (8001cc4 <_sbrk+0x60>)
  8001c70:	1ad3      	subs	r3, r2, r3
  8001c72:	617b      	str	r3, [r7, #20]
+  const uint8_t *max_heap = (uint8_t *)stack_limit;
  8001c74:	697b      	ldr	r3, [r7, #20]
  8001c76:	613b      	str	r3, [r7, #16]
+  uint8_t *prev_heap_end;
+
+  /* Initialize heap end at first call */
+  if (NULL == __sbrk_heap_end)
  8001c78:	4b13      	ldr	r3, [pc, #76]	; (8001cc8 <_sbrk+0x64>)
  8001c7a:	681b      	ldr	r3, [r3, #0]
  8001c7c:	2b00      	cmp	r3, #0
  8001c7e:	d102      	bne.n	8001c86 <_sbrk+0x22>
+  {
+    __sbrk_heap_end = &_end;
  8001c80:	4b11      	ldr	r3, [pc, #68]	; (8001cc8 <_sbrk+0x64>)
  8001c82:	4a12      	ldr	r2, [pc, #72]	; (8001ccc <_sbrk+0x68>)
  8001c84:	601a      	str	r2, [r3, #0]
+  }
+
+  /* Protect heap from growing into the reserved MSP stack */
+  if (__sbrk_heap_end + incr > max_heap)
  8001c86:	4b10      	ldr	r3, [pc, #64]	; (8001cc8 <_sbrk+0x64>)
  8001c88:	681a      	ldr	r2, [r3, #0]
  8001c8a:	687b      	ldr	r3, [r7, #4]
@@ -4316,22 +3229,32 @@ void USART2_IRQHandler(void)
  8001c8e:	693a      	ldr	r2, [r7, #16]
  8001c90:	429a      	cmp	r2, r3
  8001c92:	d207      	bcs.n	8001ca4 <_sbrk+0x40>
+  {
+    errno = ENOMEM;
  8001c94:	f002 fdc6 	bl	8004824 <__errno>
  8001c98:	4603      	mov	r3, r0
  8001c9a:	220c      	movs	r2, #12
  8001c9c:	601a      	str	r2, [r3, #0]
+    return (void *)-1;
  8001c9e:	f04f 33ff 	mov.w	r3, #4294967295
  8001ca2:	e009      	b.n	8001cb8 <_sbrk+0x54>
+  }
+
+  prev_heap_end = __sbrk_heap_end;
  8001ca4:	4b08      	ldr	r3, [pc, #32]	; (8001cc8 <_sbrk+0x64>)
  8001ca6:	681b      	ldr	r3, [r3, #0]
  8001ca8:	60fb      	str	r3, [r7, #12]
+  __sbrk_heap_end += incr;
  8001caa:	4b07      	ldr	r3, [pc, #28]	; (8001cc8 <_sbrk+0x64>)
  8001cac:	681a      	ldr	r2, [r3, #0]
  8001cae:	687b      	ldr	r3, [r7, #4]
  8001cb0:	4413      	add	r3, r2
  8001cb2:	4a05      	ldr	r2, [pc, #20]	; (8001cc8 <_sbrk+0x64>)
  8001cb4:	6013      	str	r3, [r2, #0]
+
+  return (void *)prev_heap_end;
  8001cb6:	68fb      	ldr	r3, [r7, #12]
+}
  8001cb8:	4618      	mov	r0, r3
  8001cba:	3718      	adds	r7, #24
  8001cbc:	46bd      	mov	sp, r7
@@ -4342,42 +3265,21 @@ void USART2_IRQHandler(void)
  8001ccc:	20000328 	.word	0x20000328
 
 08001cd0 <SystemInit>:
-  * @note   This function should be used only after reset.
-  * @param  None
-  * @retval None
-  */
-void SystemInit (void)
-{
  8001cd0:	b480      	push	{r7}
  8001cd2:	af00      	add	r7, sp, #0
-
-  /* Configure the Vector Table location -------------------------------------*/
-#if defined(USER_VECT_TAB_ADDRESS)
-  SCB->VTOR = VECT_TAB_BASE_ADDRESS | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal SRAM. */
-#endif /* USER_VECT_TAB_ADDRESS */
-}
  8001cd4:	bf00      	nop
  8001cd6:	46bd      	mov	sp, r7
  8001cd8:	bc80      	pop	{r7}
  8001cda:	4770      	bx	lr
 
 08001cdc <buzzer>:
- *  Created on: Nov 29, 2023
- *      Author: olkmphy
- */
-#include "uart_buzzer.h"
-
-void buzzer(){
  8001cdc:	b480      	push	{r7}
  8001cde:	af00      	add	r7, sp, #0
-	// Implement buzzer here...
-	__HAL_TIM_SetCompare(&htim3, TIM_CHANNEL_1, buzzer_value);
  8001ce0:	4b04      	ldr	r3, [pc, #16]	; (8001cf4 <buzzer+0x18>)
  8001ce2:	681a      	ldr	r2, [r3, #0]
  8001ce4:	4b04      	ldr	r3, [pc, #16]	; (8001cf8 <buzzer+0x1c>)
  8001ce6:	681b      	ldr	r3, [r3, #0]
  8001ce8:	635a      	str	r2, [r3, #52]	; 0x34
-}
  8001cea:	bf00      	nop
  8001cec:	46bd      	mov	sp, r7
  8001cee:	bc80      	pop	{r7}
@@ -4387,44 +3289,98 @@ void buzzer(){
  8001cf8:	2000023c 	.word	0x2000023c
 
 08001cfc <Reset_Handler>:
+  .weak Reset_Handler
+  .type Reset_Handler, %function
+Reset_Handler:
+
+/* Call the clock system initialization function.*/
+    bl  SystemInit
  8001cfc:	f7ff ffe8 	bl	8001cd0 <SystemInit>
+
+/* Copy the data segment initializers from flash to SRAM */
+  ldr r0, =_sdata
  8001d00:	480b      	ldr	r0, [pc, #44]	; (8001d30 <LoopFillZerobss+0xe>)
+  ldr r1, =_edata
  8001d02:	490c      	ldr	r1, [pc, #48]	; (8001d34 <LoopFillZerobss+0x12>)
+  ldr r2, =_sidata
  8001d04:	4a0c      	ldr	r2, [pc, #48]	; (8001d38 <LoopFillZerobss+0x16>)
+  movs r3, #0
  8001d06:	2300      	movs	r3, #0
+  b LoopCopyDataInit
  8001d08:	e002      	b.n	8001d10 <LoopCopyDataInit>
 
 08001d0a <CopyDataInit>:
+
+CopyDataInit:
+  ldr r4, [r2, r3]
  8001d0a:	58d4      	ldr	r4, [r2, r3]
+  str r4, [r0, r3]
  8001d0c:	50c4      	str	r4, [r0, r3]
+  adds r3, r3, #4
  8001d0e:	3304      	adds	r3, #4
 
 08001d10 <LoopCopyDataInit>:
+
+LoopCopyDataInit:
+  adds r4, r0, r3
  8001d10:	18c4      	adds	r4, r0, r3
+  cmp r4, r1
  8001d12:	428c      	cmp	r4, r1
+  bcc CopyDataInit
  8001d14:	d3f9      	bcc.n	8001d0a <CopyDataInit>
+  
+/* Zero fill the bss segment. */
+  ldr r2, =_sbss
  8001d16:	4a09      	ldr	r2, [pc, #36]	; (8001d3c <LoopFillZerobss+0x1a>)
+  ldr r4, =_ebss
  8001d18:	4c09      	ldr	r4, [pc, #36]	; (8001d40 <LoopFillZerobss+0x1e>)
+  movs r3, #0
  8001d1a:	2300      	movs	r3, #0
+  b LoopFillZerobss
  8001d1c:	e001      	b.n	8001d22 <LoopFillZerobss>
 
 08001d1e <FillZerobss>:
+
+FillZerobss:
+  str  r3, [r2]
  8001d1e:	6013      	str	r3, [r2, #0]
+  adds r2, r2, #4
  8001d20:	3204      	adds	r2, #4
 
 08001d22 <LoopFillZerobss>:
+
+LoopFillZerobss:
+  cmp r2, r4
  8001d22:	42a2      	cmp	r2, r4
+  bcc FillZerobss
  8001d24:	d3fb      	bcc.n	8001d1e <FillZerobss>
+
+/* Call static constructors */
+    bl __libc_init_array
  8001d26:	f002 fd83 	bl	8004830 <__libc_init_array>
+/* Call the application's entry point.*/
+  bl main
  8001d2a:	f7ff f9ab 	bl	8001084 <main>
+  bx lr
  8001d2e:	4770      	bx	lr
+  ldr r0, =_sdata
  8001d30:	20000000 	.word	0x20000000
+  ldr r1, =_edata
  8001d34:	200000b4 	.word	0x200000b4
+  ldr r2, =_sidata
  8001d38:	080051a0 	.word	0x080051a0
+  ldr r2, =_sbss
  8001d3c:	200000b4 	.word	0x200000b4
+  ldr r4, =_ebss
  8001d40:	20000328 	.word	0x20000328
 
 08001d44 <ADC1_2_IRQHandler>:
+ * @retval : None
+*/
+    .section .text.Default_Handler,"ax",%progbits
+Default_Handler:
+Infinite_Loop:
+  b Infinite_Loop
  8001d44:	e7fe      	b.n	8001d44 <ADC1_2_IRQHandler>
 	...
 

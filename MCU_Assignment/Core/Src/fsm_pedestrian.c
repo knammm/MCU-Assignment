@@ -57,8 +57,8 @@ void fsm_pedestrian_run() {
                         setTimer(4, 20); // Set delay for turn off buzzer
                     }
 
-                    if (timerFlag[4] == 1) {
-                        buzzerProcess(0);
+                    if (timerFlag[4]==1){
+                    	buzzerProcess(0);
                     }
 
                 } else if (status == RED_YELLOW) {
