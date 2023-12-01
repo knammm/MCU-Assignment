@@ -17,7 +17,7 @@ int durationRED = 5000;
 int durationYELLOW = 2000;
 int durationGREEN = 3000;
 
-int led_index = 0;
 int led_buffer[4] = {0};
+int led_index=0;
 
 int buzzer_value = 0;
