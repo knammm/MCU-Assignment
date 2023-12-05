@@ -17,7 +17,7 @@ void returnAutomatic(){
 }
 
 void fsm_manual_run(){
-//	char str[50];
+	char str[50];
 	switch(status){
 		case MOD_RED:
 			if(timerFlag[1] == 1){
@@ -51,8 +51,11 @@ void fsm_manual_run(){
 				timerTraffic1 = durationYELLOW / 1000;
 				timerTraffic2 = 3;
 			}
-//			HAL_UART_Transmit(&huart2, (void *)str, sprintf(str, "\r\n!7SEG1: %d#\r\n",timerTraffic1), 5);
-//			HAL_UART_Transmit(&huart2, (void *)str, sprintf(str, "\r\n!7SEG2: %d#\r\n\n\n",timerTraffic2), 5);
+			if(timerSecond == 1){
+				setTimerSecond(1000);
+				HAL_UART_Transmit(&huart2, (void *)str, sprintf(str, "\r\n!7SEG1: %d#\r\n",timerTraffic1), 500);
+				HAL_UART_Transmit(&huart2, (void *)str, sprintf(str, "\r\n!7SEG2: %d#\r\n\n\n",timerTraffic2), 500);
+			}
 			break;
 		case MOD_YELLOW:
 			if(timerFlag[1] == 1){
@@ -88,8 +91,11 @@ void fsm_manual_run(){
 				// Reset time out
 				setTimer(5, 5000);
 			}
-//			HAL_UART_Transmit(&huart2, (void *)str, sprintf(str, "\r\n!7SEG1: %d#\r\n",timerTraffic1), 5);
-//			HAL_UART_Transmit(&huart2, (void *)str, sprintf(str, "\r\n!7SEG2: %d#\r\n\n\n",timerTraffic2), 5);
+			if(timerSecond == 1){
+				setTimerSecond(1000);
+				HAL_UART_Transmit(&huart2, (void *)str, sprintf(str, "\r\n!7SEG1: %d#\r\n",timerTraffic1), 500);
+				HAL_UART_Transmit(&huart2, (void *)str, sprintf(str, "\r\n!7SEG2: %d#\r\n\n\n",timerTraffic2), 500);
+			}
 			break;
 		case MOD_GREEN:
 			if(timerFlag[1] == 1){
@@ -118,8 +124,11 @@ void fsm_manual_run(){
 			// MODE BUTTON
 			// Go back to automatic...
 			if(isButtonPressed(1) == 1) returnAutomatic();
-//			HAL_UART_Transmit(&huart2, (void *)str, sprintf(str, "\r\n!7SEG1: %d#\r\n",timerTraffic1), 5);
-//			HAL_UART_Transmit(&huart2, (void *)str, sprintf(str, "\r\n!7SEG2: %d#\r\n\n\n",timerTraffic2), 5);
+			if(timerSecond == 1){
+				setTimerSecond(1000);
+				HAL_UART_Transmit(&huart2, (void *)str, sprintf(str, "\r\n!7SEG1: %d#\r\n",timerTraffic1), 500);
+				HAL_UART_Transmit(&huart2, (void *)str, sprintf(str, "\r\n!7SEG2: %d#\r\n\n\n",timerTraffic2), 500);
+			}
 			break;
 		default:
 			break;
