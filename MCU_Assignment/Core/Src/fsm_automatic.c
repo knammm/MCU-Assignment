@@ -105,6 +105,7 @@ void fsm_automatic_run(){
 			status = MOD_RED;
 			setTimer(1, 10); // timer for blinky
 			setTimer(5, 5000);
+			setTimerSecond(1000);
 			Traffic_setColor(1, AUTO_RED);
 			Traffic_setColor(2, AUTO_RED);
 			RED_sec = durationRED / 1000;
