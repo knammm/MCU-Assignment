@@ -12,6 +12,8 @@ void fsm_automatic_run(){
 	switch(status){
 	case INIT:
 		//TODO
+		timerTraffic1 = durationRED / 1000;
+		timerTraffic2 = durationGREEN / 1000;
 		status = RED_GREEN;
 		setTimer(0, durationGREEN);
 		setTimerSecond(1000);

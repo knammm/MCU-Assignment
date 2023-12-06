@@ -80,7 +80,7 @@ void fsm_manual_run(){
 				setTimer(5, 5000);
 				int prevDurationYELLOW = durationYELLOW;
 				durationYELLOW = YELLOW_sec * 1000;
-				if(durationYELLOW > durationRED) durationYELLOW = prevDurationYELLOW; // Check the logic
+				if(durationYELLOW >= durationRED) durationYELLOW = prevDurationYELLOW; // Check the logic
 			}
 			// MODE BUTTON
 			if(isButtonPressed(1) == 1){
