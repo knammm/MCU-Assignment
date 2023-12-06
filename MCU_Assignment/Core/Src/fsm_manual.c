@@ -51,11 +51,8 @@ void fsm_manual_run(){
 				timerTraffic1 = durationYELLOW / 1000;
 				timerTraffic2 = 3;
 			}
-			if(timerSecond == 1){
-				setTimerSecond(1000);
-				HAL_UART_Transmit(&huart2, (void *)str, sprintf(str, "\r\n!7SEG1: %d#\r\n",timerTraffic1), 500);
-				HAL_UART_Transmit(&huart2, (void *)str, sprintf(str, "\r\n!7SEG2: %d#\r\n\n\n",timerTraffic2), 500);
-			}
+//			HAL_UART_Transmit(&huart2, (void *)str, sprintf(str, "\r\n!7SEG1: %d#\r\n",timerTraffic1), 5);
+//			HAL_UART_Transmit(&huart2, (void *)str, sprintf(str, "\r\n!7SEG2: %d#\r\n\n\n",timerTraffic2), 5);
 			break;
 		case MOD_YELLOW:
 			if(timerFlag[1] == 1){
