@@ -33,6 +33,7 @@ void button_reading(){
 			else{
 				buttonTimeOut[i]--;
 				if(buttonTimeOut[i] <= 0){
+					buttonTimeOut[i] = 0;
 					buttonBuffer[i] = BUTTON_IS_RELEASED;
 				}
 			}
