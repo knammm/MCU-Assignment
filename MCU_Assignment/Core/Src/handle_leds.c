@@ -118,11 +118,11 @@ void Pedestrian_setColor(int color){
 	}
 }
 
-void updateBuffer(){
-	led_buffer[0] = timerTraffic1 / 10;
-	led_buffer[1] = timerTraffic1 % 10;
-	led_buffer[2] = timerTraffic2 / 10;
-	led_buffer[3] = timerTraffic2 % 10;
-}
+//void updateBuffer(){
+//	led_buffer[0] = timerTraffic1 / 10;
+//	led_buffer[1] = timerTraffic1 % 10;
+//	led_buffer[2] = timerTraffic2 / 10;
+//	led_buffer[3] = timerTraffic2 % 10;
+//}
 
 

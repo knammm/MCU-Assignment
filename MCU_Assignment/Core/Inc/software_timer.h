@@ -17,12 +17,12 @@ extern int timerFlag[NO_OF_COUNTERS];
 extern int timer7SEG;
 extern int timerSecond;
 
-void setTimer7SEG(int);
+//void setTimer7SEG(int);
 void setTimerSecond(int);
 void setTimer(int, int);
 
 void timerRun();
-void timerRun7SEG();
+//void timerRun7SEG();
 void timerRunSecond();
 
 #endif /* INC_SOFTWARE_TIMER_H_ */

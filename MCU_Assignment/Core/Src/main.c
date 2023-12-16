@@ -20,6 +20,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "global.h"
+#include "scheduler.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -111,7 +112,7 @@ int main(void)
    //blinkLEDs(TRAFFIC_1, AUTO_RED);
    SCH_Add_Task(timerRun, 0, 1);
    SCH_Add_Task(timerRunSecond, 0, 1);
-   SCH_Add_Task(timerRun7SEG, 0, 1);
+   //SCH_Add_Task(timerRun7SEG, 0, 1);
    SCH_Add_Task(button_reading, 0, 1);
    //SCH_Add_Task(update7SEG, 1, 25);
    //SCH_Add_Task(updateBuffer, 1,10);
